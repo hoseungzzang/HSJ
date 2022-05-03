@@ -43,8 +43,7 @@ public class test1009 {
 	}
 
 	public static void sum() {
-		double result = Math.pow(7, 100);
-		System.out.println(result);
+	
 	}
 
 }
