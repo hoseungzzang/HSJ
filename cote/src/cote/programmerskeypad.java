@@ -1,25 +1,23 @@
-package backjoon;
+package cote;
 
+public class programmerskeypad {
 
-
-public class test {
-
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		
 		int[] numbers = {1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5};//LRLLLRLLL
 		String hand = "right";
-		String answer = "";
+		String result = "";
 	
 		int rightNum=12;
 		int leftNum=10;
 		
 		for(int i=0; i<numbers.length;i++) {
 			if(numbers[i]==1 || numbers[i]==4 || numbers[i]==7) {
-				answer = answer+"L";
+				result = result+"L";
 				leftNum = numbers[i];
 			}
 			else if(numbers[i]==3 || numbers[i]==6 || numbers[i]==9) {
-				answer = answer+"R";
+				result = result+"R";
 				rightNum = numbers[i];
 			}
 			else {
@@ -27,42 +25,29 @@ public class test {
 			int clacLeftNum=Math.abs((numbers[i] - leftNum)/3) + Math.abs((numbers[i] - leftNum)%3);
 			int clacRightNum=Math.abs((numbers[i] - rightNum)/3) + Math.abs((numbers[i] - rightNum)%3);
 				if(clacLeftNum==clacRightNum) {
-					if("left".equalsIgnoreCase(hand)) {
-                        System.out.println(hand.equals("left"));
-						answer = answer+"L";
-                        leftNum = numbers[i];
-						//rightNum = numbers[i];
+					if(hand.equals("right")) {
+						System.out.println(hand.equals("right"));
+						result = result+"R";
+						rightNum = numbers[i];
 					}
-					else if("right".equalsIgnoreCase(hand)){
-						answer = answer+"R";
-						//leftNum = numbers[i];
-                        rightNum = numbers[i];
+					else {
+						result = result+"L";
+						leftNum = numbers[i];
 					}
 				}
 				else if(clacRightNum>clacLeftNum) {
-					answer = answer+"L";
+					result = result+"L";
 					leftNum = numbers[i];
 				}
 				else {
-					answer = answer+"R";
+					result = result+"R";
 					rightNum = numbers[i];
 				}
 				
 				
 			}
 		}
-		System.out.println(answer);
+		System.out.println(result);
 	}
-}
 
-/*
- * LRLLLRLLRRL
- * LRLLLRLLLRL
-LRLLRRLLLRR
-LRLLRRLLLRR
-LRLLLRLLRRL
-LRLLLRLLRRL
-LRLLLRLLRRL
-LRLLLRLLL
-LRLLLRLLLRL
- */
+}
