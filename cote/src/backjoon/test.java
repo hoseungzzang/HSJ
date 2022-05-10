@@ -1,53 +1,66 @@
 package backjoon;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
+
 public class test {
 
 	public static void main(String[] args) {
-		int [] lottos = {0, 0, 0, 0, 0, 0};
-		int [] win_nums= {38, 19, 20, 40, 15, 25};
-		int [] arr = {6,6,5,4,3,2,1};
-		int[] answer = new int[2];
-		int cnt=0;
-		int zeroCnt=0;
-		for(int i=0; i<5; i++) {
-			if(lottos[i]==0) {
-				zeroCnt++;
-				continue;
+		
+		int[] numbers = {1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5};//LRLLLRLLL
+		String hand = "right";
+		String result = "";
+	
+		int rightNum=12;
+		int leftNum=10;
+		
+		for(int i=0; i<numbers.length;i++) {
+			if(numbers[i]==1 || numbers[i]==4 || numbers[i]==7) {
+				result = result+"L";
+				leftNum = numbers[i];
 			}
-			for(int j=0; j<5;j++) {
-				
-				if(lottos[i]==win_nums[j]) {
-					cnt++;
+			else if(numbers[i]==3 || numbers[i]==6 || numbers[i]==9) {
+				result = result+"R";
+				rightNum = numbers[i];
+			}
+			else {
+			if(numbers[i]==0) numbers[i]=11;
+			int clacLeftNum=Math.abs((numbers[i] - leftNum)/3) + Math.abs((numbers[i] - leftNum)%3);
+			int clacRightNum=Math.abs((numbers[i] - rightNum)/3) + Math.abs((numbers[i] - rightNum)%3);
+				if(clacLeftNum==clacRightNum) {
+					if(hand.equals("right")) {
+						System.out.println(hand.equals("right"));
+						result = result+"R";
+						rightNum = numbers[i];
+					}
+					else {
+						result = result+"L";
+						leftNum = numbers[i];
+					}
 				}
+				else if(clacRightNum>clacLeftNum) {
+					result = result+"L";
+					leftNum = numbers[i];
+				}
+				else {
+					result = result+"R";
+					rightNum = numbers[i];
+				}
+				
 				
 			}
 		}
-		answer[0]=arr[(cnt+zeroCnt)];
-		answer[1]=arr[cnt];
-		System.out.println(answer[0] +" "+answer[1]);
+		System.out.println(result);
 	}
 }
+
 /*
- * //쿼리에서 불러온 List List testYrList = TestCommonService.selectTestYr(testVO);
- * 
- * //List<Map<String, Object>> 라는 리스트 안에 쿼리에서 불러온 List를 넣어준다. List<Map<String,
- * Object>> listMap = testYrList;
- * 
- * //그리고 0번째 로우에서 year라는 컬럼의 값을 String으로 가져온다. String strYear =
- * listMap.get(0).get("year").toString();
+ * LRLLLRLLRRL
+ * LRLLLRLLLRL
+LRLLRRLLLRR
+LRLLRRLLLRR
+LRLLLRLLRRL
+LRLLLRLLRRL
+LRLLLRLLRRL
+LRLLLRLLL
+LRLLLRLLLRL
  */
