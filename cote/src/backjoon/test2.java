@@ -5,11 +5,20 @@ import java.util.Arrays;
 public class test2 {
 
 	public static void main(String[] args) {
-		int a = 3%3;
-			
-				
+		long n=121;
+		Double a = Math.sqrt(n);
+
+		System.out.println(a);
 		
-		//11
+		if(a==a.intValue()) {
+
+			System.out.println(a.intValue());
+			a=Math.pow((a+1), 2);
+			
+		}
+		else a = (double) -1;
+	
+		
 		System.out.println(a);
 	}
 
