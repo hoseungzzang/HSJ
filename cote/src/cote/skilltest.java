@@ -82,9 +82,9 @@ public class skilltest {
 	}
 	public static void test5() {
 		//배열합구하기
-		int[][] arr1 = {{1},{2}};
-		int[][] arr2 =  {{3},{5}};
-		int[][] answer = new int[arr1.length][arr1.length-1];
+		int[][] arr1 = {{1,2},{2,3}};
+		int[][] arr2 =  {{3,4},{5,5}};
+		int[][] answer = new int[arr1.length][arr1[arr1.length-1].length];
 		System.out.println(arr1[arr1.length-1].length);
 		
 		for(int i=0; i<arr1.length; i++) {
@@ -94,6 +94,21 @@ public class skilltest {
 			}
 			
 		}
+	}
+	public static void test6() {
+		String num = "01033334444";
+		char [] num2 = num.toCharArray();
+		String answer = "";
+		for(int i= 0; i< num2.length; i++) {
+			if(i<num2.length-4) {
+				answer += '*';
+			}
+			else answer+= num2[i];
+		}
+	
+		
+		System.out.println(answer);
+		
 	}
 
 }

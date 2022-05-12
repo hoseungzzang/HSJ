@@ -3,21 +3,32 @@ package backjoon;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class test {
 
 	public static void main(String[] args) {
-		int[][] arr1 = {{1},{2}};
-		int[][] arr2 =  {{3},{5}};
-		int[][] answer = new int[arr1.length][arr1.length-1];
-		System.out.println(arr1[arr1.length-1].length);
+	
+		int x=2;
+		int calc=0;
+		char[] a = Integer.toString(x).toCharArray();
 		
-		for(int i=0; i<arr1.length; i++) {
-			for(int j=0; j<arr1[arr1.length-1].length;j++) {
-				answer[i][j] = arr1[i][j]+arr2[i][j];
-				System.out.println(answer[i][j]);
+		if(a.length>1) {
+			for(int i=0; i<a.length;i++) {
+				
+				calc+=(a[i]-'0');
+				System.out.println(calc);
+				
 			}
+			if(x%calc==0) {
+				System.out.println("true");
+			}
+			else System.out.println("false");
 			
 		}
+		else System.out.println("true");
+		
+		
 	}
+	
 }
