@@ -56,9 +56,10 @@ public class skilltest {
 	}
 
 	public static void test4() {
-
-		int num = 3;
-		int cnt = 0;
+		int b= 626331;
+		long num = 0;
+		num = (long)b;
+		long cnt = 0;
 		// 홀수 짝수 구분 제어
 		for (int i = 0; i < 500; i++) {
 			if (num == 1) {
@@ -108,6 +109,59 @@ public class skilltest {
 	
 		
 		System.out.println(answer);
+		
+	}
+	public static void test7() {
+	
+		int x=2;
+		int calc=0;
+		char[] a = Integer.toString(x).toCharArray();
+		
+		if(a.length>1) {
+			for(int i=0; i<a.length;i++) {
+				
+				calc+=(a[i]-'0');
+				System.out.println(calc);
+				
+			}
+			if(x%calc==0) {
+				System.out.println("true");
+			}
+			else System.out.println("false");
+			
+		}
+		else System.out.println("true");
+		
+		
+	}
+	
+	public static void test8() {
+		//대소문자 구분 더해진 대소문자 구하기
+		String s= "a B Z";
+		String answer = "";
+		int n=4;
+		
+		char [] arr = s.toCharArray();
+		for(int i=0; i<arr.length; i++) {
+			int sum=0;
+			if (Character.isUpperCase(arr[i])) {
+				if((int)arr[i]+n>90) {
+					answer+=(char)(arr[i]+n-26);
+				}
+				else answer+=(char)(arr[i]+n);
+			}
+          
+
+			else if (arr[i] == ' ') {
+				answer+=' ';
+			}else {
+				if((int)arr[i]+n>122) {
+					answer+=(char)(arr[i]+n-26);
+				}
+				else answer+=(char)(arr[i]+n);
+			}
+                
+		}
 		
 	}
 

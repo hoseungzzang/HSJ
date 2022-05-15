@@ -8,27 +8,39 @@ import java.util.StringTokenizer;
 public class test {
 
 	public static void main(String[] args) {
-	
-		int x=2;
-		int calc=0;
-		char[] a = Integer.toString(x).toCharArray();
+		//test();
+		String s= "a B Z";
+		String answer = "";
+		int n=4;
 		
-		if(a.length>1) {
-			for(int i=0; i<a.length;i++) {
-				
-				calc+=(a[i]-'0');
-				System.out.println(calc);
-				
+		char [] arr = s.toCharArray();
+		for(int i=0; i<arr.length; i++) {
+			int sum=0;
+			if (Character.isUpperCase(arr[i])) {
+				if((int)arr[i]+n>90) {
+					answer+=(char)(arr[i]+n-26);
+				}
+				else answer+=(char)(arr[i]+n);
 			}
-			if(x%calc==0) {
-				System.out.println("true");
+          
+
+			else if (arr[i] == ' ') {
+				answer+=' ';
+			}else {
+				if((int)arr[i]+n>122) {
+					answer+=(char)(arr[i]+n-26);
+				}
+				else answer+=(char)(arr[i]+n);
 			}
-			else System.out.println("false");
-			
+                
 		}
-		else System.out.println("true");
 		
-		
+	}
+	
+	
+	public static void test() {
+		char a = 'Z';//97~122 소문자  대문자 65~90 
+		System.out.println((int)a);
 	}
 	
 }
