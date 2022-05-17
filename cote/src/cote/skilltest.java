@@ -164,5 +164,41 @@ public class skilltest {
 		}
 		
 	}
+	public static void test9() {
+		//test();
+		int n = 10;
+		int answer = 0;
+		 char [] c = Integer.toString(n).toCharArray();
+	        for(int i=0; i<c.length;i++){
+	            answer+=(c[i]-'0');
+	            
+	        }
+	        System.out.println(answer);
+		
+	}
+	public static void test10() {
+		//문자열뒤집기
+		long n = 118372;
+		
+		String s = Long.toString(n);
+		String [] arr = s.split("");
+		 Arrays.sort(arr);
+	s= String.join("",arr);
+	StringBuffer sb = new StringBuffer(s); 
+	
+	Long.parseLong(sb.reverse().toString());
+		
+	}
+	
+	public static void test11() {
+		//문자열 인덱스 찾기
+		String[] seoul = {"Jane", "Kim"};
+		int a =Arrays.asList(seoul).indexOf("Kim");
+		 String answer = "김서방은 "+a+"에 있다";
+		System.out.println(answer);
+	
+	
+		
+	}
 
 }
