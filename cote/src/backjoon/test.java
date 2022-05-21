@@ -17,34 +17,33 @@ import java.util.StringTokenizer;
 public class test {
 
 	public static void main(String[] args) throws IOException {
-		  Scanner sc = new Scanner(System.in);
-	        int T = sc.nextInt();
-	        for( int t=1; t<=T; t++) {
-	            int n, m, i, k;
-	            n = sc.nextInt();//5
-	            m = sc.nextInt();//15
-	            int a[] = new int[n];
-	            int b[] = new int[m];
-	            for( i=0; i<n; i++) a[i] = sc.nextInt();//5
-	            for( i=0; i<m; i++) b[i] = sc.nextInt();//15
-	            int sum, max = 0;
-	            for( k=0; k<m-n+1; k++ ) {//11
-	                sum = 0;
-	                for( i=0; i<n; i++) sum += a[i] * b[i+k];//5
-	                if( sum > max ) max = sum;
-	            }
-	            for( k=0; k<n-m+1; k++ ) {
-	                sum = 0;
-	                for( i=0; i<m; i++) sum += a[i+k] * b[i];
-	                if( sum > max ) max = sum;
-	            }
-	            System.out.format("#%d %d\n", t, max );
-	        }
-		
-		
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		for (int i = 1; i <= roop; i++) {
+			bw.write("#"+i+"\n");
+			int N=0;
+			int roop2 = Integer.parseInt(br.readLine());
+			for(int j =0;j <roop2; j++) {
+				for(int k=0; k<=j;k++) {
+					if(k==0||k==j) {
+						bw.write(1+" ");
+					}
+					else {
+						bw.write(N+" ");
+					}
+					
+				}
+				N++;
+				bw.write("\n");
+			}
+			
+
+		}
+		bw.flush();
 	}
-	
-	
+
 	public static void test() {
 		int a = 123;
 		a = a % 10;

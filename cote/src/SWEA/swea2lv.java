@@ -222,6 +222,131 @@ public class swea2lv {
 		bw.flush();
 
 	}
+	
+	public static void test7() throws NumberFormatException, IOException {
+		//최소값 최대값 제외 후 반올림
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(br.readLine());
+		for(int i=1; i<=roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int [] arr = new int[str.countTokens()];
+			int calc=0;
+			int cnt = str.countTokens();
+			for(int j=0; j<cnt; j++) {
+				 arr[j] = Integer.parseInt(str.nextToken());
+			}
+			Arrays.sort(arr);
+			for(int j=1;j<arr.length-1;j++) {
+				calc+=arr[j];
+			}
+			bw.write("#"+i+" "+String.format("%.0f",(double)calc/8)+"\n");
+		}
+		bw.flush();
+	}
+	public static void test8() throws NumberFormatException, IOException {
+		//학점계싼
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		String [] grade = {"A+","A0","A-","B+","B0","B-","C+","C0","C-","D0"};
+		int roop = Integer.parseInt(br.readLine());
+		for(int i=1; i<=roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int stu =Integer.parseInt(str.nextToken());
+			int find =Integer.parseInt(str.nextToken());
+			double [] arr = new double[stu];
+			for(int j=0; j<stu; j++) {
+				str = new StringTokenizer(br.readLine());
+				arr[j] =Integer.parseInt(str.nextToken())*0.35+Integer.parseInt(str.nextToken())*0.45
+						+Integer.parseInt(str.nextToken())*0.20;
+			}
+			double target = arr[find-1];
+			Arrays.sort(arr);
+			int cnt =0;
+			for(int j=arr.length-1;j>=0;j--) {
+				if(arr[j]==target) {
+					bw.write("#"+i+" "+grade[cnt/(stu/10)]+"\n");
+					break;
+				}
+				cnt++;
+			}
+			
+			
+			
+		}
+		bw.flush();
+	}
+public static void test9() throws NumberFormatException, IOException {
+	//홀짝제어
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	String [] grade = {"A+","A0","A-","B+","B0","B-","C+","C0","C-","D0"};
+	int roop = Integer.parseInt(br.readLine());
+	for(int i=1; i<=roop; i++) {
+		int calc=0;
+		int num =Integer.parseInt(br.readLine());
+		for(int j=1;j<=num;j++) {
+			if(j%2==0) {
+				calc-=j;
+			}else calc+=j;
+		}
+		bw.write("#"+i+" "+calc+"\n");
+		
+	}
+	bw.flush();
+}
+public static void test10() throws NumberFormatException, IOException {
+//앞뒤글자체크
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	int roop = Integer.parseInt(br.readLine());
+	for (int i = 1; i <= roop; i++) {
+		String[] arr = br.readLine().split("");
+		String a1="";
+		String a2="";
+		for (int j = 0; j < arr.length; j++) {
+			a1+=arr[j];
+		}
+		for (int j = arr.length-1; j >=0; j--) {
+			a2+=arr[j];
+		}
+		if(a1.equals(a2)) {
+			bw.write("#" + i + " "+1+ "\n");
+		}else bw.write("#" + i + " "+0+ "\n");
+		
+
+	}
+	bw.flush();
+}
+
+public static void test11() throws NumberFormatException, IOException {
+	//파스칼삼각형 구하기. 일케 하는건 아닌거같으나 어쨌든 구현;;
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	int roop = Integer.parseInt(br.readLine());
+	for (int i = 1; i <= roop; i++) {
+		bw.write("#"+i+"\n");
+		int N=0;
+		int roop2 = Integer.parseInt(br.readLine());
+		for(int j =0;j <roop2; j++) {
+			for(int k=0; k<=j;k++) {
+				if(k==0||k==j) {
+					bw.write(1+" ");
+				}
+				else {
+					bw.write(N+" ");
+				}
+				
+			}
+			N++;
+			bw.write("\n");
+		}
+		
+
+	}
+	bw.flush();
+}
 }
 
 
