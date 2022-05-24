@@ -627,4 +627,108 @@ public class swea2lv {
 		
 		bw.flush();
 	}
+	public static void test17() throws NumberFormatException, IOException {
+		//날짜구하기
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(br.readLine());
+		int [] mon = {1,2,3,4,5,6,7,8,9,10,11,12};
+		int [] day = {31,28,31,30,31,30,31,31,30,31,30,31};
+		
+		for(int i=1;i<=roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int fm = Integer.parseInt(str.nextToken())-1;//7
+			int fd = Integer.parseInt(str.nextToken());//17
+			int lm = Integer.parseInt(str.nextToken());//12
+			int ld = Integer.parseInt(str.nextToken());//24
+			int cnt=0;
+			if(fm==lm) {
+				for(int j= fd; j<=ld;j++) {
+					cnt++;
+				}
+			}
+			else {
+				while(mon[fm]<=lm) {
+					int sumDay = 0;
+					if(mon[fm]==lm) {
+						sumDay= ld;
+					}
+					else sumDay = day[fm];
+					
+					for(int j= fd; j<=sumDay;j++) {
+						cnt++;
+					}
+					fm++;
+					fd=1;
+					if(fm==12) {
+						break;
+					}
+				}
+				
+			}
+			bw.write("#"+i+" "+cnt+"\n");
+			
+		}
+	
+		
+		
+		bw.flush();
+	
+	}
+	public static void test18() throws NumberFormatException, IOException {
+
+		//금액에 맞는 거스름돈주기
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(br.readLine());
+		
+		int [] gap = {50000,10000,5000,1000,500,100,50,10};
+		for(int i=1;i<=roop; i++) {
+			int [] arr = new int[8];
+			bw.write("#"+i+"\n");
+			int n = Integer.parseInt(br.readLine());
+			for(int j=0; j<8;j++) {
+				arr[j] = n/gap[j];
+				n= n%gap[j];
+				bw.write(arr[j]+" ");
+			}
+			bw.write("\n");
+		}
+	
+		
+		
+		bw.flush();
+	
+		
+	
+	}
+	public static void test19() throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		//정렬
+		int roop = Integer.parseInt(br.readLine());
+		
+		
+		for(int i=1;i<=roop; i++) {
+			bw.write("#"+i+" ");
+			int roop2 = Integer.parseInt(br.readLine());
+			int [] arr = new int[roop2];
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			for(int j=0; j<roop2;j++) {
+				arr[j]= Integer.parseInt(str.nextToken());
+				
+			}
+			Arrays.sort(arr);
+			for(int j=0; j<arr.length;j++) {
+				bw.write(arr[j]+" ");
+			}
+			bw.write("\n");
+		}
+	
+		
+		
+		bw.flush();
+	}
 }
