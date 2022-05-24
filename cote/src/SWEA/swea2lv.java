@@ -441,4 +441,190 @@ public class swea2lv {
 		
 		bw.flush();
 	}
+	public static void test14() throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		//글자넣기
+		int roop = Integer.parseInt(br.readLine());
+		
+		for(int i=1; i<=roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int arrSize = Integer.parseInt(str.nextToken());
+			int [][] arr = new int[arrSize][arrSize];
+			int cnt = Integer.parseInt(str.nextToken());
+			int garopin=0;
+			int garosum=0;
+			int seropin=0;
+			int serosum=0;
+			
+			for(int j=0; j<arrSize; j++) {
+				str=new StringTokenizer(br.readLine());
+				for(int k=0; k<arrSize; k++) {
+					arr[j][k] = Integer.parseInt(str.nextToken());
+				}
+			}
+			//가로
+			for(int j=0; j<arrSize; j++) {
+				//가로
+				for(int k=0; k<arrSize; k++) {
+					if(arr[j][k]==1) {
+						garopin++;
+						
+					}
+					else if(arr[j][k]==0) {
+						if(garopin==cnt) {
+							garosum++;
+							garopin=0;
+						}
+						else garopin=0;
+					}
+				}
+				if(garopin==cnt){
+					garosum++;
+					garopin=0;
+				}
+				else garopin=0;
+				//가로
+				for(int k=0; k<arrSize; k++) {
+					if(arr[k][j]==1) {
+						seropin++;
+						
+					}
+					else if(arr[k][j]==0) {
+						if(seropin==cnt) {
+							serosum++;
+							seropin=0;
+						}
+						else seropin=0;
+					}
+				}
+				if(seropin==cnt){
+					serosum++;
+					seropin=0;
+				}
+				else seropin=0;
+				
+			
+			}
+			bw.write("#"+i+" "+(garosum+serosum)+"\n");
+		}
+		
+		bw.flush();
+	}
+	public static void test15() throws NumberFormatException, IOException {
+		//시분더하기
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(br.readLine());
+		
+		for(int i=1; i<=roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int asi = Integer.parseInt(str.nextToken());
+			int abun = Integer.parseInt(str.nextToken());
+			int bsi = Integer.parseInt(str.nextToken());
+			int bbun = Integer.parseInt(str.nextToken());
+			int bun= 0;
+			int si = 0;
+			if(abun+bbun>60) {
+				bun = abun+bbun-60;
+				si++;
+			}
+			else bun = abun+bbun;
+			
+			if(asi+bsi>12) {
+				si+= asi+bsi-12;
+			}
+			else si+= asi+bsi;
+			
+			bw.write("#"+i+" "+si+" "+bun+"\n");
+		}
+	
+		
+		bw.flush();
+	}
+	public static void test16() throws NumberFormatException, IOException {
+		//스도쿠검증
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(br.readLine());
+		
+		for(int i=1;i<=roop; i++) {
+			
+			int [][] arr = new int[9][9];
+			int [][] arr2 = new int[9][9];
+			
+			int breakPoint=0;
+			int cnt=0;
+			int sero = 0;
+			for(int j=0; j<9;j++) {
+				StringTokenizer str = new StringTokenizer(br.readLine());
+				for(int k=0; k<9; k++) {
+					arr[j][k] = Integer.parseInt(str.nextToken());
+				}
+				
+			}
+			for(int j=0; j<9; j++) {
+				for(int k=0; k<9;k++) {
+					int num = arr[j][k]-1;
+					arr2[j][num] += 1;//가로
+				}
+				for(int k=0; k<9; k++){
+					int num = arr[k][j]-1;
+					arr2[j][num] += 1;//세로
+				}
+			}
+			for(int j=0; j<9; j++) {
+				for(int k=0; k<9; k++) {
+					if(arr2[j][k]!=2) {
+						breakPoint =1;
+						bw.write("#"+i+" "+0+"\n");
+						break;
+					}
+				}
+				if(breakPoint==1) break;
+			}
+			for(int l = 0; l<9; l++) {
+				int [] arr3 = new int[9];
+				for(int j=sero; j<sero+3;j++) {
+					for(int k=cnt;k<cnt+3;k++) {
+						int num = arr[j][k]-1;
+						arr3[num]+=1;
+					}	
+				}
+				for(int k=0; k<9; k++) {
+					if(arr3[k]!=1) {
+						bw.write("#"+i+" "+0+"\n");
+						breakPoint =1;
+						break;
+					}
+				}
+			
+				
+				if(breakPoint==1) {
+					break;
+				}
+				
+				cnt= cnt+3;
+				if(cnt>6) {
+					cnt=0;
+					sero+=3;
+				}	
+				
+				
+			}
+			
+		
+			if(breakPoint==0) {
+				bw.write("#"+i+" "+1+"\n");
+			}
+			
+		
+			
+			
+		}
+		
+		bw.flush();
+	}
 }
