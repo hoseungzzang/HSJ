@@ -731,4 +731,124 @@ public class swea2lv {
 		
 		bw.flush();
 	}
+	public static void test20() throws NumberFormatException, IOException {
+		//숫자정렬
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		for (int i = 1; i <= roop; i++) {
+			bw.write("#" + i + "\n");
+			String answer = "";
+			int roop2 = Integer.parseInt(br.readLine());
+			for (int j = 0; j < roop2; j++) {
+				StringTokenizer str = new StringTokenizer(br.readLine());
+				String al = str.nextToken();
+				int roop3 = Integer.parseInt(str.nextToken());
+				for (int k = 0; k < roop3; k++) {
+					answer += al;
+				}
+			}
+			String[] arr = answer.split("");
+			for (int j = 0; j < arr.length; j++) {
+				if (j % 10 == 0) {
+					bw.write("\n");
+				}
+				bw.write(arr[j]);
+			}
+			bw.write("\n");
+		}
+		bw.flush();
+	}
+	public static void test21() throws NumberFormatException, IOException {
+		//숫자 배열 회전 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		for (int i = 1; i <= roop; i++) {
+			bw.write("#"+i+"\n");
+			int roop2 = Integer.parseInt(br.readLine());
+			String[][] arr = new String[roop2][roop2];
+			String[][] cloneArr = new String[roop2][roop2];
+			String [] res = new String[roop2];
+			for(int j=0; j<res.length; j++) {
+				res[j]="";
+			}
+			for (int j = 0; j < roop2; j++) {
+				StringTokenizer str = new StringTokenizer(br.readLine());
+				for (int k = 0; k < roop2; k++) {
+					
+					arr[j][k] = str.nextToken();
+					cloneArr[j][k] = arr[j][k];
+				}
+			}
+			int roop3 = roop2/2;
+			for(int m=0; m<3; m++) {
+				for(int cnt=0;cnt<roop3;cnt++) {
+					for(int j = 0; j < roop2-(cnt*2); j++) {
+						cloneArr[0+cnt][roop2-1-j-cnt]=arr[j+cnt][0+cnt];
+							
+					}//끝
+				
+					for(int j = 0; j < roop2-(cnt*2); j++) {
+						cloneArr[j+cnt][0+cnt]=arr[roop2-1-cnt][j+cnt];
+				
+					}
+				
+					for(int j = 0; j < roop2-(cnt*2); j++) {
+						cloneArr[roop2-1-cnt][j+cnt]=arr[roop2-1-j-cnt][roop2-1-cnt];
+						
+					}
+			
+					for(int j = 0; j < roop2-(cnt*2); j++) {
+						cloneArr[j+cnt][roop2-1-cnt]=arr[0+cnt][j+cnt];
+					
+					}
+				}
+				for(int j = 0; j < roop2; j++) {
+					for(int k = 0; k < roop2; k++) {
+						arr[j][k]= cloneArr[j][k];
+						res[j] += cloneArr[j][k];
+					}
+					res[j]+=" ";
+				}	
+			}
+			for(int j=0; j<res.length; j++) {
+				bw.write(res[j]+"\n");
+			}
+			
+
+		}
+		bw.flush();
+	}
+	public static void test22() throws NumberFormatException, IOException {
+		//소인수분해
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		int [] arr = {2,3,5,7,11};
+		for (int i = 1; i <= roop; i++) {
+			bw.write("#"+i+" ");
+			int [] count = new int[arr.length];
+			int num = Integer.parseInt(br.readLine());
+			int cnt=0;
+			int index=0;
+			int calcNum=0;
+			while(num!=1) {
+				for(int j=0; j<arr.length;j++) {
+					if(num%arr[j]==0) {
+						 index= j;
+						 calcNum=arr[j];
+					}
+				}
+				num = num/calcNum;
+				count[index]+=1;
+			}
+			for(int j=0; j<count.length;j++) {
+				bw.write(count[j]+" ");
+			}
+			bw.write("\n");
+		}
+		
+		bw.flush();
+	}
 }
