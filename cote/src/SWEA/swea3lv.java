@@ -137,4 +137,65 @@ public class swea3lv {
 		}
 		bw.flush();
 	}
+	public static void ex5() throws IOException {
+		//최대값구하기
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		
+		for(int i=1; i<=10; i++) {
+			int tCase = Integer.parseInt(br.readLine());
+			int max = 0;
+			
+			int [][] arr=  new int[100][100];
+			for(int j=0; j<100; j++) {
+				StringTokenizer str = new StringTokenizer(br.readLine());
+				int roop = str.countTokens();
+				
+				for(int k=0;k<roop;k++) {
+					arr[j][k] = Integer.parseInt(str.nextToken());
+				}
+				
+			}
+			//가로
+			for(int j=0; j<100; j++) {
+				int sum=0;
+				for(int k=0;k<100;k++) {
+					sum+=arr[j][k];
+				}
+				if(sum>max) {
+					max=sum;
+				}
+			}
+			for(int j=0; j<100; j++) {
+				int sum=0;
+				for(int k=0;k<100;k++) {
+					sum+=arr[k][j];
+				}
+				if(sum>max) {
+					max=sum;
+				}
+			}
+			
+			for(int j=0; j<100; j++) {
+				int sum=0;
+				sum+=arr[j][j];
+				if(sum>max) {
+					max=sum;
+				}
+			}
+			
+			for(int j=0; j<100; j++) {
+				int sum=0;
+				sum+=arr[99-j][j];
+				if(sum>max) {
+					max=sum;
+				}
+			}
+			bw.write("#"+tCase+" "+max+"\n");
+			
+		}
+		bw.flush();
+		
+	}
 }
