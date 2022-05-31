@@ -19,18 +19,39 @@ import java.io.OutputStreamWriter;
 public class study {
 
 	public static void main(String[] args) throws IOException {
-		int[] d = {2,2,3,3};
-		int budget =10;
-		int cnt=0;
-		Arrays.sort(d);
-		for(int i=0; i<d.length;i++) {
-			if(d[i]>budget) {
-				break;
+	
+		int n=5;
+		int[] arr1= {9, 20, 28, 18, 11};
+		int[] arr2 = {30, 1, 21, 17, 28};
+		String[] answer = new String[n];
+		for(int i=0; i<arr1.length;i++) {
+			String a=Integer.toBinaryString(arr1[i]);
+			String b=Integer.toBinaryString(arr2[i]);
+			if(a.length()<n) {
+				int cnt = n-a.length();
+				for(int j=0; j<cnt;j++) {
+					a = "0"+a;
+				}
 			}
-			budget-=d[i];
-			cnt++;
+			
+			if(b.length()<n) {
+				int cnt = n-b.length();
+				for(int j=0; j<cnt;j++) {
+					b = "0"+b;
+				}
+			}
+			
+			answer[i]="";
+		
+			for(int j=0; j<n;j++) {
+				int sum = (a.charAt(j)-'0') +(b.charAt(j)-'0');
+				if(sum>0) {
+					answer[i]+="#";
+				}
+				else answer[i]+=" ";
+			}
 		}
-		System.out.println(cnt);
+
 		
 	}
 
@@ -185,6 +206,80 @@ public class study {
 		int answer = Integer.parseInt(answer1,3);
 		System.out.println(answer);
 	
+		
+	}
+	public static void ex8() throws IOException {
+		//예산계산 쉬웠음.
+		int[] d = {2,2,3,3};
+		int budget =10;
+		int cnt=0;
+		Arrays.sort(d);
+		for(int i=0; i<d.length;i++) {
+			if(d[i]>budget) {
+				break;
+			}
+			budget-=d[i];
+			cnt++;
+		}
+		System.out.println(cnt);
+		
+	}
+	
+	public static void ex9() throws IOException {
+		//포켓몬찾기
+
+		
+		int[] nums = {3,1,2,3};
+		int cnt = nums.length/2;
+		int answer = 0;
+		ArrayList<Integer> arrayList = new ArrayList<Integer>();
+		for(int i=0; i<nums.length;i++) {
+			if(arrayList.indexOf(nums[i])==-1) {
+				arrayList.add(nums[i]);
+			}
+		}
+		if(arrayList.size()>=cnt) {
+			answer = cnt;
+		}
+		else answer = arrayList.size();
+		
+	
+		
+	}
+	public static void ex10() throws IOException {
+		//비밀지도
+		int n=5;
+		int[] arr1= {9, 20, 28, 18, 11};
+		int[] arr2 = {30, 1, 21, 17, 28};
+		String[] answer = new String[n];
+		for(int i=0; i<arr1.length;i++) {
+			String a=Integer.toBinaryString(arr1[i]);
+			String b=Integer.toBinaryString(arr2[i]);
+			if(a.length()<n) {
+				int cnt = n-a.length();
+				for(int j=0; j<cnt;j++) {
+					a = "0"+a;
+				}
+			}
+			
+			if(b.length()<n) {
+				int cnt = n-b.length();
+				for(int j=0; j<cnt;j++) {
+					b = "0"+b;
+				}
+			}
+			
+			answer[i]="";
+		
+			for(int j=0; j<n;j++) {
+				int sum = (a.charAt(j)-'0') +(b.charAt(j)-'0');
+				if(sum>0) {
+					answer[i]+="#";
+				}
+				else answer[i]+=" ";
+			}
+		}
+
 		
 	}
 
