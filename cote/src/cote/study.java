@@ -19,39 +19,30 @@ import java.io.OutputStreamWriter;
 public class study {
 
 	public static void main(String[] args) throws IOException {
-	
-		int n=5;
-		int[] arr1= {9, 20, 28, 18, 11};
-		int[] arr2 = {30, 1, 21, 17, 28};
-		String[] answer = new String[n];
-		for(int i=0; i<arr1.length;i++) {
-			String a=Integer.toBinaryString(arr1[i]);
-			String b=Integer.toBinaryString(arr2[i]);
-			if(a.length()<n) {
-				int cnt = n-a.length();
-				for(int j=0; j<cnt;j++) {
-					a = "0"+a;
-				}
-			}
-			
-			if(b.length()<n) {
-				int cnt = n-b.length();
-				for(int j=0; j<cnt;j++) {
-					b = "0"+b;
-				}
-			}
-			
-			answer[i]="";
 		
-			for(int j=0; j<n;j++) {
-				int sum = (a.charAt(j)-'0') +(b.charAt(j)-'0');
-				if(sum>0) {
-					answer[i]+="#";
+		int[] array = {1, 5, 2, 6, 3, 7, 4};
+		
+		int[][] commands = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
+		 int[] answer = new int[commands.length];
+		
+		for(int i=0; i<commands.length;i++) {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			int num1 = commands[i][0]-1;
+			int num2 = commands[i][1]-1;
+			if(num1!=num2) {
+				for(int j=num1; j<=num2; j++){
+					list.add(array[j]);
 				}
-				else answer[i]+=" ";
+				int [] arr = new int[list.size()];
+				for(int j=0; j<list.size();j++) {
+					arr[j] = list.get(j);
+				}
+				Arrays.sort(arr);
+				answer[i] = arr[commands[i][2]-1];
 			}
+			else answer[i] = array[num1];
 		}
-
+		
 		
 	}
 
@@ -280,6 +271,101 @@ public class study {
 			}
 		}
 
+		
+	}
+	public static void ex11() throws IOException {
+		//¼Ò¼öÃ£¾ÆÈ¦Â¦µ¡–E¼À
+
+		
+		int left = 13;
+		int right = 17;
+		int answer = 0;
+		for(int i=left; i<=right;i++) {
+			int cnt=0;
+			for(int j=1; j<=i; j++) {
+				if(i%j==0) {
+					cnt++;
+				}
+			}
+			
+			if(cnt%2==0) {
+				answer += i;
+			}
+			else answer-= i;
+		}
+		System.out.println(answer);
+		
+	
+
+		
+	}
+	
+	public static void ex12() throws IOException {
+		//È®·ü°ËÁõ
+		int N=5;
+		int[] stages= {2, 1, 2, 6, 2, 4, 3, 3};
+		int stageCnt = stages.length;
+		double [] arr = new double[N];
+		double [] arr2 = new double[N];
+		double [] arr3 = new double[N];
+		int sum=stageCnt;
+		int[] answer = new int[N];
+		for(int i=1; i<=N; i++){
+			int cnt=0;
+			for(int j=0; j<stageCnt; j++) {
+				if(i==stages[j]) {
+					cnt++;
+				}
+			}
+			if(cnt==0) {
+				arr[i-1]=0.0;
+			}
+			else arr[i-1] = (double)cnt/sum*100;
+			
+			arr2[i-1] = arr[i-1];
+			sum -=cnt;
+		}
+		Arrays.sort(arr2);
+		for(int i=arr.length-1;i>=0; i--) {
+			arr3[N-1-i] = arr2[i];	
+		}
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr.length; j++) {
+				if(arr3[i]==arr[j]) {
+					answer[i] = j+1;
+					arr[j] = 0.1234;
+					break;
+				}
+			}
+		}
+		
+		
+	}
+	public static void ex13() throws IOException {
+		//Á¤·Ä
+		int[] array = {1, 5, 2, 6, 3, 7, 4};
+		
+		int[][] commands = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
+		 int[] answer = new int[commands.length];
+		
+		for(int i=0; i<commands.length;i++) {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			int num1 = commands[i][0]-1;
+			int num2 = commands[i][1]-1;
+			if(num1!=num2) {
+				for(int j=num1; j<=num2; j++){
+					list.add(array[j]);
+				}
+				int [] arr = new int[list.size()];
+				for(int j=0; j<list.size();j++) {
+					arr[j] = list.get(j);
+				}
+				Arrays.sort(arr);
+				answer[i] = arr[commands[i][2]-1];
+			}
+			else answer[i] = array[num1];
+		}
+		
 		
 	}
 
