@@ -15,12 +15,26 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 
 public class study {
 
 	public static void main(String[] args) throws IOException {
-
 		
+		int n=55;
+		int answer =1;
+	
+		BigInteger bigNumber2 = BigInteger.valueOf(answer);
+		int swap=0;
+		BigInteger bigNumber3 = BigInteger.valueOf(swap);
+		BigInteger bigNumber4 = BigInteger.valueOf(1234567);
+		for(int i=2; i<=n;i++) {
+			BigInteger sum = bigNumber2.add(bigNumber3);
+			bigNumber3 = bigNumber2;
+			bigNumber2 =sum;
+		}
+		answer =bigNumber2.remainder(bigNumber4).intValue();
+		System.out.println(answer);
 	}
 
 	public static void ex1() throws IOException {
@@ -382,5 +396,22 @@ public class study {
 		answer = cnt;
 		System.out.println(answer);
 
+	}
+	public static void ex16() throws IOException {
+		//피보나치수
+		int n=55;
+		int answer =1;
+	
+		BigInteger bigNumber2 = BigInteger.valueOf(answer);
+		int swap=0;
+		BigInteger bigNumber3 = BigInteger.valueOf(swap);
+		BigInteger bigNumber4 = BigInteger.valueOf(1234567);
+		for(int i=2; i<=n;i++) {
+			BigInteger sum = bigNumber2.add(bigNumber3);
+			bigNumber3 = bigNumber2;
+			bigNumber2 =sum;
+		}
+		answer =bigNumber2.remainder(bigNumber4).intValue();
+		System.out.println(answer);
 	}
 }
