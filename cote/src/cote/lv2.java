@@ -13,17 +13,27 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		int n=15;
-		int answer = 0;
-		String n2= Integer.toBinaryString(n);
-		int cnt = n2.replace("0","").length();
-		n++;
-		while(answer!=n) {
-			n2= Integer.toBinaryString(n);
-			if(cnt==n2.replace("0","").length()) {
-				answer= n;
-			}else n++;
+		
+		String s = "  A dsad 2Wdas sad   ";
+		int len = s.length();
+		s= s.toLowerCase();
+		 String answer = "";
+		String [] arr = s.split(" ");
+		for(int i=0; i<arr.length;i++) {
+			if(arr[i].length()!=0) {
+				String c = arr[i].substring(0, 1).toUpperCase();
+				answer += c+arr[i].substring(1);
+			}
 			
+			if(i<arr.length-1) {
+				answer+=" ";
+			}
+		}
+		if(len>answer.length()) {
+			int cnt = len-answer.length();
+			for(int i=0; i<cnt;i++) {
+				answer+=" ";
+			}
 		}
 		System.out.println(answer);
 	}
@@ -337,9 +347,9 @@ public class lv2 {
 		System.out.println(answer);
 
 	}
-	
+
 	public static void ex12() throws IOException {
-		
+
 		String s = "try hello world  ";
 		String cnt = s.replace(" ", "-");
 		int cnt2 = 0;
@@ -352,7 +362,7 @@ public class lv2 {
 		String answer = "";
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[i].length(); j++) {
-				 if (j % 2 == 0) {
+				if (j % 2 == 0) {
 					char word = Character.toUpperCase(arr[i].charAt(j));
 					answer += word;
 				} else {
@@ -367,27 +377,84 @@ public class lv2 {
 			}
 
 		}
-		if(cnt2!=0) {
-			for(int i=cnt2-1; i>=0;i--) {
+		if (cnt2 != 0) {
+			for (int i = cnt2 - 1; i >= 0; i--) {
+				answer += " ";
+			}
+		}
+		System.out.println(answer);
+	}
+
+	public static void ex13() throws IOException {
+		// 다음수찾기 효율성 ㅅ...
+		int n = 15;
+		int answer = 0;
+		String n2 = Integer.toBinaryString(n);
+		int cnt = n2.replace("0", "").length();
+		n++;
+		while (answer != n) {
+			n2 = Integer.toBinaryString(n);
+			if (cnt == n2.replace("0", "").length()) {
+				answer = n;
+			} else
+				n++;
+
+		}
+		System.out.println(answer);
+	}
+	public static void ex14() throws IOException {
+		String s = "-1 -2 -3 -4";
+		String[] arr = s.split(" ");
+		int[] arr2 = new int[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr2[i] = Integer.parseInt(arr[i]);
+		}
+		Arrays.sort(arr2);
+		String answer = "";
+		answer += Integer.toString(arr2[0]) + " " + Integer.toString(arr2[arr2.length - 1]);
+		System.out.println(answer);
+	}
+	public static void ex15() throws IOException {
+		//행렬곱셈
+		int [][] arr1 = {{1,2,3},{4,5,6}};
+		int [][] arr2 = {{1,4},{2,5},{3,6}};
+		//int [][] arr1 = {{1,4},{3,2},{4,1}};
+		//int [][] arr2 = {{3,3},{3,3}};
+		int [][] answer = new int[arr1.length][arr2[0].length];
+		for(int i=0; i<arr1.length;i++) {
+			for(int j=0; j<arr2[0].length;j++) {
+				
+				for(int k=0; k<arr2.length;k++) {
+					answer[i][j] += arr1[i][k] * arr2[k][j];
+					
+				}
+				System.out.println(answer[i][j]);
+			}
+		}
+	}
+	public static void ex16() throws IOException {
+		//문자열만들기 
+		String s = "  A dsad 2Wdas sad   ";
+		int len = s.length();
+		s= s.toLowerCase();
+		 String answer = "";
+		String [] arr = s.split(" ");
+		for(int i=0; i<arr.length;i++) {
+			if(arr[i].length()!=0) {
+				String c = arr[i].substring(0, 1).toUpperCase();
+				answer += c+arr[i].substring(1);
+			}
+			
+			if(i<arr.length-1) {
+				answer+=" ";
+			}
+		}
+		if(len>answer.length()) {
+			int cnt = len-answer.length();
+			for(int i=0; i<cnt;i++) {
 				answer+=" ";
 			}
 		}
 		System.out.println(answer);
 	}
-public static void ex13() throws IOException {
-	//다음수찾기 효율성 ㅅ...
-	int n=15;
-	int answer = 0;
-	String n2= Integer.toBinaryString(n);
-	int cnt = n2.replace("0","").length();
-	n++;
-	while(answer!=n) {
-		n2= Integer.toBinaryString(n);
-		if(cnt==n2.replace("0","").length()) {
-			answer= n;
-		}else n++;
-		
-	}
-	System.out.println(answer);
-}
 }
