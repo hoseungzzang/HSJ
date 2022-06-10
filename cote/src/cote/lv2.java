@@ -8,33 +8,26 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		
-		String s = "  A dsad 2Wdas sad   ";
-		int len = s.length();
-		s= s.toLowerCase();
-		 String answer = "";
-		String [] arr = s.split(" ");
-		for(int i=0; i<arr.length;i++) {
-			if(arr[i].length()!=0) {
-				String c = arr[i].substring(0, 1).toUpperCase();
-				answer += c+arr[i].substring(1);
-			}
-			
-			if(i<arr.length-1) {
-				answer+=" ";
-			}
+		String s = "cdcd";
+		Stack<Character> stack = new Stack<>(); // char형 스택 선언
+		int answer = 1;
+		stack.push(s.charAt(0));
+		for (int i = 1; i < s.length(); i++) {
+			if (!stack.isEmpty() && stack.peek() == s.charAt(i)) {
+				stack.pop();
+			} else
+				stack.push(s.charAt(i));
 		}
-		if(len>answer.length()) {
-			int cnt = len-answer.length();
-			for(int i=0; i<cnt;i++) {
-				answer+=" ";
-			}
+		if (!stack.isEmpty()) {
+			answer = 0;
 		}
+
 		System.out.println(answer);
 	}
 
@@ -402,6 +395,7 @@ public class lv2 {
 		}
 		System.out.println(answer);
 	}
+
 	public static void ex14() throws IOException {
 		String s = "-1 -2 -3 -4";
 		String[] arr = s.split(" ");
@@ -414,47 +408,107 @@ public class lv2 {
 		answer += Integer.toString(arr2[0]) + " " + Integer.toString(arr2[arr2.length - 1]);
 		System.out.println(answer);
 	}
+
 	public static void ex15() throws IOException {
-		//행렬곱셈
-		int [][] arr1 = {{1,2,3},{4,5,6}};
-		int [][] arr2 = {{1,4},{2,5},{3,6}};
-		//int [][] arr1 = {{1,4},{3,2},{4,1}};
-		//int [][] arr2 = {{3,3},{3,3}};
-		int [][] answer = new int[arr1.length][arr2[0].length];
-		for(int i=0; i<arr1.length;i++) {
-			for(int j=0; j<arr2[0].length;j++) {
-				
-				for(int k=0; k<arr2.length;k++) {
+		// 행렬곱셈
+		int[][] arr1 = { { 1, 2, 3 }, { 4, 5, 6 } };
+		int[][] arr2 = { { 1, 4 }, { 2, 5 }, { 3, 6 } };
+		// int [][] arr1 = {{1,4},{3,2},{4,1}};
+		// int [][] arr2 = {{3,3},{3,3}};
+		int[][] answer = new int[arr1.length][arr2[0].length];
+		for (int i = 0; i < arr1.length; i++) {
+			for (int j = 0; j < arr2[0].length; j++) {
+
+				for (int k = 0; k < arr2.length; k++) {
 					answer[i][j] += arr1[i][k] * arr2[k][j];
-					
+
 				}
 				System.out.println(answer[i][j]);
 			}
 		}
 	}
+
 	public static void ex16() throws IOException {
-		//문자열만들기 
+		// 문자열만들기
 		String s = "  A dsad 2Wdas sad   ";
 		int len = s.length();
-		s= s.toLowerCase();
-		 String answer = "";
-		String [] arr = s.split(" ");
-		for(int i=0; i<arr.length;i++) {
-			if(arr[i].length()!=0) {
+		s = s.toLowerCase();
+		String answer = "";
+		String[] arr = s.split(" ");
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].length() != 0) {
 				String c = arr[i].substring(0, 1).toUpperCase();
-				answer += c+arr[i].substring(1);
+				answer += c + arr[i].substring(1);
 			}
-			
-			if(i<arr.length-1) {
-				answer+=" ";
-			}
-		}
-		if(len>answer.length()) {
-			int cnt = len-answer.length();
-			for(int i=0; i<cnt;i++) {
-				answer+=" ";
+
+			if (i < arr.length - 1) {
+				answer += " ";
 			}
 		}
+		if (len > answer.length()) {
+			int cnt = len - answer.length();
+			for (int i = 0; i < cnt; i++) {
+				answer += " ";
+			}
+		}
+		System.out.println(answer);
+	}
+
+	public static void ex17() throws IOException {
+
+		int[] arr = { 1, 2, 3 };
+		for (int i = 1; i < arr.length; i++) {
+			int max = Integer.max(arr[i - 1], arr[i]);
+			int min = Integer.min(arr[i - 1], arr[i]);
+			int calc = max * min;
+			while (min != 0) {
+				int swap = max % min;
+				max = min;
+				min = swap;
+			}
+			arr[i] = calc / max;
+
+		}
+		System.out.println(arr[arr.length - 1]);
+
+	}
+
+	public static void ex18() throws IOException {
+		String s = "(";
+		int cnt = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (cnt < 0) {
+				System.out.println("false");
+				break;
+			}
+			if ('(' == s.charAt(i)) {
+				cnt++;
+			} else if (')' == s.charAt(i)) {
+				cnt--;
+			}
+
+		}
+		if (cnt > 0 || cnt < 0) {
+			System.out.println("false");
+		} else
+			System.out.println("true");
+	}
+
+	public static void ex19() throws IOException {
+		String s = "cdcd";
+		Stack<Character> stack = new Stack<>(); // char형 스택 선언
+		int answer = 1;
+		stack.push(s.charAt(0));
+		for (int i = 1; i < s.length(); i++) {
+			if (!stack.isEmpty() && stack.peek() == s.charAt(i)) {
+				stack.pop();
+			} else
+				stack.push(s.charAt(i));
+		}
+		if (!stack.isEmpty()) {
+			answer = 0;
+		}
+
 		System.out.println(answer);
 	}
 }

@@ -14,53 +14,32 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int roop = Integer.parseInt(br.readLine());
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		ArrayList<Integer> list2 = new ArrayList<Integer>();
-		int[] arr = new int[roop];
-		int[] count = new int[roop];
-		int[] choiarr = {};
-		int sum =0;
-		for(int i=0; i<roop; i++) {
-			arr[i]  = Integer.parseInt(br.readLine());
-			sum+=arr[i];
-			if(list.indexOf(arr[i])==-1) {
-				list.add(arr[i]);
-				count[i]++;
-			}else {
-				count[list.indexOf(arr[i])]++;
-			}
-		}
-		int choi= Arrays.stream(count).max().getAsInt();
 		
-		double calc = (double)sum/roop;//»ê¼úÆò±Õ
-		String s= String.format("%.0f",calc);
-		if(s.equals("-0")) {
-			s="0";
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int hang = Integer.parseInt(str.nextToken());
+		int yeol = Integer.parseInt(str.nextToken());
+		int [][] arr = new int[hang][yeol];
+		int [][] arr2 = new int[hang][yeol];
+		int [][] answer = new int[hang][yeol];
+		for(int i=0; i<arr.length;i++) {
+			for(int j=0; j<yeol;j++) {
+				arr[i][j] = Integer.parseInt(str.nextToken());
+			}
 		}
-		bw.write(s+"\n");
-		if(roop>1) {
-			for(int i=0; i<roop; i++) {
-				if(count[i]==choi) {
-					list2.add(arr[i]);
-				}
+		for(int i=0; i<arr.length;i++) {
+			for(int j=0; j<yeol;j++) {
+				arr2[i][j] = Integer.parseInt(str.nextToken());
 			}
-			if(list2.size()>1) {
-				choiarr = new int[list2.size()];
-				for(int i=0; i<choiarr.length;i++) {
-					choiarr[i] = list2.get(i);
-				}
-				Arrays.sort(choiarr);
-				choi = choiarr[1];
+		}
+		for(int i=0; i<arr.length;i++) {
+			for(int j=0; j<yeol;j++) {
+				answer[i][j] = arr[i][j]+arr2[i][j];
 			}
-			else choi = list2.get(0);
-			
-			Arrays.sort(arr);
-			int middle = arr[roop/2];
-			int beom = arr[roop-1]-arr[0];
-			bw.write(middle+"\n"+choi+"\n"+beom);
-		}else {
-			bw.write(arr[0]+"\n"+arr[0]+"\n"+"0");
+		}
+		for(int i=0; i<answer.length;i++) {
+			for(int j=0; j<yeol;j++) {
+				System.out.println(answer[i][j]);
+			}
 		}
 		bw.flush();
 		
@@ -151,5 +130,60 @@ public class Main {
 		bw.flush();
 
 	}
+	public static void ex4() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list2 = new ArrayList<Integer>();
+		int[] arr = new int[roop];
+		int[] count = new int[roop];
+		int[] choiarr = {};
+		int sum =0;
+		for(int i=0; i<roop; i++) {
+			arr[i]  = Integer.parseInt(br.readLine());
+			sum+=arr[i];
+			if(list.indexOf(arr[i])==-1) {
+				list.add(arr[i]);
+				count[i]++;
+			}else {
+				count[list.indexOf(arr[i])]++;
+			}
+		}
+		int choi= Arrays.stream(count).max().getAsInt();
+		
+		double calc = (double)sum/roop;//»ê¼úÆò±Õ
+		String s= String.format("%.0f",calc);
+		if(s.equals("-0")) {
+			s="0";
+		}
+		bw.write(s+"\n");
+		if(roop>1) {
+			for(int i=0; i<roop; i++) {
+				if(count[i]==choi) {
+					list2.add(arr[i]);
+				}
+			}
+			if(list2.size()>1) {
+				choiarr = new int[list2.size()];
+				for(int i=0; i<choiarr.length;i++) {
+					choiarr[i] = list2.get(i);
+				}
+				Arrays.sort(choiarr);
+				choi = choiarr[1];
+			}
+			else choi = list2.get(0);
+			
+			Arrays.sort(arr);
+			int middle = arr[roop/2];
+			int beom = arr[roop-1]-arr[0];
+			bw.write(middle+"\n"+choi+"\n"+beom);
+		}else {
+			bw.write(arr[0]+"\n"+arr[0]+"\n"+"0");
+		}
+		bw.flush();
+		
+	}
+	
 
 }
