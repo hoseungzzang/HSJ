@@ -14,8 +14,26 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		
-		
+		String s ="1111111";
+		int sum=0;
+		int roop=0;
+		int[] answer = new int[2];
+		while(!s.equals("1")) {
+			int cnt=0;
+			if(s.contains("0")) {
+				for(int i=0; i<s.length();i++) {
+					if(s.charAt(i)=='0') {
+						cnt++;
+					}
+				}	
+			}
+			sum+=cnt;
+			s= s.replace("0", "");
+			s= Integer.toBinaryString(s.length());
+			roop++;
+		}
+		answer[0] = roop;
+		answer[1] = sum;
 	}
 
 	public static void ex1() {
