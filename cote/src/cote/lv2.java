@@ -14,21 +14,8 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		String s = "cdcd";
-		Stack<Character> stack = new Stack<>(); // char형 스택 선언
-		int answer = 1;
-		stack.push(s.charAt(0));
-		for (int i = 1; i < s.length(); i++) {
-			if (!stack.isEmpty() && stack.peek() == s.charAt(i)) {
-				stack.pop();
-			} else
-				stack.push(s.charAt(i));
-		}
-		if (!stack.isEmpty()) {
-			answer = 0;
-		}
-
-		System.out.println(answer);
+		
+		
 	}
 
 	public static void ex1() {
@@ -510,5 +497,41 @@ public class lv2 {
 		}
 
 		System.out.println(answer);
+	}
+	public static void ex20() throws IOException {
+		int[] progresses= {95, 90, 99, 99, 80, 99};
+		int[] speeds = {1, 1, 1, 1, 1, 1};
+		int cnt=0;
+		int result=0;
+		Stack<Integer> stack = new Stack<Integer>();
+		Stack<Integer> stack2 = new Stack<Integer>();
+		for (int i = 0; i < progresses.length; i++) {
+			result = progresses[i];
+			cnt=0;
+			while(result<100) {
+				result +=speeds[i];
+				cnt++;
+			}
+		
+			if(i==0) {
+				stack.push(cnt);
+			}
+			else {
+				if(stack.firstElement()>=cnt) {
+					stack.push(cnt);
+				}
+				else {
+					stack2.push(stack.size());
+					stack.clear();
+					stack.push(cnt);
+				}
+			}
+		}
+		stack2.push(stack.size());
+		int[]answer = new int[stack2.size()];
+		for(int i=0; i<answer.length;i++) {
+			answer[i] = stack2.get(i);
+		}
+	
 	}
 }
