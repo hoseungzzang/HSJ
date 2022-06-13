@@ -12,36 +12,26 @@ import java.util.StringTokenizer;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		StringTokenizer str = new StringTokenizer(br.readLine());
-		int hang = Integer.parseInt(str.nextToken());
-		int yeol = Integer.parseInt(str.nextToken());
-		int [][] arr = new int[hang][yeol];
-		int [][] arr2 = new int[hang][yeol];
-		int [][] answer = new int[hang][yeol];
-		for(int i=0; i<arr.length;i++) {
-			for(int j=0; j<yeol;j++) {
-				arr[i][j] = Integer.parseInt(str.nextToken());
+		int roop = Integer.parseInt(bf.readLine());
+		for(int i=0; i<roop;i++){
+			StringTokenizer str = new StringTokenizer(bf.readLine());
+			int h = Integer.parseInt(str.nextToken());
+			int w = Integer.parseInt(str.nextToken());
+			int n = Integer.parseInt(str.nextToken());
+			int calc=n%h;
+			int calc2= n/h+1;
+			if(n%h==0) {
+				calc=h;
+				calc2=n/h;
 			}
-		}
-		for(int i=0; i<arr.length;i++) {
-			for(int j=0; j<yeol;j++) {
-				arr2[i][j] = Integer.parseInt(str.nextToken());
-			}
-		}
-		for(int i=0; i<arr.length;i++) {
-			for(int j=0; j<yeol;j++) {
-				answer[i][j] = arr[i][j]+arr2[i][j];
-			}
-		}
-		for(int i=0; i<answer.length;i++) {
-			for(int j=0; j<yeol;j++) {
-				System.out.println(answer[i][j]);
-			}
+			int sum = (100*calc+calc2);
+			bw.write(sum+"\n");
 		}
 		bw.flush();
+		
 		
 	}
 
@@ -182,6 +172,56 @@ public class Main {
 			bw.write(arr[0]+"\n"+arr[0]+"\n"+"0");
 		}
 		bw.flush();
+		
+	}
+	public static void ex5() throws IOException {
+		//น๚มý
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		long num = Long.parseLong(bf.readLine());
+		long cnt=0;
+		int sum = 1;
+		if(num==1) {
+			bw.write(1+"");
+		}
+		else {
+			while(true) {
+				if(num >sum) {
+					cnt++;
+					sum+= 6*cnt;
+				}else {
+					bw.write((cnt+1)+"");
+					break;
+				}
+			}
+		}
+		
+		bw.flush();
+		
+	}
+	public static void ex6() throws IOException {
+		//10250น๘ น้มุ
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int roop = Integer.parseInt(bf.readLine());
+		for(int i=0; i<roop;i++){
+			StringTokenizer str = new StringTokenizer(bf.readLine());
+			int h = Integer.parseInt(str.nextToken());
+			int w = Integer.parseInt(str.nextToken());
+			int n = Integer.parseInt(str.nextToken());
+			int calc=n%h;
+			int calc2= n/h+1;
+			if(n%h==0) {
+				calc=h;
+				calc2=n/h;
+			}
+			int sum = (100*calc+calc2);
+			bw.write(sum+"\n");
+		}
+		bw.flush();
+		
 		
 	}
 	
