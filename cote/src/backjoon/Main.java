@@ -8,51 +8,27 @@ import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
 
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		int roop = Integer.parseInt(br.readLine());
-		int [][] arr = new int[roop][2];
-		int [][] arr2 = new int[roop][2];
-		int [] x1 = new int[roop];//안변해 좌표용 
-		int [] x2 = new int[roop];
-		int [] y1 = new int[roop];
-		int [] y2 = new int[roop];
-		//x2의 첫번째 원소의 좌표에 해당하는 x1읜 원래좌표를 구한 후 그 좌표의 y1의 좌표를 구하고 그 좌표의 값의 y2인덱스를 구한다.
-		for(int i=0; i<roop; i++) {
-				StringTokenizer str = new StringTokenizer(br.readLine());
-				
-				
-				x1[i]= Integer.parseInt(str.nextToken());
-				x2[i]= x1[i];
-				y1[i] = Integer.parseInt(str.nextToken());
-				y2[i]= y1[i];
-				arr[i][0] =x1[i];
-				arr[i][1]= y1[i];
+		int [] x = new int[3];
+		int [] y = new int[3];
+		for(int i=0; i<3; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			x[i] = Integer.parseInt(str.nextToken());
+			y[i] = Integer.parseInt(str.nextToken());
 		}
-		Arrays.sort(x2);
-		for(int i=0; i<roop; i++) {
-			
-		}
-		
-		
-
-	}
-	public static void re(int [] roop, int cnt,int num) {
-		if(cnt==num+1) {
-			System.out.println(roop[num]);
-			return ;
-		}
-		roop[cnt] = roop[cnt-2]+roop[cnt-1];
 	
-		cnt++;
-		re(roop,cnt,num);
+
 		
+	
+		bw.flush();
+
 	}
 
 	public static void ex1() throws IOException {
@@ -339,6 +315,7 @@ public class Main {
 		bw.flush();
 
 	}
+
 	public static void ex10() throws IOException {
 		// 골드바흐추측
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -357,8 +334,8 @@ public class Main {
 				}
 			}
 			int num = 0;
-			for (int i = 2; i <=num2 / 2; i++) {
-				if (arr[i] == 0&&arr[num2-i]==0) {
+			for (int i = 2; i <= num2 / 2; i++) {
+				if (arr[i] == 0 && arr[num2 - i] == 0) {
 					num = i;
 				}
 			}
@@ -367,40 +344,89 @@ public class Main {
 		bw.flush();
 
 	}
+
 	public static void ex11() throws IOException {
 		// 재귀기초
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int num = Integer.parseInt(br.readLine());
-		int [] roop = new int[num+1];
-		int cnt=2;
-		if(num==1) {
+		int[] roop = new int[num + 1];
+		int cnt = 2;
+		if (num == 1) {
 			System.out.println(1);
-		}else if(num==0) {
+		} else if (num == 0) {
 			System.out.println(0);
-		}else {
+		} else {
 			roop[0] = 0;
-			roop[1]=1;
-			re(roop,cnt,num);
+			roop[1] = 1;
+			// re(roop,cnt,num);
 		}
-		
-		
 
 	}
+
 	public static void ex12() throws IOException {
 		// 정렬기초
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
+
 		String s = br.readLine();
-		String [] sbb = s.split("");
-		 Arrays.sort(sbb);
-		 s=String.join("", sbb);
+		String[] sbb = s.split("");
+		Arrays.sort(sbb);
+		s = String.join("", sbb);
 		StringBuffer sb = new StringBuffer(s);
-		bw.write(sb.reverse()+"");
+		bw.write(sb.reverse() + "");
 		bw.flush();
+
+	}
+
+	public static void ex13() throws IOException {
+		// 셀프넘버
+		/*
+		 * static int [] arr = new int[10000]; BufferedWriter bw = new
+		 * BufferedWriter(new OutputStreamWriter(System.out)); int cnt=1; arr[0] = 1;
+		 * arr[11]=1; int sum=0; while(cnt<10000) { sum=re(cnt); cnt++; }
+		 * 
+		 * for(int i=0; i<arr.length; i++) { if(arr[i]==0) { bw.write(i+"\n"); }
+		 * 
+		 * }
+		 */
+		/*
+		 * 함수 String s = Integer.toString(cnt); int sum=cnt; for(int i=0;
+		 * i<s.length();i++) { sum+=s.charAt(i)-'0'; } if(sum<10000) { arr[sum] = 1; }
+		 * return sum;
+		 */
+		// bw.flush();
+
+	}
+	public static void ex14() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int roop = Integer.parseInt(br.readLine());
+		for (int i = 0; i < roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			BigInteger big1 = new BigInteger(str.nextToken());
+			BigInteger big2 = new BigInteger(str.nextToken());
+			int be = big1.gcd(big2).intValue();
+			bw.write((big1.intValue() * big2.intValue()) / be + "\n");
+		}
+		bw.flush();
+
+	}
+	public static void ex15() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer str = new StringTokenizer(br.readLine());
 		
+		int x = Integer.parseInt(str.nextToken());
+		int y = Integer.parseInt(str.nextToken());
+		int w = Integer.parseInt(str.nextToken());
+		int h = Integer.parseInt(str.nextToken());
+	
+		bw.write(Integer.min(Integer.min(w-x, x),Integer.min(h-y,y))+"");
+		
+		bw.flush();
 
 	}
 }
