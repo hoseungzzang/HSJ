@@ -16,19 +16,26 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int [] x = new int[3];
-		int [] y = new int[3];
-		for(int i=0; i<3; i++) {
+
+		while(true) {
+			int [] arr = new int[3];
 			StringTokenizer str = new StringTokenizer(br.readLine());
-			x[i] = Integer.parseInt(str.nextToken());
-			y[i] = Integer.parseInt(str.nextToken());
+			int sum = 0;
+			for(int i=0; i<3; i++) {
+				arr[i] = Integer.parseInt(str.nextToken());
+				sum+= arr[i];
+			}
+			if(sum ==0) {
+				break;
+			}
+			Arrays.sort(arr);
+			if(arr[2]*arr[2] == (arr[0]*arr[0])+(arr[1]*arr[1])) {
+				bw.write("right\n");
+			}else bw.write("wrong\n");
 		}
-	
-
 		
-	
+		
 		bw.flush();
-
 	}
 
 	public static void ex1() throws IOException {
@@ -399,6 +406,7 @@ public class Main {
 		// bw.flush();
 
 	}
+
 	public static void ex14() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -414,18 +422,19 @@ public class Main {
 		bw.flush();
 
 	}
+
 	public static void ex15() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer str = new StringTokenizer(br.readLine());
-		
+
 		int x = Integer.parseInt(str.nextToken());
 		int y = Integer.parseInt(str.nextToken());
 		int w = Integer.parseInt(str.nextToken());
 		int h = Integer.parseInt(str.nextToken());
-	
-		bw.write(Integer.min(Integer.min(w-x, x),Integer.min(h-y,y))+"");
-		
+
+		bw.write(Integer.min(Integer.min(w - x, x), Integer.min(h - y, y)) + "");
+
 		bw.flush();
 
 	}
