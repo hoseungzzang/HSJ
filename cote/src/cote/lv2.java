@@ -14,26 +14,41 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		String s ="1111111";
-		int sum=0;
-		int roop=0;
+		int n = 2;
+		String[] words = { "hello", "one", "even", "never", "now", "world", "draw" };
+		int roop = 1;
+		int turn =1;
+		int member = 2;
+		ArrayList<String> list = new ArrayList<String>();
 		int[] answer = new int[2];
-		while(!s.equals("1")) {
-			int cnt=0;
-			if(s.contains("0")) {
-				for(int i=0; i<s.length();i++) {
-					if(s.charAt(i)=='0') {
-						cnt++;
-					}
-				}	
+		answer[0] = answer[1] = 0;
+
+		list.add(words[0]);
+		while (roop < words.length) {
+			if (list.indexOf(words[roop]) == -1) {
+				if (words[roop - 1].charAt(words[roop - 1].length() - 1) == words[roop].charAt(0)) {
+					list.add(words[roop]);
+				} else {
+					answer[0] = member;
+					answer[1] = turn;
+					break;
+				}
+			} else {
+				answer[0] = member;
+				answer[1] = turn;
+				break;
 			}
-			sum+=cnt;
-			s= s.replace("0", "");
-			s= Integer.toBinaryString(s.length());
+
 			roop++;
+			member++;
+			if(member > n) {
+				member = 1;
+				turn++;
+			}
 		}
-		answer[0] = roop;
-		answer[1] = sum;
+
+		System.out.println(answer[0] + " " + answer[1]);
+
 	}
 
 	public static void ex1() {
@@ -516,29 +531,28 @@ public class lv2 {
 
 		System.out.println(answer);
 	}
+
 	public static void ex20() throws IOException {
-		int[] progresses= {95, 90, 99, 99, 80, 99};
-		int[] speeds = {1, 1, 1, 1, 1, 1};
-		int cnt=0;
-		int result=0;
+		int[] progresses = { 95, 90, 99, 99, 80, 99 };
+		int[] speeds = { 1, 1, 1, 1, 1, 1 };
+		int cnt = 0;
+		int result = 0;
 		Stack<Integer> stack = new Stack<Integer>();
 		Stack<Integer> stack2 = new Stack<Integer>();
 		for (int i = 0; i < progresses.length; i++) {
 			result = progresses[i];
-			cnt=0;
-			while(result<100) {
-				result +=speeds[i];
+			cnt = 0;
+			while (result < 100) {
+				result += speeds[i];
 				cnt++;
 			}
-		
-			if(i==0) {
+
+			if (i == 0) {
 				stack.push(cnt);
-			}
-			else {
-				if(stack.firstElement()>=cnt) {
+			} else {
+				if (stack.firstElement() >= cnt) {
 					stack.push(cnt);
-				}
-				else {
+				} else {
 					stack2.push(stack.size());
 					stack.clear();
 					stack.push(cnt);
@@ -546,10 +560,106 @@ public class lv2 {
 			}
 		}
 		stack2.push(stack.size());
-		int[]answer = new int[stack2.size()];
-		for(int i=0; i<answer.length;i++) {
+		int[] answer = new int[stack2.size()];
+		for (int i = 0; i < answer.length; i++) {
 			answer[i] = stack2.get(i);
 		}
-	
+
 	}
+
+	public static void ex21() throws IOException {
+		String s = "1111111";
+		int sum = 0;
+		int roop = 0;
+		int[] answer = new int[2];
+		while (!s.equals("1")) {
+			int cnt = 0;
+			if (s.contains("0")) {
+				for (int i = 0; i < s.length(); i++) {
+					if (s.charAt(i) == '0') {
+						cnt++;
+					}
+				}
+			}
+			sum += cnt;
+			s = s.replace("0", "");
+			s = Integer.toBinaryString(s.length());
+			roop++;
+		}
+		answer[0] = roop;
+		answer[1] = sum;
+	}
+
+	public static void ex22() throws IOException {
+		// 86점
+		int n = 110011;
+		int k = 10;
+		int max = 0;
+		int answer = 0;
+
+		String nd = "";
+		String item = "";
+		Stack<Character> stack = new Stack<Character>();
+		while (n > 0) {// 진법이 되는 수를 나눈다.
+			nd = (n % k) + nd;
+			n /= k;
+		}
+		if (!nd.contains("0")) {
+			answer = 0;
+		} else {
+			String[] arr = nd.split("0");
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i].length() > 0) {
+					if (max < Integer.parseInt(arr[i])) {
+						max = Integer.parseInt(arr[i]);
+					}
+				}
+			}
+			if (max != 0) {
+				int[] arr2 = new int[max + 1];
+				arr2[0] = arr2[1] = 1;
+				for (int i = 2; i < arr2.length; i++) {
+					if (arr2[i] == 0) {
+						for (int j = i + i; j < arr2.length; j += i) {
+							arr2[j] = 1;
+						}
+					}
+				}
+
+				for (int i = 0; i < nd.length(); i++) {
+					if (nd.charAt(i) == '0') {
+						item = "";
+						for (int j = 0; j < stack.size(); j++) {
+							if (stack.get(j) != '0') {
+								item += stack.get(j);
+							}
+						}
+						if (item != "") {
+							if (arr2[Integer.parseInt(item)] == 0) {
+								answer++;
+							}
+						}
+						stack.clear();
+						stack.push('0');
+					} else
+						stack.push(nd.charAt(i));
+				}
+				if (stack.size() != 1) {
+					item = "";
+					for (int j = 0; j < stack.size(); j++) {
+						if (stack.get(j) != '0') {
+							item += stack.get(j);
+						}
+					}
+					if (arr2[Integer.parseInt(item)] == 0) {
+						answer++;
+					}
+				}
+			}
+
+		}
+
+		System.out.println(answer);
+	}
+
 }
