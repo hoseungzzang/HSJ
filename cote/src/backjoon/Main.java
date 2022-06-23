@@ -18,29 +18,29 @@ import java.util.TreeMap;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		//수정렬
+	
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-		int num = Integer.parseInt(br.readLine());
-		int [][] arr = new int[num][2];
-		for(int i=0; i<arr.length; i++) {
-			StringTokenizer str = new StringTokenizer(br.readLine());
-			arr[i][0] = Integer.parseInt(str.nextToken());
-			arr[i][1] = Integer.parseInt(str.nextToken());
+		int roop = Integer.parseInt(br.readLine());
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		int cnt=0;
+		int [] arr = new int[roop];
+		int [] count = new int[roop];
+		for(int i=0; i<roop; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+			count[i] = arr[i];
 		}
-		Arrays.sort(arr, (o1,o2)->{
-		  
-		    	 if(o1[1] == o2[1]) {
-	                 return o1[0] - o2[0];
-		    	 }else {
-		    		 return o1[1] - o2[1]; 
-		    	 }
-	           
-	        });
-		
-		for(int i = 0; i < arr.length; i++) {
-			bw.write(arr[i][0]+" "+arr[i][1]+"\n");
+		Arrays.sort(count);
+		for(int i=0; i<count.length; i++) {
+			if(!map.containsKey(count[i])) {
+				map.put(count[i],cnt);
+				cnt++;
+			}
+			
+		}
+		for(int i=0; i<arr.length; i++) {
+			bw.write(map.get(arr[i])+" ");
 		}
 		bw.flush();
 
@@ -687,6 +687,79 @@ public class Main {
 		
 		for(int i = 0; i < arr.length; i++) {
 			bw.write(arr[i][0]+" "+arr[i][1]+"\n");
+		}
+		bw.flush();
+
+	}
+	public static void ex25() throws IOException {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		int [] arr = new int[roop];
+		int sum=0;
+		for(int i=0; i<roop; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+			sum+=arr[i];
+			if(!map.containsKey(arr[i])) {
+				map.put(arr[i],1);
+			}else {
+				map.put(arr[i],map.get(arr[i])+1);
+			}
+		}
+		//산술평균
+		String num = String.format("%.0f",(double)sum/roop);
+		if(num.contains("-0")) {
+			num = num.replace("-","");
+		}
+		bw.write(num+"\n");
+		Arrays.sort(arr);
+		//중앙ㄱ밧
+		bw.write(arr[roop/2]+"\n");
+		int max= Collections.max(map.values());
+		for(int key : map.keySet()) {
+			int value = map.get(key);
+			if (value == max) {
+				list.add(key);
+			}
+		}
+		//최빈값
+		if(list.size()!=1) {
+			Collections.sort(list);
+			bw.write(list.get(1)+"\n");
+		}else bw.write(list.get(0)+"\n");
+		
+		//범위
+		bw.write((arr[arr.length-1]-arr[0])+"");
+		bw.flush();
+
+	}
+	public static void ex26() throws IOException {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int roop = Integer.parseInt(br.readLine());
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		int cnt=0;
+		int [] arr = new int[roop];
+		int [] count = new int[roop];
+		for(int i=0; i<roop; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+			count[i] = arr[i];
+		}
+		Arrays.sort(count);
+		for(int i=0; i<count.length; i++) {
+			if(!map.containsKey(count[i])) {
+				map.put(count[i],cnt);
+				cnt++;
+			}
+			
+		}
+		for(int i=0; i<arr.length; i++) {
+			bw.write(map.get(arr[i])+" ");
 		}
 		bw.flush();
 
