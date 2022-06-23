@@ -8,34 +8,42 @@ import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		//수정렬
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		while(true) {
-			int [] arr = new int[3];
+		int num = Integer.parseInt(br.readLine());
+		int [][] arr = new int[num][2];
+		for(int i=0; i<arr.length; i++) {
 			StringTokenizer str = new StringTokenizer(br.readLine());
-			int sum = 0;
-			for(int i=0; i<3; i++) {
-				arr[i] = Integer.parseInt(str.nextToken());
-				sum+= arr[i];
-			}
-			if(sum ==0) {
-				break;
-			}
-			Arrays.sort(arr);
-			if(arr[2]*arr[2] == (arr[0]*arr[0])+(arr[1]*arr[1])) {
-				bw.write("right\n");
-			}else bw.write("wrong\n");
+			arr[i][0] = Integer.parseInt(str.nextToken());
+			arr[i][1] = Integer.parseInt(str.nextToken());
 		}
+		Arrays.sort(arr, (o1,o2)->{
+		  
+		    	 if(o1[1] == o2[1]) {
+	                 return o1[0] - o2[0];
+		    	 }else {
+		    		 return o1[1] - o2[1]; 
+		    	 }
+	           
+	        });
 		
-		
+		for(int i = 0; i < arr.length; i++) {
+			bw.write(arr[i][0]+" "+arr[i][1]+"\n");
+		}
 		bw.flush();
+
 	}
 
 	public static void ex1() throws IOException {
@@ -435,6 +443,251 @@ public class Main {
 
 		bw.write(Integer.min(Integer.min(w - x, x), Integer.min(h - y, y)) + "");
 
+		bw.flush();
+
+	}
+
+	public static void ex16() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		while (true) {
+			int[] arr = new int[3];
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int sum = 0;
+			for (int i = 0; i < 3; i++) {
+				arr[i] = Integer.parseInt(str.nextToken());
+				sum += arr[i];
+			}
+			if (sum == 0) {
+				break;
+			}
+			Arrays.sort(arr);
+			if (arr[2] * arr[2] == (arr[0] * arr[0]) + (arr[1] * arr[1])) {
+				bw.write("right\n");
+			} else
+				bw.write("wrong\n");
+		}
+
+		bw.flush();
+	}
+
+	public static void ex17() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		Map<Integer, Integer> map1 = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+		for (int i = 0; i < 3; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int num1 = Integer.parseInt(str.nextToken());
+			int num2 = Integer.parseInt(str.nextToken());
+			if (!map1.containsKey(num1)) {
+				map1.put(num1, 1);
+			} else
+				map1.put(num1, map1.get(num1) + 1);
+			if (!map2.containsKey(num2)) {
+				map2.put(num2, 1);
+			} else
+				map2.put(num2, map2.get(num2) + 1);
+		}
+		for (int key : map1.keySet()) {
+			int value = map1.get(key);
+			if (value == 1) {
+				bw.write(key + " ");
+			}
+		}
+
+		for (int key : map2.keySet()) {
+			int value = map2.get(key);
+			if (value == 1) {
+				bw.write(key + "");
+			}
+		}
+
+		bw.flush();
+	}
+
+	public static void ex18() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		long x = Integer.parseInt(br.readLine());
+		double pi = 3.14;
+		double calc1 = (x * x) * Math.PI;
+		double calc2 = (x * x) * 2;
+		String a = String.format("%.6f", calc1);
+		String b = String.format("%.6f", calc2);
+		bw.write(a + "\n" + b);
+		bw.flush();
+	}
+
+	public static void ex19() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int d = Integer.parseInt(str.nextToken());
+		int b = Integer.parseInt(str.nextToken());
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int cnt = 0;
+		for (int i = 0; i < d; i++) {
+			map.put(br.readLine(), 1);
+		}
+		for (int i = 0; i < b; i++) {
+			String s = br.readLine();
+			if (map.containsKey(s)) {
+				map.put(s, map.get(s) + 1);
+				cnt++;
+			}
+		}
+		Map<String, Integer> sortedMap = new TreeMap<>(map);
+		bw.write(cnt + "\n");
+		for (String key : sortedMap.keySet()) {
+			int value = sortedMap.get(key);
+			if (value == 2) {
+				bw.write(key + "\n");
+			}
+		}
+		bw.flush();
+	}
+
+	public static void ex20() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		while (true) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int d = Integer.parseInt(str.nextToken());
+			int b = Integer.parseInt(str.nextToken());
+			if (d == 0 && b == 0)
+				break;
+			if (d > b) {
+				if (d % b != 0) {
+					bw.write("neither\n");
+				} else
+					bw.write("multiple\n");
+			} else {
+				if (b % d != 0) {
+					bw.write("neither\n");
+				} else
+					bw.write("factor\n");
+			}
+		}
+
+		bw.flush();
+	}
+
+	public static void ex21() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int roop = Integer.parseInt(br.readLine());
+		String[][] arr = new String[roop][2];
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int num = Integer.parseInt(str.nextToken());
+			arr[i][0] = Integer.toString(num);
+			arr[i][1] = str.nextToken();
+			if (list.indexOf(num) == -1) {
+				list.add(num);
+			}
+		}
+		Collections.sort(list);
+
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < arr.length; j++) {
+				if (list.get(i) == Integer.parseInt(arr[j][0])) {
+					bw.write(arr[j][0] + " " + arr[j][1] + "\n");
+				}
+			}
+		}
+
+		bw.flush();
+	}
+
+	public static void ex22() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int roop = Integer.parseInt(br.readLine());
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int[] arr = new int[roop];
+		for (int i = 0; i < roop; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+		}
+		for (int i = 1; i < roop; i++) {
+			if (arr[0] % arr[i] == 0) {
+				bw.write((arr[0] / arr[i]) + "/1\n");
+			} else {
+				int swap = 0;
+				int num1 = arr[0];
+				int num2 = arr[i];
+				while (num2 != 0) {
+					swap = num1 % num2;// 4
+					num1 = num2;//
+					num2 = swap;
+				}
+				bw.write((arr[0] / num1) + "/" + (arr[i] / num1) + "\n");
+			}
+		}
+
+		bw.flush();
+	}
+	public static void ex23() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		String num = br.readLine();
+		BigInteger big1 = new BigInteger(num);
+		long cnt = 0;
+		BigInteger big2 = new BigInteger("1");
+		long result = 0;
+		while (true) {
+			if (big1.subtract(BigInteger.valueOf(cnt)).intValue() == 0) {
+				break;
+			}
+			big2 = big2.multiply(big1.subtract(BigInteger.valueOf(cnt)));
+			cnt++;
+		}
+
+		String[] arr = big2.toString().split("");
+
+		for (int i = arr.length - 1; i >= 0; i--) {
+			if (!arr[i].equals("0")) {
+				break;
+			} else
+				result++;
+		}
+		bw.write(result + "");
+		bw.flush();
+	}
+	public static void ex24() throws IOException {
+		//수정렬
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int num = Integer.parseInt(br.readLine());
+		int [][] arr = new int[num][2];
+		for(int i=0; i<arr.length; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			arr[i][0] = Integer.parseInt(str.nextToken());
+			arr[i][1] = Integer.parseInt(str.nextToken());
+		}
+		Arrays.sort(arr, (o1,o2)->{
+		  
+		    	 if(o1[1] == o2[1]) {
+	                 return o1[0] - o2[0];
+		    	 }else {
+		    		 return o1[1] - o2[1]; 
+		    	 }
+	           
+	        });
+		
+		for(int i = 0; i < arr.length; i++) {
+			bw.write(arr[i][0]+" "+arr[i][1]+"\n");
+		}
 		bw.flush();
 
 	}
