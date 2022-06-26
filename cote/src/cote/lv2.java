@@ -14,41 +14,30 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		int n = 2;
-		String[] words = { "hello", "one", "even", "never", "now", "world", "draw" };
-		int roop = 1;
-		int turn =1;
-		int member = 2;
-		ArrayList<String> list = new ArrayList<String>();
-		int[] answer = new int[2];
-		answer[0] = answer[1] = 0;
-
-		list.add(words[0]);
-		while (roop < words.length) {
-			if (list.indexOf(words[roop]) == -1) {
-				if (words[roop - 1].charAt(words[roop - 1].length() - 1) == words[roop].charAt(0)) {
-					list.add(words[roop]);
-				} else {
-					answer[0] = member;
-					answer[1] = turn;
+		int[][] board = {
+				{0,0,0,0,0},
+				{0,0,1,0,3},
+				{0,2,5,0,1},
+				{4,2,4,4,2},
+				{3,5,1,3,1}};
+		int answer=0;
+		int[] moves = {1,5,3,5,1,2,1,4};
+		Stack<Integer> stack = new Stack<Integer>();
+		for(int i=0; i<moves.length; i++) {
+			for(int j=0; j<board.length; j++) {
+				
+				if(board[j][moves[i]-1]!=0) {
+					if(!stack.isEmpty()) {
+						if(stack.peek()==board[j][moves[i]-1]) {
+							stack.pop(); 
+							answer+=2;
+						}else stack.push(board[j][moves[i]-1]); 
+					}else stack.push(board[j][moves[i]-1]); 
+					board[j][moves[i]-1]=0;
 					break;
 				}
-			} else {
-				answer[0] = member;
-				answer[1] = turn;
-				break;
-			}
-
-			roop++;
-			member++;
-			if(member > n) {
-				member = 1;
-				turn++;
 			}
 		}
-
-		System.out.println(answer[0] + " " + answer[1]);
-
 	}
 
 	public static void ex1() {
@@ -659,6 +648,127 @@ public class lv2 {
 
 		}
 
+		System.out.println(answer);
+	}
+	public static void ex23() throws IOException {
+		int n = 2;
+		String[] words = { "hello", "one", "even", "never", "now", "world", "draw" };
+		int roop = 1;
+		int turn =1;
+		int member = 2;
+		ArrayList<String> list = new ArrayList<String>();
+		int[] answer = new int[2];
+		answer[0] = answer[1] = 0;
+
+		list.add(words[0]);
+		while (roop < words.length) {
+			if (list.indexOf(words[roop]) == -1) {
+				if (words[roop - 1].charAt(words[roop - 1].length() - 1) == words[roop].charAt(0)) {
+					list.add(words[roop]);
+				} else {
+					answer[0] = member;
+					answer[1] = turn;
+					break;
+				}
+			} else {
+				answer[0] = member;
+				answer[1] = turn;
+				break;
+			}
+
+			roop++;
+			member++;
+			if(member > n) {
+				member = 1;
+				turn++;
+			}
+		}
+
+		System.out.println(answer[0] + " " + answer[1]);
+
+	}
+	public static void ex24() throws IOException {
+		int rows = 100;
+		int columns = 97;
+		int [][] queries = {{1,1,100,97}};
+		int [][] squre = new int[rows][columns];
+		int [][] squre2 = new int[rows][columns];
+		int cnt=1;
+		int[] answer = new int[queries.length];
+		for(int i=0; i<rows; i++) {
+			for(int j=0; j<columns;j++) {
+				squre[i][j] = cnt;
+				squre2[i][j] = cnt;
+				cnt++;
+			}
+		}
+
+		for(int i=0; i<queries.length; i++) {
+			int fr = queries[i][0]-1; //2
+			int fy = queries[i][1]-1; // 2
+			int lr = queries[i][2]-1; // 5
+			int ly = queries[i][3]-1;// 4
+			int min =rows*columns+1;
+			//가로
+			for(int j=fy; j<=ly; j++ ) {
+				if(j+1>ly) {
+					squre2[fr+1][j] =  squre[fr][j];
+				}else squre2[fr][j+1] =  squre[fr][j];
+				if(min>squre[fr][j]) {
+					min = squre[fr][j];
+				}
+			}
+			//세로
+			for(int j=fr+1; j<=lr; j++ ) {
+				if(j+1>lr) {
+					squre2[j][ly-1] =  squre[j][ly];
+				}else squre2[j+1][ly] =  squre[j][ly];
+				if(min>squre[j][ly]) {
+					min = squre[j][ly];
+				}
+			}
+			//가로
+			for(int j=ly-1; j>=fy; j-- ) {
+				if(j-1<fy) {
+					squre2[lr-1][j] =  squre[lr][j];
+				}else squre2[lr][j-1] =  squre[lr][j];
+				
+				if(min>squre[lr][j]) {
+					min = squre[lr][j];
+				}
+			}
+			//세로
+			for(int j=lr-1; j>fr; j-- ) {
+				squre2[j-1][fy] =  squre[j][fy];
+				if(min>squre[j][fy]) {
+					min = squre[j][fy];
+				}
+			}
+			for(int j=0; j< rows; j++) {
+				for(int k=0; k<columns; k++) {
+					squre[j][k] = squre2[j][k];
+				}
+			}
+			answer[i] = min;
+		}
+		
+		
+	}
+	public static void ex25() throws IOException {
+		int n = 8;
+		int a = 4;
+		int b =5;
+		int answer =0;
+		while(a!=b) {
+			if(a%2!=0) {
+				a = a/2+1;
+			}else a = a/2;
+			
+			if(b%2!=0) {
+				b = b/2+1;
+			}else b = b/2;
+			answer ++;
+		}
 		System.out.println(answer);
 	}
 
