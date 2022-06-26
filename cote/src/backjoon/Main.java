@@ -10,32 +10,46 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class Main {
-
 	public static void main(String[] args) throws IOException {
 	
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-	
+
 		StringTokenizer str = new StringTokenizer(br.readLine());
-		int num1 = Integer.parseInt(str.nextToken());
-		int num2 = Integer.parseInt(str.nextToken());
-		for(int i=1; i<=num1; i++) {
-			for(int j=1;j<=num2;j++) {
-				System.out.println(i+" "+(j+i));
+		Queue<Integer> que = new LinkedList<Integer>();
+		int n = Integer.parseInt(str.nextToken());
+		int k = Integer.parseInt(str.nextToken())-1;
+		int cnt=0;
+		for(int i=0; i<n; i++) {
+			que.offer(i+1);
+		}
+		bw.write("<");
+		while(!que.isEmpty()) {
+			if(cnt==k) {
+				if(que.size()!=1) {
+					bw.write(que.poll()+", ");
+				}else bw.write(que.poll()+">");
+			
+				cnt=0;
+			}else {
+				que.offer(que.poll());
+				cnt++;
 			}
 		}
-		
-		
-		
-		
+	
+
 		bw.flush();
-	}
+		}
 
 	public static void ex1() throws IOException {
 		// 占쏙옙占쏙옙 占쏙옙占쏙옙占신쏙옙占�
@@ -1020,4 +1034,54 @@ public static void ex36() throws IOException {
 	
 	bw.flush();
 }
+public static void ex37() throws IOException {
+	
+	
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	Queue<Integer> que = new LinkedList<>();
+	int roop = Integer.parseInt(br.readLine());
+	int last = 0;
+	for(int i=0; i<roop; i++) {
+		String s = br.readLine();
+		if(s.contains("push")) {
+			String [] arr = s.split(" ");
+			que.offer(Integer.parseInt(arr[1]) );
+			last = Integer.parseInt(arr[1]);
+			continue;
+		}
+		if(s.equals("front")) {
+			if(que.isEmpty()) {
+				bw.write(-1+"\n");
+			}else bw.write(que.peek()+"\n");
+			continue;
+		}
+		if(s.equals("pop")) {
+			if(que.isEmpty()) {
+				bw.write(-1+"\n");
+			}else bw.write(que.poll()+"\n");
+			continue;
+		}
+		if(s.equals("size")) {
+			bw.write(que.size()+"\n");
+			continue;
+		}
+		if(s.equals("empty")) {
+			if(que.isEmpty()) {
+				bw.write(1+"\n");
+			}else bw.write(0+"\n");
+			continue;
+		}
+		if(s.equals("back")) {
+			if(que.isEmpty()) {
+				bw.write(-1+"\n");
+			}else {
+				bw.write(last+"\n");
+			}
+
+			}
+			continue;
+		}
+	bw.flush();
+	}
 }
