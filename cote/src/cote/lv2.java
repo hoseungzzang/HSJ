@@ -8,17 +8,34 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
+	
+		int n=15;
+		int cnt =0;
+
+		for(int i=1; i<=n; i++) {
+			int sum=i;
+			for(int j=i+1; j<=n; j++) {
+				sum+=j;
+				if(sum==n) {
+					cnt++;
+				}else if(sum>n) {
+					break;
+				}
+			}
+		}
+		System.out.println(cnt+1);
 		
 	}
 
 	public static void ex1() {
-		// ÃÖ¼Ú°ª¸¸µé±â
+		// ìµœì†Ÿê°’ë§Œë“¤ê¸°
 		int[] A = { 1, 2 };
 		int[] B = { 3, 4 };
 		int[] arr = new int[B.length];
@@ -35,7 +52,7 @@ public class lv2 {
 	}
 
 	public static void ex2() throws IOException {
-		// »õ½Ï¸¸µé±â
+		// ìƒˆì‹¹ë§Œë“¤ê¸°
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		bw.write("         ,r'\"7\nr`-_   ,'  ,/\n \\. \". L_r'\n   `~\\/\n      |\n      |");
@@ -44,7 +61,7 @@ public class lv2 {
 	}
 
 	public static void ex3() throws IOException {
-		// ½Ã°£°è»ê
+		// ì‹œê°„ê³„ì‚°
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -67,7 +84,7 @@ public class lv2 {
 	}
 
 	public static void ex4() throws IOException {
-		// Á¤·Ä,Ä«¿îÆÃ,
+		// ì •ë ¬,ì¹´ìš´íŒ…,
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer str = new StringTokenizer(br.readLine());
@@ -110,7 +127,7 @@ public class lv2 {
 	}
 
 	public static void ex5() throws IOException {
-		// ¹æ¹«°è»ê
+		// ë°©ë¬´ê³„ì‚°
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer str = new StringTokenizer(br.readLine());
@@ -127,7 +144,7 @@ public class lv2 {
 	}
 
 	public static void ex6() throws IOException {
-		// ¼Ò¼ö°³¼ö±¸ÇÏ±â ¿¡¶óÅä½ºÅ×³×½ºÀÇ Ã¤ ±¸Çö
+		// ì†Œìˆ˜ê°œìˆ˜êµ¬í•˜ê¸° ì—ë¼í† ìŠ¤í…Œë„¤ìŠ¤ì˜ ì±„ êµ¬í˜„
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -161,7 +178,7 @@ public class lv2 {
 	}
 
 	public static void ex7() throws IOException {
-		// ¼Ò¼ö±¸ÇÏ±â
+		// ì†Œìˆ˜êµ¬í•˜ê¸°
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int roop = Integer.parseInt(br.readLine());
@@ -231,15 +248,15 @@ public class lv2 {
 	}
 
 	public static void ex9() throws IOException {
-		// Á¤±ÔÇ¥Çö½Ä
+		// ì •ê·œí‘œí˜„ì‹
 		String new_id = "=.=";
 
 		String answer = "";
-		answer = new_id.toLowerCase();// 1´Ü°è
-		answer = answer.replaceAll("[^a-z|0-9|_|.|-]", "");// 2´Ü°è
-		answer = answer.replaceAll("\\.{2,}", ".");// 3´Ü°è
+		answer = new_id.toLowerCase();// 1ë‹¨ê³„
+		answer = answer.replaceAll("[^a-z|0-9|_|.|-]", "");// 2ë‹¨ê³„
+		answer = answer.replaceAll("\\.{2,}", ".");// 3ë‹¨ê³„
 		int cnt = answer.length();
-		if (answer.charAt(0) == '.') { // 4´Ü°è
+		if (answer.charAt(0) == '.') { // 4ë‹¨ê³„
 			if (answer.length() == 1) {
 				answer = "";
 			} else
@@ -270,7 +287,7 @@ public class lv2 {
 	}
 
 	public static void ex10() throws IOException {
-		// ¿ÏÀüÅ½»ö
+		// ì™„ì „íƒìƒ‰
 		int[] answers = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		int[][] man = { { 1, 2, 3, 4, 5 }, { 2, 1, 2, 3, 2, 4, 2, 5 }, { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 } };
 		ArrayList<Integer> list = new ArrayList<Integer>();
@@ -310,7 +327,7 @@ public class lv2 {
 	}
 
 	public static void ex11() throws IOException {
-		// ¼Ò¼ö±¸ÇÏ±â
+		// ì†Œìˆ˜êµ¬í•˜ê¸°
 		int n = 5;
 		int[] arr = new int[n + 1];
 		int answer = 0;
@@ -365,7 +382,7 @@ public class lv2 {
 	}
 
 	public static void ex13() throws IOException {
-		// ´ÙÀ½¼öÃ£±â È¿À²¼º ¤µ...
+		// ë‹¤ìŒìˆ˜ì°¾ê¸° íš¨ìœ¨ì„± ã……...
 		int n = 15;
 		int answer = 0;
 		String n2 = Integer.toBinaryString(n);
@@ -396,7 +413,7 @@ public class lv2 {
 	}
 
 	public static void ex15() throws IOException {
-		// Çà·Ä°ö¼À
+		// í–‰ë ¬ê³±ì…ˆ
 		int[][] arr1 = { { 1, 2, 3 }, { 4, 5, 6 } };
 		int[][] arr2 = { { 1, 4 }, { 2, 5 }, { 3, 6 } };
 		// int [][] arr1 = {{1,4},{3,2},{4,1}};
@@ -415,7 +432,7 @@ public class lv2 {
 	}
 
 	public static void ex16() throws IOException {
-		// ¹®ÀÚ¿­¸¸µé±â
+		// ë¬¸ìì—´ë§Œë“¤ê¸°
 		String s = "  A dsad 2Wdas sad   ";
 		int len = s.length();
 		s = s.toLowerCase();
@@ -482,7 +499,7 @@ public class lv2 {
 
 	public static void ex19() throws IOException {
 		String s = "cdcd";
-		Stack<Character> stack = new Stack<>(); // charÇü ½ºÅÃ ¼±¾ğ
+		Stack<Character> stack = new Stack<>(); // charí˜• ìŠ¤íƒ ì„ ì–¸
 		int answer = 1;
 		stack.push(s.charAt(0));
 		for (int i = 1; i < s.length(); i++) {
@@ -557,7 +574,7 @@ public class lv2 {
 	}
 
 	public static void ex22() throws IOException {
-		// 86Á¡
+		// 86ì 
 		int n = 110011;
 		int k = 10;
 		int max = 0;
@@ -566,7 +583,7 @@ public class lv2 {
 		String nd = "";
 		String item = "";
 		Stack<Character> stack = new Stack<Character>();
-		while (n > 0) {// Áø¹ıÀÌ µÇ´Â ¼ö¸¦ ³ª´«´Ù.
+		while (n > 0) {// ì§„ë²•ì´ ë˜ëŠ” ìˆ˜ë¥¼ ë‚˜ëˆˆë‹¤.
 			nd = (n % k) + nd;
 			n /= k;
 		}
@@ -686,7 +703,7 @@ public class lv2 {
 			int lr = queries[i][2]-1; // 5
 			int ly = queries[i][3]-1;// 4
 			int min =rows*columns+1;
-			//°¡·Î
+			//ê°€ë¡œ
 			for(int j=fy; j<=ly; j++ ) {
 				if(j+1>ly) {
 					squre2[fr+1][j] =  squre[fr][j];
@@ -695,7 +712,7 @@ public class lv2 {
 					min = squre[fr][j];
 				}
 			}
-			//¼¼·Î
+			//ì„¸ë¡œ
 			for(int j=fr+1; j<=lr; j++ ) {
 				if(j+1>lr) {
 					squre2[j][ly-1] =  squre[j][ly];
@@ -704,7 +721,7 @@ public class lv2 {
 					min = squre[j][ly];
 				}
 			}
-			//°¡·Î
+			//ê°€ë¡œ
 			for(int j=ly-1; j>=fy; j-- ) {
 				if(j-1<fy) {
 					squre2[lr-1][j] =  squre[lr][j];
@@ -714,7 +731,7 @@ public class lv2 {
 					min = squre[lr][j];
 				}
 			}
-			//¼¼·Î
+			//ì„¸ë¡œ
 			for(int j=lr-1; j>fr; j-- ) {
 				squre2[j-1][fy] =  squre[j][fy];
 				if(min>squre[j][fy]) {
@@ -773,6 +790,25 @@ public class lv2 {
 				}
 			}
 		}
+	}
+	public static void ex27() throws IOException {
+	
+		int n=15;
+		int cnt =0;
+
+		for(int i=1; i<=n; i++) {
+			int sum=i;
+			for(int j=i+1; j<=n; j++) {
+				sum+=j;
+				if(sum==n) {
+					cnt++;
+				}else if(sum>n) {
+					break;
+				}
+			}
+		}
+		System.out.println(cnt+1);
+		
 	}
 
 }
