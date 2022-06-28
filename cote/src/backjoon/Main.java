@@ -24,24 +24,31 @@ public class Main {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-		Stack<Integer> stack = new Stack<Integer>();
+		
+		String s = br.readLine();
 		int roop = Integer.parseInt(br.readLine());
-		int sum=0;
+
 		for(int i=0; i<roop; i++) {
-			int num = Integer.parseInt(br.readLine());
-			if(num!=0) {
-				stack.push(num);
-			}else {
-				stack.pop();
+			int cnt=0;
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			char target =str.nextToken().charAt(0);
+			int first = Integer.parseInt(str.nextToken());
+			int last = Integer.parseInt(str.nextToken())+1;
+			String sp = s.substring(first,last);
+			if(!sp.contains(String.valueOf(target))) {
+				bw.write(cnt+"\n");
+				continue;
 			}
-		}
-		if(!stack.isEmpty()) {
-			for(int i =0; i<stack.size(); i++) {
-				sum+= stack.get(i);
+			for(int j=0; j<sp.length(); j++) {
+				if(sp.charAt(j)==target) {
+					cnt++;
+				}
 			}
+			bw.write(cnt+"\n");
 		}
-		bw.write(sum+"");
+	
+
+		
 		bw.flush();
 	}
 
@@ -1100,7 +1107,7 @@ public class Main {
 	}
 
 	public static void ex38() throws IOException {
-		//재귀
+		// 재귀
 		/*
 		 * Scanner in = new Scanner(System.in);
 		 * 
@@ -1122,6 +1129,7 @@ public class Main {
 		 * }
 		 */
 	}
+
 	public static void ex39() throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -1150,6 +1158,250 @@ public class Main {
 			}
 		}
 
+		bw.flush();
+	}
+
+	public static void ex40() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		Stack<Integer> stack = new Stack<Integer>();
+		int roop = Integer.parseInt(br.readLine());
+		int sum = 0;
+		for (int i = 0; i < roop; i++) {
+			int num = Integer.parseInt(br.readLine());
+			if (num != 0) {
+				stack.push(num);
+			} else {
+				stack.pop();
+			}
+		}
+		if (!stack.isEmpty()) {
+			for (int i = 0; i < stack.size(); i++) {
+				sum += stack.get(i);
+			}
+		}
+		bw.write(sum + "");
+		bw.flush();
+	}
+
+	public static void ex41() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int roop = Integer.parseInt(br.readLine());
+
+		for (int k = 0; k < roop; k++) {
+			Queue<Integer> que = new LinkedList<>();
+			Queue<Integer> queIndex = new LinkedList<>();
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			int numSu = Integer.parseInt(str.nextToken());
+			int index = Integer.parseInt(str.nextToken());
+			int cnt = 0;
+			int[] arr = new int[numSu];
+			int arrIndex = arr.length - 1;
+			str = new StringTokenizer(br.readLine());
+			for (int i = 0; i < numSu; i++) {
+				int num = Integer.parseInt(str.nextToken());
+				que.offer(num);
+				queIndex.offer(i);
+				arr[i] = num;
+			}
+			Arrays.sort(arr);
+			while (queIndex.contains(index)) {
+				if (que.peek() == arr[arrIndex]) {
+					que.poll();
+					queIndex.poll();
+					arrIndex--;
+					cnt++;
+				} else {
+					que.offer(que.poll());
+					queIndex.offer(queIndex.poll());
+				}
+			}
+			bw.write(cnt + "\n");
+		}
+		bw.flush();
+	}
+
+	public static void ex42() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int roop = Integer.parseInt(br.readLine());
+		int[][] arr = new int[roop][2];
+
+		for (int i = 0; i < roop; i++) {
+			StringTokenizer str = new StringTokenizer(br.readLine());
+			arr[i][0] = Integer.parseInt(str.nextToken());
+			arr[i][1] = Integer.parseInt(str.nextToken());
+		}
+		for (int i = 0; i < roop; i++) {
+			int cnt = 1;
+			for (int j = 0; j < roop; j++) {
+				if (arr[i][0] < arr[j][0] && arr[i][1] < arr[j][1]) {
+					cnt++;
+				}
+			}
+			bw.write(cnt + " ");
+		}
+
+		bw.flush();
+	}
+
+	public static void ex43() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		while (true) {
+			int flag = 0;
+			String s = br.readLine();
+			Stack<Character> stack = new Stack<Character>();
+			if (s.equals(".")) {
+				break;
+			}
+			for (int i = 0; i < s.length(); i++) {
+				if (s.charAt(i) == '(' || s.charAt(i) == '[') {
+					stack.push(s.charAt(i));
+				}
+				if (s.charAt(i) == ')') {
+					if (stack.isEmpty()) {
+						flag = 1;
+						break;
+					} else {
+						if (stack.peek() == '(') {
+							stack.pop();
+						} else if (stack.peek() == '[') {
+							flag = 1;
+							break;
+						}
+					}
+
+				} else if (s.charAt(i) == ']') {
+					if (stack.isEmpty()) {
+						flag = 1;
+						break;
+					} else {
+						if (stack.peek() == '[') {
+							stack.pop();
+						} else if (stack.peek() == '(') {
+							flag = 1;
+							break;
+						}
+					}
+
+				}
+			}
+			if (stack.isEmpty() && flag != 1) {
+				bw.write("yes" + "\n");
+			} else
+				bw.write("no\n");
+		}
+
+		bw.flush();
+	}
+
+	public static void ex44() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		ArrayList<Character> list = new ArrayList<Character>();
+		int num = Integer.parseInt(br.readLine());
+		Stack<Integer> stack = new Stack<Integer>();
+		int[] arr = new int[num];
+
+		int cnt = 0;
+		int roop = 2;
+		for (int i = 0; i < num; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+		}
+		stack.push(1);
+		list.add('+');
+		while (cnt != num) {
+			if (!stack.isEmpty() && arr[cnt] == stack.peek()) {
+				list.add('-');
+				stack.pop();
+				cnt++;
+			} else {
+				if (roop > num + 1) {
+					break;
+				}
+				stack.push(roop);
+				list.add('+');
+				roop++;
+			}
+		}
+		if (cnt != num || !stack.isEmpty()) {
+			System.out.println("NO");
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i));
+			}
+		}
+	}
+	public static void ex45() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int roop = Integer.parseInt(str.nextToken());
+		int count = Integer.parseInt(str.nextToken());
+		str = new StringTokenizer(br.readLine());
+		int sum=0;
+		int [] arrIndex = new int[roop];
+		for(int i=0; i<roop; i++) {
+			int num= Integer.parseInt(str.nextToken());
+			sum+=num;
+			arrIndex[i] = sum;
+		}
+		
+		for(int i=0; i<count; i++) {
+			str = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(str.nextToken())-1;
+			int b = Integer.parseInt(str.nextToken())-1;
+			if(a==0) {
+				bw.write(arrIndex[b]+"\n");
+			}else {
+				bw.write(arrIndex[b]- arrIndex[a-1]+"\n");
+			}
+		}
+		bw.flush();
+	}
+	public static void ex46() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int roop = Integer.parseInt(str.nextToken());
+		int count = Integer.parseInt(str.nextToken());
+		int cnt=0;
+		int max=0;
+		str = new StringTokenizer(br.readLine());
+		int sum=0;
+		int [] arrIndex = new int[roop];
+		for(int i=0; i<roop; i++) {
+			int num= Integer.parseInt(str.nextToken());
+			sum+=num;
+			arrIndex[i] = sum;
+		}
+		for(int i=count-1; i<roop; i++) {
+			if(i==count-1) {
+				max = arrIndex[i];
+				cnt++;
+			}
+			else {
+				int calc = arrIndex[i]-arrIndex[cnt-1];
+				max = Integer.max(max, calc);
+				cnt++;
+			}
+		}
+		bw.write(max+"");
 		bw.flush();
 	}
 }

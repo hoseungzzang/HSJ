@@ -16,22 +16,39 @@ public class lv2 {
 
 	public static void main(String[] args) throws IOException {
 	
-		int n=15;
-		int cnt =0;
-
-		for(int i=1; i<=n; i++) {
-			int sum=i;
-			for(int j=i+1; j<=n; j++) {
-				sum+=j;
-				if(sum==n) {
-					cnt++;
-				}else if(sum>n) {
-					break;
-				}
+		int n =3;
+		long left=2;
+		long right=5;
+		long calc = right-left+1;
+		long cnt=0;
+		long roop=0;
+		 int[] answer = new int[(int)calc];
+		int [][] arr = new int[n][n];
+		for(int i=0; i<n; i++) {
+			for(int j=0;j<=i; j++) {
+				arr[j][i] = i+1;
+			
 			}
+			for(int j=0;j<=i; j++) {
+				arr[i][j] = i+1;
+			
+			}
+			
 		}
-		System.out.println(cnt+1);
-		
+		for(int i=0; i<n; i++) {
+			for(int j=0;j<n; j++) {
+				if(cnt>=left && cnt<=right) {
+					answer[(int)roop] = arr[i][j];
+					roop++;
+				}
+				cnt++;
+			}
+			
+		}
+		for(int i=0; i<answer.length; i++) {
+		System.out.println(answer[i]);
+		}
+	
 	}
 
 	public static void ex1() {
