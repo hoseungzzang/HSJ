@@ -9,45 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-	
-		int n =3;
-		long left=2;
-		long right=5;
-		long calc = right-left+1;
-		long cnt=0;
-		long roop=0;
-		 int[] answer = new int[(int)calc];
-		int [][] arr = new int[n][n];
-		for(int i=0; i<n; i++) {
-			for(int j=0;j<=i; j++) {
-				arr[j][i] = i+1;
-			
-			}
-			for(int j=0;j<=i; j++) {
-				arr[i][j] = i+1;
-			
-			}
-			
-		}
-		for(int i=0; i<n; i++) {
-			for(int j=0;j<n; j++) {
-				if(cnt>=left && cnt<=right) {
-					answer[(int)roop] = arr[i][j];
-					roop++;
-				}
-				cnt++;
-			}
-			
-		}
-		for(int i=0; i<answer.length; i++) {
-		System.out.println(answer[i]);
-		}
 	
 	}
 
@@ -826,6 +795,42 @@ public class lv2 {
 		}
 		System.out.println(cnt+1);
 		
+	}
+	public static void ex28() throws IOException {
+	
+		int n =3;
+		long left=2;
+		long right=5;
+		long calc = right-left+1;
+		long cnt=0;
+		long roop=0;
+		 int[] answer = new int[(int)calc];
+		int [][] arr = new int[n][n];
+		for(int i=0; i<n; i++) {
+			for(int j=0;j<=i; j++) {
+				arr[j][i] = i+1;
+			
+			}
+			for(int j=0;j<=i; j++) {
+				arr[i][j] = i+1;
+			
+			}
+			
+		}
+		for(int i=0; i<n; i++) {
+			for(int j=0;j<n; j++) {
+				if(cnt>=left && cnt<=right) {
+					answer[(int)roop] = arr[i][j];
+					roop++;
+				}
+				cnt++;
+			}
+			
+		}
+		for(int i=0; i<answer.length; i++) {
+		System.out.println(answer[i]);
+		}
+	
 	}
 
 }
