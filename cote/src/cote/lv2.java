@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
@@ -17,7 +19,7 @@ import java.util.StringTokenizer;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-	
+
 	}
 
 	public static void ex1() {
@@ -831,6 +833,81 @@ public class lv2 {
 		System.out.println(answer[i]);
 		}
 	
+	}
+	public static void ex29() throws IOException {
+	
+		String[] record = {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"};
+		Map<String,String> map = new HashMap<String,String>();
+		Map<String,String> map2 = new HashMap<String,String>();
+		int cnt=0;
+		for(int i=0; i<record.length; i++) {
+			String [] arr = record[i].split(" ");
+
+			if(arr[0].equals("Enter")) {
+				map.put(arr[1], arr[2]);
+				if(map2.containsKey(arr[1])) {
+					map2.put(arr[1], arr[2]);
+				}
+				cnt++;
+			}else if(arr[0].equals("Leave")) {
+				map2.put(arr[1], map.get(arr[1]));
+				map.put(arr[1], "");
+				cnt++;
+			}else {
+				map.put(arr[1], arr[2]);
+				if(map2.containsKey(arr[1])) {
+					map2.put(arr[1], arr[2]);
+				}
+			}
+		}
+
+		String [] answer = new String[cnt];
+		cnt=0;
+		for(int i=0; i<record.length; i++) {
+			String [] arr = record[i].split(" ");
+			if(arr[0].equals("Enter")) {
+				if(!map.get(arr[1]).equals("")) {
+					answer[cnt] =map.get(arr[1])+"님이 들어왔습니다.";
+				}else {
+					answer[cnt] =map2.get(arr[1])+"님이 들어왔습니다.";
+				}
+			
+			cnt++;
+			}else if(arr[0].equals("Leave")) {
+			answer[cnt] = map2.get(arr[1])+"님이 나갔습니다.";
+			cnt++;
+			}
+		}
+	}
+	public static void ex30() throws IOException {
+		String s ="{{123}}";
+		 ArrayList<String> list = new  ArrayList<String>();
+		 s=s.replace("{{", "");
+		 s=s.replaceAll("}}", "");
+		 if(s.contains("},{")) {
+			 s=s.replace("},{", " ");
+		 }
+		 String [] arr = s.split(" ");
+		 int [] answer = new int[arr.length];
+		 int cnt=0;
+		 while(cnt<arr.length) {
+			 for(int i=0; i<arr.length;i++) {
+				 String [] arr2 = arr[i].split(",");
+				 if(arr2.length==cnt+1) {
+					 for(int j=0; j<arr2.length; j++) {
+						 if(list.indexOf(arr2[j])==-1 ) {
+							 list.add(arr2[j]);
+						 }
+					 }
+					 cnt++;
+				 }
+			 }
+		 }
+		 for(int i=0; i<list.size(); i++) {
+			 answer[i] = Integer.parseInt(list.get(i));
+			 System.out.println(answer[i]);
+		 }
+
 	}
 
 }
