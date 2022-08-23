@@ -23,12 +23,36 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer str = new StringTokenizer(br.readLine());
-		int roop = Integer.parseInt(str.nextToken());
-		int cnt = Integer.parseInt(str.nextToken());
+
+		int roop = Integer.parseInt(br.readLine());
+		
+
+		for (int i = 0; i < roop; i++) {
+
+			for (int j = 0; j < i; j++) {
+				System.out.print(" ");
+			}
+			for (int j = 0; j < (2 * (roop - i)) - 1; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+		
+		for (int i = 1; i < roop; i++) {
+
+			for (int j = roop-(i+1); j >0; j--) {
+				System.out.print(" ");
+			}
+			for (int j = 0; j < (2 * (i+1)) - 1; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+
 		
 		
-		bw.flush();
+		
+
 	}
 
 	public static void ex1() throws IOException {
