@@ -23,27 +23,11 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-		Map<String,String> map = new HashMap<String,String>();
-		int roop = Integer.parseInt(br.readLine());
-
 		StringTokenizer str = new StringTokenizer(br.readLine());
-		for (int i = 0; i < roop; i++) {
-			map.put(str.nextToken(), "1");
-		}
-		roop = Integer.parseInt(br.readLine());
-		str = new StringTokenizer(br.readLine());
-		for (int i = 0; i < roop; i++) {
-			String s= map.get(str.nextToken());
-			if(s==null) {
-				bw.write("0\n");
-			}else {
-				bw.write(s+"\n");
-			}
-				
+		int roop = Integer.parseInt(str.nextToken());
+		int cnt = Integer.parseInt(str.nextToken());
 		
-		}
-
+		
 		bw.flush();
 	}
 
@@ -1453,6 +1437,94 @@ public class Main {
 
 		}
 		bw.write(sum + "");
+		bw.flush();
+	}
+	public static void ex49() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		Map<String,String> map = new HashMap<String,String>();
+		int roop = Integer.parseInt(br.readLine());
+
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		for (int i = 0; i < roop; i++) {
+			map.put(str.nextToken(), "1");
+		}
+		roop = Integer.parseInt(br.readLine());
+		str = new StringTokenizer(br.readLine());
+		for (int i = 0; i < roop; i++) {
+			String s= map.get(str.nextToken());
+			if(s==null) {
+				bw.write("0\n");
+			}else {
+				bw.write(s+"\n");
+			}
+				
+		
+		}
+
+		bw.flush();
+	}
+	
+	public static void ex50() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		int sum=0;
+		String s = br.readLine();
+		
+		String [] arr ;
+		if(!s.contains("-")) {
+			s = s.replace("+"," ");
+			arr = s.split(" ");
+			for(int i=0; i<arr.length; i++) {
+				sum+= Integer.parseInt(arr[i]);
+			}
+		}else if(s.charAt(0)=='-') {
+			s = s.replace("+"," ");
+			s = s.replace("-"," ");
+			arr = s.split(" ");
+			for(int i=1; i<arr.length; i++) {
+				sum+= Integer.parseInt(arr[i]);
+			}
+			sum *= -1;
+		}else {
+			s = s.replace("+"," ");
+			s = s.replace("-"," -");
+			arr = s.split(" ");
+			int index=0;
+			for(int i=0; i<arr.length; i++) {
+				if(Integer.parseInt(arr[i])<0) {
+					index = i;
+					break;
+				}else {
+					sum+=Integer.parseInt(arr[i]);
+				}
+			}
+			for(int i=index; i<arr.length; i++) {
+				if(Integer.parseInt(arr[i])<0) {
+					sum+=Integer.parseInt(arr[i]);
+				}else sum-= Integer.parseInt(arr[i]);
+			}
+			
+		}
+		bw.write(sum+"");
+		bw.flush();
+	}
+	
+	public static void ex51() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int roop = Integer.parseInt(str.nextToken());
+		int cnt = Integer.parseInt(str.nextToken());
+		str = new StringTokenizer(br.readLine());
+		int [] arr = new int[roop];
+		for(int i=0; i<roop; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+		}
+		 Arrays.sort(arr);
+		
+		bw.write(arr[roop-cnt]+"");
 		bw.flush();
 	}
 }

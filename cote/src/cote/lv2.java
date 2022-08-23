@@ -11,16 +11,35 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 public class lv2 {
-
+//앞에가 비동의 뒤에가 동의
 	public static void main(String[] args) throws IOException {
-
-	}
+		int[] topping = {1, 2, 1, 3, 1, 4, 1, 2};
+		int answer = 0;
+		String arr = Arrays.toString(topping).replaceAll("\\[|]", "");
+		String [] arr2 = arr.split(", ");
+		ArrayList<String> little = new ArrayList<String>(Arrays.asList(arr2));
+		ArrayList<Integer> bro = new ArrayList<Integer>();
+		for(int i=0; i<topping.length; i++) {
+			little.remove(0);
+				if(bro.indexOf(topping[i])==-1) {
+					bro.add(topping[i]);
+				}
+				List<String> newList = little.stream().distinct().collect(Collectors.toList());
+			if(bro.size() == newList.size()) {
+				answer++;
+			}
+		}
+		System.out.println(answer);
+		
+}
 
 	public static void ex1() {
 		// 최솟값만들기
@@ -632,11 +651,12 @@ public class lv2 {
 
 		System.out.println(answer);
 	}
+
 	public static void ex23() throws IOException {
 		int n = 2;
 		String[] words = { "hello", "one", "even", "never", "now", "world", "draw" };
 		int roop = 1;
-		int turn =1;
+		int turn = 1;
 		int member = 2;
 		ArrayList<String> list = new ArrayList<String>();
 		int[] answer = new int[2];
@@ -660,7 +680,7 @@ public class lv2 {
 
 			roop++;
 			member++;
-			if(member > n) {
+			if (member > n) {
 				member = 1;
 				turn++;
 			}
@@ -669,245 +689,399 @@ public class lv2 {
 		System.out.println(answer[0] + " " + answer[1]);
 
 	}
+
 	public static void ex24() throws IOException {
 		int rows = 100;
 		int columns = 97;
-		int [][] queries = {{1,1,100,97}};
-		int [][] squre = new int[rows][columns];
-		int [][] squre2 = new int[rows][columns];
-		int cnt=1;
+		int[][] queries = { { 1, 1, 100, 97 } };
+		int[][] squre = new int[rows][columns];
+		int[][] squre2 = new int[rows][columns];
+		int cnt = 1;
 		int[] answer = new int[queries.length];
-		for(int i=0; i<rows; i++) {
-			for(int j=0; j<columns;j++) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
 				squre[i][j] = cnt;
 				squre2[i][j] = cnt;
 				cnt++;
 			}
 		}
 
-		for(int i=0; i<queries.length; i++) {
-			int fr = queries[i][0]-1; //2
-			int fy = queries[i][1]-1; // 2
-			int lr = queries[i][2]-1; // 5
-			int ly = queries[i][3]-1;// 4
-			int min =rows*columns+1;
-			//가로
-			for(int j=fy; j<=ly; j++ ) {
-				if(j+1>ly) {
-					squre2[fr+1][j] =  squre[fr][j];
-				}else squre2[fr][j+1] =  squre[fr][j];
-				if(min>squre[fr][j]) {
+		for (int i = 0; i < queries.length; i++) {
+			int fr = queries[i][0] - 1; // 2
+			int fy = queries[i][1] - 1; // 2
+			int lr = queries[i][2] - 1; // 5
+			int ly = queries[i][3] - 1;// 4
+			int min = rows * columns + 1;
+			// 가로
+			for (int j = fy; j <= ly; j++) {
+				if (j + 1 > ly) {
+					squre2[fr + 1][j] = squre[fr][j];
+				} else
+					squre2[fr][j + 1] = squre[fr][j];
+				if (min > squre[fr][j]) {
 					min = squre[fr][j];
 				}
 			}
-			//세로
-			for(int j=fr+1; j<=lr; j++ ) {
-				if(j+1>lr) {
-					squre2[j][ly-1] =  squre[j][ly];
-				}else squre2[j+1][ly] =  squre[j][ly];
-				if(min>squre[j][ly]) {
+			// 세로
+			for (int j = fr + 1; j <= lr; j++) {
+				if (j + 1 > lr) {
+					squre2[j][ly - 1] = squre[j][ly];
+				} else
+					squre2[j + 1][ly] = squre[j][ly];
+				if (min > squre[j][ly]) {
 					min = squre[j][ly];
 				}
 			}
-			//가로
-			for(int j=ly-1; j>=fy; j-- ) {
-				if(j-1<fy) {
-					squre2[lr-1][j] =  squre[lr][j];
-				}else squre2[lr][j-1] =  squre[lr][j];
-				
-				if(min>squre[lr][j]) {
+			// 가로
+			for (int j = ly - 1; j >= fy; j--) {
+				if (j - 1 < fy) {
+					squre2[lr - 1][j] = squre[lr][j];
+				} else
+					squre2[lr][j - 1] = squre[lr][j];
+
+				if (min > squre[lr][j]) {
 					min = squre[lr][j];
 				}
 			}
-			//세로
-			for(int j=lr-1; j>fr; j-- ) {
-				squre2[j-1][fy] =  squre[j][fy];
-				if(min>squre[j][fy]) {
+			// 세로
+			for (int j = lr - 1; j > fr; j--) {
+				squre2[j - 1][fy] = squre[j][fy];
+				if (min > squre[j][fy]) {
 					min = squre[j][fy];
 				}
 			}
-			for(int j=0; j< rows; j++) {
-				for(int k=0; k<columns; k++) {
+			for (int j = 0; j < rows; j++) {
+				for (int k = 0; k < columns; k++) {
 					squre[j][k] = squre2[j][k];
 				}
 			}
 			answer[i] = min;
 		}
-		
-		
+
 	}
+
 	public static void ex25() throws IOException {
 		int n = 8;
 		int a = 4;
-		int b =5;
-		int answer =0;
-		while(a!=b) {
-			if(a%2!=0) {
-				a = a/2+1;
-			}else a = a/2;
-			
-			if(b%2!=0) {
-				b = b/2+1;
-			}else b = b/2;
-			answer ++;
+		int b = 5;
+		int answer = 0;
+		while (a != b) {
+			if (a % 2 != 0) {
+				a = a / 2 + 1;
+			} else
+				a = a / 2;
+
+			if (b % 2 != 0) {
+				b = b / 2 + 1;
+			} else
+				b = b / 2;
+			answer++;
 		}
 		System.out.println(answer);
 	}
-	public static void ex26() throws IOException {
-		int[][] board = {
-				{0,0,0,0,0},
-				{0,0,1,0,3},
-				{0,2,5,0,1},
-				{4,2,4,4,2},
-				{3,5,1,3,1}};
-		int answer=0;
-		int[] moves = {1,5,3,5,1,2,1,4};
-		Stack<Integer> stack = new Stack<Integer>();
-		for(int i=0; i<moves.length; i++) {
-			for(int j=0; j<board.length; j++) {
-				
-				if(board[j][moves[i]-1]!=0) {
-					if(!stack.isEmpty()) {
-						if(stack.peek()==board[j][moves[i]-1]) {
-							stack.pop(); 
-							answer+=2;
-						}else stack.push(board[j][moves[i]-1]); 
-					}else stack.push(board[j][moves[i]-1]); 
-					board[j][moves[i]-1]=0;
-					break;
-				}
-			}
-		}
-	}
-	public static void ex27() throws IOException {
-	
-		int n=15;
-		int cnt =0;
 
-		for(int i=1; i<=n; i++) {
-			int sum=i;
-			for(int j=i+1; j<=n; j++) {
-				sum+=j;
-				if(sum==n) {
-					cnt++;
-				}else if(sum>n) {
+	public static void ex26() throws IOException {
+		int[][] board = { { 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 3 }, { 0, 2, 5, 0, 1 }, { 4, 2, 4, 4, 2 },
+				{ 3, 5, 1, 3, 1 } };
+		int answer = 0;
+		int[] moves = { 1, 5, 3, 5, 1, 2, 1, 4 };
+		Stack<Integer> stack = new Stack<Integer>();
+		for (int i = 0; i < moves.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+
+				if (board[j][moves[i] - 1] != 0) {
+					if (!stack.isEmpty()) {
+						if (stack.peek() == board[j][moves[i] - 1]) {
+							stack.pop();
+							answer += 2;
+						} else
+							stack.push(board[j][moves[i] - 1]);
+					} else
+						stack.push(board[j][moves[i] - 1]);
+					board[j][moves[i] - 1] = 0;
 					break;
 				}
 			}
 		}
-		System.out.println(cnt+1);
-		
 	}
-	public static void ex28() throws IOException {
-	
-		int n =3;
-		long left=2;
-		long right=5;
-		long calc = right-left+1;
-		long cnt=0;
-		long roop=0;
-		 int[] answer = new int[(int)calc];
-		int [][] arr = new int[n][n];
-		for(int i=0; i<n; i++) {
-			for(int j=0;j<=i; j++) {
-				arr[j][i] = i+1;
-			
+
+	public static void ex27() throws IOException {
+
+		int n = 15;
+		int cnt = 0;
+
+		for (int i = 1; i <= n; i++) {
+			int sum = i;
+			for (int j = i + 1; j <= n; j++) {
+				sum += j;
+				if (sum == n) {
+					cnt++;
+				} else if (sum > n) {
+					break;
+				}
 			}
-			for(int j=0;j<=i; j++) {
-				arr[i][j] = i+1;
-			
-			}
-			
 		}
-		for(int i=0; i<n; i++) {
-			for(int j=0;j<n; j++) {
-				if(cnt>=left && cnt<=right) {
-					answer[(int)roop] = arr[i][j];
+		System.out.println(cnt + 1);
+
+	}
+
+	public static void ex28() throws IOException {
+
+		int n = 3;
+		long left = 2;
+		long right = 5;
+		long calc = right - left + 1;
+		long cnt = 0;
+		long roop = 0;
+		int[] answer = new int[(int) calc];
+		int[][] arr = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j <= i; j++) {
+				arr[j][i] = i + 1;
+
+			}
+			for (int j = 0; j <= i; j++) {
+				arr[i][j] = i + 1;
+
+			}
+
+		}
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (cnt >= left && cnt <= right) {
+					answer[(int) roop] = arr[i][j];
 					roop++;
 				}
 				cnt++;
 			}
-			
-		}
-		for(int i=0; i<answer.length; i++) {
-		System.out.println(answer[i]);
-		}
-	
-	}
-	public static void ex29() throws IOException {
-	
-		String[] record = {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"};
-		Map<String,String> map = new HashMap<String,String>();
-		Map<String,String> map2 = new HashMap<String,String>();
-		int cnt=0;
-		for(int i=0; i<record.length; i++) {
-			String [] arr = record[i].split(" ");
 
-			if(arr[0].equals("Enter")) {
+		}
+		for (int i = 0; i < answer.length; i++) {
+			System.out.println(answer[i]);
+		}
+
+	}
+
+	public static void ex29() throws IOException {
+
+		String[] record = { "Enter uid1234 Muzi", "Enter uid4567 Prodo", "Leave uid1234", "Enter uid1234 Prodo",
+				"Change uid4567 Ryan" };
+		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map2 = new HashMap<String, String>();
+		int cnt = 0;
+		for (int i = 0; i < record.length; i++) {
+			String[] arr = record[i].split(" ");
+
+			if (arr[0].equals("Enter")) {
 				map.put(arr[1], arr[2]);
-				if(map2.containsKey(arr[1])) {
+				if (map2.containsKey(arr[1])) {
 					map2.put(arr[1], arr[2]);
 				}
 				cnt++;
-			}else if(arr[0].equals("Leave")) {
+			} else if (arr[0].equals("Leave")) {
 				map2.put(arr[1], map.get(arr[1]));
 				map.put(arr[1], "");
 				cnt++;
-			}else {
+			} else {
 				map.put(arr[1], arr[2]);
-				if(map2.containsKey(arr[1])) {
+				if (map2.containsKey(arr[1])) {
 					map2.put(arr[1], arr[2]);
 				}
 			}
 		}
 
-		String [] answer = new String[cnt];
-		cnt=0;
-		for(int i=0; i<record.length; i++) {
-			String [] arr = record[i].split(" ");
-			if(arr[0].equals("Enter")) {
-				if(!map.get(arr[1]).equals("")) {
-					answer[cnt] =map.get(arr[1])+"님이 들어왔습니다.";
-				}else {
-					answer[cnt] =map2.get(arr[1])+"님이 들어왔습니다.";
+		String[] answer = new String[cnt];
+		cnt = 0;
+		for (int i = 0; i < record.length; i++) {
+			String[] arr = record[i].split(" ");
+			if (arr[0].equals("Enter")) {
+				if (!map.get(arr[1]).equals("")) {
+					answer[cnt] = map.get(arr[1]) + "님이 들어왔습니다.";
+				} else {
+					answer[cnt] = map2.get(arr[1]) + "님이 들어왔습니다.";
 				}
-			
-			cnt++;
-			}else if(arr[0].equals("Leave")) {
-			answer[cnt] = map2.get(arr[1])+"님이 나갔습니다.";
-			cnt++;
+
+				cnt++;
+			} else if (arr[0].equals("Leave")) {
+				answer[cnt] = map2.get(arr[1]) + "님이 나갔습니다.";
+				cnt++;
 			}
 		}
 	}
+
 	public static void ex30() throws IOException {
-		String s ="{{123}}";
-		 ArrayList<String> list = new  ArrayList<String>();
-		 s=s.replace("{{", "");
-		 s=s.replaceAll("}}", "");
-		 if(s.contains("},{")) {
-			 s=s.replace("},{", " ");
-		 }
-		 String [] arr = s.split(" ");
-		 int [] answer = new int[arr.length];
-		 int cnt=0;
-		 while(cnt<arr.length) {
-			 for(int i=0; i<arr.length;i++) {
-				 String [] arr2 = arr[i].split(",");
-				 if(arr2.length==cnt+1) {
-					 for(int j=0; j<arr2.length; j++) {
-						 if(list.indexOf(arr2[j])==-1 ) {
-							 list.add(arr2[j]);
-						 }
-					 }
-					 cnt++;
-				 }
-			 }
-		 }
-		 for(int i=0; i<list.size(); i++) {
-			 answer[i] = Integer.parseInt(list.get(i));
-			 System.out.println(answer[i]);
-		 }
+		String s = "{{123}}";
+		ArrayList<String> list = new ArrayList<String>();
+		s = s.replace("{{", "");
+		s = s.replaceAll("}}", "");
+		if (s.contains("},{")) {
+			s = s.replace("},{", " ");
+		}
+		String[] arr = s.split(" ");
+		int[] answer = new int[arr.length];
+		int cnt = 0;
+		while (cnt < arr.length) {
+			for (int i = 0; i < arr.length; i++) {
+				String[] arr2 = arr[i].split(",");
+				if (arr2.length == cnt + 1) {
+					for (int j = 0; j < arr2.length; j++) {
+						if (list.indexOf(arr2[j]) == -1) {
+							list.add(arr2[j]);
+						}
+					}
+					cnt++;
+				}
+			}
+		}
+		for (int i = 0; i < list.size(); i++) {
+			answer[i] = Integer.parseInt(list.get(i));
+			System.out.println(answer[i]);
+		}
 
 	}
 
+	public static void ex31() throws IOException {
+		int[] priorities = { 1, 1, 9, 1, 1, 1 };
+		int location = 0;
+		int answer = 0;
+		Queue<Integer> que = new LinkedList<Integer>();
+		Queue<Integer> queIndex = new LinkedList<Integer>();
+
+		for (int i = 0; i < priorities.length; i++) {
+			que.offer(priorities[i]);
+			if (i == location) {
+				queIndex.offer(1);
+			} else {
+				queIndex.offer(0);
+			}
+		}
+		Arrays.sort(priorities);
+		int cnt = priorities.length - 1;
+		while (true) {
+			if (que.peek() == priorities[cnt]) {
+				que.poll();
+				if (queIndex.peek() == 1) {
+					answer++;
+					break;
+				}
+				queIndex.poll();
+				answer++;
+				cnt--;
+			} else {
+				que.offer(que.poll());
+				queIndex.offer(queIndex.poll());
+			}
+
+		}
+
+	}
+	
+	public static void ex32() throws IOException {
+		String X ="12321";
+		String answer = "";
+		String Y="42531";
+		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list2 = new ArrayList<String>();
+		String [] arrX = X.split("");
+		String [] arrY = Y.split("");
+		int cnt=0;
+		int sum = 0;
+		for(int i = 0; i<arrY.length; i++) {
+			list.add(arrY[i]);
+		}
+		for(int i=0; i<arrX.length; i++) {
+			if(list.contains(arrX[i])) {
+				list.remove(arrX[i]);
+				list2.add(arrX[i]);
+				cnt++;
+				sum+=Integer.parseInt(arrX[i]);
+			}
+		}
+		
+		
+		if(cnt==0) {
+			answer ="-1";
+		}else if(cnt!=0&& sum==0) {
+			answer ="0";
+		}else {
+			Collections.sort(list2, Collections.reverseOrder());
+			answer = String.join("", list2);
+		}
+	
+		
+	}
+
+	public static void ex33() throws IOException {
+		String[] want = {"banana", "apple", "rice", "pork", "pot"};
+		int[] number = {3, 2, 2, 2, 1}; 
+		String[] discount= {"chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice", "pot", "banana", "apple", "banana"};
+		int answer = 0;
+
+		
+		for(int i=0; i<=discount.length-10; i++) {
+			String[] arr = new String[10];
+			int flag = 1;
+			for(int j=0; j<10; j++) {
+				arr[j] = discount[j+i];
+			}
+			for(int j=0; j<want.length; j++) {
+				if(Collections.frequency(Arrays.asList(arr), want[j]) != number[j]) {
+					flag=0;
+					break;
+				}
+			}
+			if(flag==1) {
+				answer++;
+			}
+		
+		}
+		System.out.println(answer);
+		
+	}
+	
+	public static void ex34() throws IOException {
+	
+		int[] order = {5,4,3,2,1};
+		int [] send = new int[order.length];
+		ArrayList<String> list = new ArrayList<String>();
+		for(int i=1; i<=send.length; i++) {
+			send[i-1] = i;
+			list.add(Integer.toString(i) );
+		}
+		
+		Stack<Integer> main = new Stack<Integer>();
+		Stack<Integer> sub = new Stack<Integer>();
+		int answer = 0;
+		for(int i=0; i<order.length; i++) {
+			if(i==0) {
+				for(int j=0; j<send.length; j++) {
+					if(order[i] !=send[j]) {
+						sub.push(send[j]);
+						list.remove(Integer.toString(send[j]));
+					}else {
+						list.remove(Integer.toString(order[i]));
+						answer++;
+						break;
+					}
+				}
+			}else {
+				
+				if(!list.isEmpty()&& order[i] ==Integer.parseInt(list.get(0)) ) {
+					int num = Integer.parseInt(list.get(0));
+					answer++;
+					list.remove(Integer.toString(num));
+					
+				}else if(!sub.isEmpty() && sub.peek() == order[i]) {
+					answer++;
+					sub.pop();
+				}else {
+					break;
+				}
+				
+			}
+
+		}
+		System.out.println(answer);
+		
+	}
 }
