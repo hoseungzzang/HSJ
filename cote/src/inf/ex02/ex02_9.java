@@ -1,4 +1,10 @@
-package inf;
+package inf.ex02;
+
+public class ex02_9 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,22 +22,13 @@ public class Main {
 	
 	public String solution( int roop, int n, int [] arr) {
 		String answer = "";
-	
-		int max=0;
-		for(int i=0; i<roop; i++) {
-			int su = n;
-			int cnt = 0;
-			for(int j=i;j<arr.length; j++) {
-				if(arr[j]==1) {
-					cnt++;
-				}else if(su!=0 && arr[j]==0) {
-					su --;
-					cnt++;
-				}else {
-					break;
-				}
+		int max = 0;
+		for(int i=0; i<=roop-n; i++) {
+			int sum =0;
+			for(int j=0;j<n; j++) {
+				sum+=arr[i+j];
 			}
-			max = Integer.max(max, cnt);
+			max = Integer.max(max,sum);
 		}
 		
 		return Integer.toString(max);
@@ -61,3 +58,8 @@ public class Main {
 	}
 
 }
+
+
+
+
+*/

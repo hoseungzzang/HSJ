@@ -1,5 +1,10 @@
-package inf;
+package inf.ex02;
 
+public class ex02_13 {
+
+}
+
+/*
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -61,3 +66,8 @@ public class Main {
 	}
 
 }
+
+
+
+
+*/
