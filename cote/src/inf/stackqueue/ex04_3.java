@@ -1,4 +1,10 @@
-package inf;
+package inf.stackqueue;
+
+public class ex04_3 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.HashMap;import java.util.Map;import java.util.Map.Entry;
@@ -79,3 +85,7 @@ public class Main {
 	}
 
 }
+
+
+
+*/
