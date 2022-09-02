@@ -1,5 +1,10 @@
-package inf;
+package inf.stackqueue;
 
+public class ex04_6 {
+
+}
+
+/*
 import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,33 +25,33 @@ import java.util.StringTokenizer;
 
 public class Main {
 	
-	public String solution(int human, int call) {
+	public String solution(int human, int call, int[] arr) {
 		String answer= "YES";
-		int cnt = 1;
-
+		int cnt = 0;
+		int index = arr.length-1;
 		Queue<Integer> que =  new LinkedList<>();
-		for(int i=1; i<=human; i++) {
-			que.add(i);
+		Queue<Integer> indexQue =  new LinkedList<>();
+		for(int i=0; i<human; i++) {
+			que.add(arr[i]);
+			indexQue.add(i);
 			}
-		
-		while(que.size()!=1) {
-			
-			
-		
-			if(cnt==call) {
+		Arrays.sort(arr);
+		while(true) {
+			if(arr[index] == que.peek()) {
+				if(indexQue.peek()==call) {
+					cnt++;
+					break;
+				}
 				que.remove();
-				cnt=1;
-				continue;
+				indexQue.remove();
+				cnt++;
+				index--;
+			}else {
+				que.offer(que.poll());
+				indexQue.offer(indexQue.poll());
 			}
-			else {
-				que.add(que.poll());
-			}
-			cnt++;
-	
 		}
-	
-
-		return Integer.toString(que.peek());
+		return Integer.toString(cnt);
 		
 	}
 	
@@ -60,9 +65,17 @@ public class Main {
 		StringTokenizer str = new StringTokenizer(br.readLine());
 		int human = Integer.parseInt(str.nextToken());
 		int call = Integer.parseInt(str.nextToken());
-
+		int [] arr = new int[human];
+		str = new StringTokenizer(br.readLine());
+		for(int i=0; i<human; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+		}
 		
-		System.out.println(T.solution(human, call));
+		System.out.println(T.solution(human, call, arr));
 	}
 
 }
+
+
+
+*/
