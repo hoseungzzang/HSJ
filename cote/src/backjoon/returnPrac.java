@@ -5,40 +5,59 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class returnPrac {
-
-	static boolean [] check ;
-	static int [] node;
-	static String [][] move;
-	
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		int N = Integer.parseInt(br.readLine());
-		node = new int[N+1];
-		move = new String[N+1][N+1];
-	
-		for(int i=1; i<move.length; i++) {
-			StringTokenizer str = new StringTokenizer(br.readLine());
-			int num = str.countTokens();
-			for(int j=0;j<num;j++) {
-				move[i][j] = str.nextToken();
-			}
-		}
-		
-		dfs(N,"A");
-	}
-	
-	public static void dfs(int n, String start) {
+class returnPrac {
+	static int [][] line;
+	static boolean [] check;
+	static int N;
+	static int cnt;
+    // DFS 메소드
+	public static void BFS(int start) {
+		Queue<Integer> que = new LinkedList<Integer>();
+		que.offer(start);
 		check[start] = true;
-		System.out.println();
-		for(int i=1; i<=n;i++) {
-			for(int j=1; j<=move[start].length;j++) {
+	
+		while(!que.isEmpty()) {
+			int num = que.poll();
+			for(int i=1; i<line[num].length; i++) {
+				if(line[num][i]==1 && !check[i]) {
+					check[i] = true;
+					que.offer(i);
 				
 			}
 		}
+		
+		
+	}
+    
+	public static void main(String[] args) throws IOException  {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		
+		StringTokenizer str  = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(str.nextToken());
+		int M = Integer.parseInt(str.nextToken());
+		int start=0;
+		line = new int  [N+1][N+1];
+		check = new boolean[N+1];
+		for(int i=0; i<M; i++) {
+			
+			str  = new StringTokenizer(br.readLine());
+			int num1 = Integer.parseInt(str.nextToken());
+			int num2 = Integer.parseInt(str.nextToken());
+			line[num1][num2] = 1;
+			line[num2][num1] = 1;
+			if(i==0) {
+				start = num1;
+			}
+		}
+		cnt=1;
+		BFS(start);
 	}
 }
