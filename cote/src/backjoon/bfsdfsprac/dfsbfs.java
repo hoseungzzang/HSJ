@@ -1,4 +1,4 @@
-package backjoon;
+package backjoon.bfsdfsprac;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

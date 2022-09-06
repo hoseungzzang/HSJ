@@ -25,31 +25,39 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int roop = Integer.parseInt(br.readLine());
-		
-
-		for (int i = 0; i < roop; i++) {
-
-			for (int j = 0; j < i; j++) {
-				System.out.print(" ");
-			}
-			for (int j = 0; j < (2 * (roop - i)) - 1; j++) {
-				System.out.print("*");
-			}
-			System.out.println();
+		int min = Integer.MAX_VALUE;
+		int su1=0;
+		int su2=0;
+		int [] arr2 = new int[roop];
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int [] arr = new int[roop];
+		for(int i=0; i<roop; i++) {
+			arr[i] = Integer.parseInt(str.nextToken());
+			arr2[i] = Math.abs(arr[i]);
 		}
-		
-		for (int i = 1; i < roop; i++) {
-
-			for (int j = roop-(i+1); j >0; j--) {
-				System.out.print(" ");
+		Arrays.sort(arr2);
+		int [] check = new int[arr2[roop-1]+arr2[roop-2]+1];
+		int rt = 0;
+		int lt=rt+1;
+		while(rt<roop-1) {
+			int num = Math.abs(arr[rt]+arr[lt]);
+			if(check[num]==0&&num<min) {
+				check[num] =1 ;
+					min = num;
+					su1= arr[rt];
+					su2= arr[lt];
+			}else {
+				check[num] =1 ;
 			}
-			for (int j = 0; j < (2 * (i+1)) - 1; j++) {
-				System.out.print("*");
+			lt++;
+			if(lt==roop) {
+				rt++;
+				lt=rt+1;
 			}
-			System.out.println();
+			
+			
 		}
-
-		
+		System.out.println(su1+" "+su2);
 		
 		
 

@@ -1,4 +1,11 @@
-package inf;
+package inf.bfsdfs;
+
+public class ex05_4 {
+
+}
+
+/*
+
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -42,21 +49,24 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Main T = new Main();
 		
+		
+		roop = Integer.parseInt(br.readLine());
+		int [] arr = new int[roop];
+		StringTokenizer str = new StringTokenizer(br.readLine());
 
-		int [][] arr = new int[9][9];
-		Arrays.fill(arr,1);
-
-		for(int i=1; i<=7; i++) {
-				StringTokenizer str = new StringTokenizer(br.readLine());
-			for(int j=1; j<7; j++) {
-					arr[i][j] = Integer.parseInt(str.nextToken());
-			}
+		for(int i=0; i<roop; i++) {
+		arr[i] = Integer.parseInt(str.nextToken());
 
 		}
 		total = Integer.parseInt(br.readLine());
-		//T.solution(0,roop-1,total,arr);
+		T.solution(0,roop-1,total,arr);
 		
 		System.out.println(min);
 	}
 
 }
+
+
+
+
+*/

@@ -1,4 +1,11 @@
-package inf;
+package inf.bfsdfs;
+
+public class ex05_3 {
+
+}
+
+/*
+
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -20,20 +27,17 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static int total,roop,max=0;
-	static int min = Integer.MAX_VALUE; 
-	public void solution(int cnt , int start,int sum, int [] arr) {
-		if(sum==0) {
-			min= Integer.min(min, cnt);
+	public void solution(int start,int timeSum,int score, int [][] arr) {
+		if(total<timeSum) {
 			return;
 		}
-
-		if(start <0) {
+		if(start == roop) {
+			max = Integer.max(max, score);
 			return;
 		}
-		cnt+=sum/arr[start];
-		solution(cnt,start-1,  sum%arr[start],arr);
-		cnt-=sum/arr[start];
-		solution(cnt,start-1, sum,arr);
+	
+		solution(start+1, timeSum+arr[start][1],score+arr[start][0],arr);
+		solution(start+1, timeSum,score,arr);
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -42,21 +46,25 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Main T = new Main();
 		
-
-		int [][] arr = new int[9][9];
-		Arrays.fill(arr,1);
-
-		for(int i=1; i<=7; i++) {
-				StringTokenizer str = new StringTokenizer(br.readLine());
-			for(int j=1; j<7; j++) {
-					arr[i][j] = Integer.parseInt(str.nextToken());
-			}
-
-		}
-		total = Integer.parseInt(br.readLine());
-		//T.solution(0,roop-1,total,arr);
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		roop = Integer.parseInt(str.nextToken());
+		total = Integer.parseInt(str.nextToken());
+		int [][] arr = new int[roop][roop];
 		
-		System.out.println(min);
+		for(int i=0; i<roop; i++) {
+			str = new StringTokenizer(br.readLine());
+			for(int j=0;j<2;j++) {
+				arr[i][j] = Integer.parseInt(str.nextToken());
+			}
+		}
+
+		T.solution(0,0,0,arr);
+		
+		System.out.println(max);
 	}
 
 }
+
+
+
+*/

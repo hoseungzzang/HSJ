@@ -1,4 +1,11 @@
-package inf;
+package inf.stackqueue;
+
+public class ex04_9 {
+
+}
+
+/*
+
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -19,44 +26,51 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int total,roop,max=0;
-	static int min = Integer.MAX_VALUE; 
-	public void solution(int cnt , int start,int sum, int [] arr) {
-		if(sum==0) {
-			min= Integer.min(min, cnt);
+	static int total, roop;
+	static String answer;
+	boolean flag = false;
+	public void solution(int start,int sum, int [] arr) {
+		if(flag) {
 			return;
 		}
+		if(sum>(total/2)) {
+			return;
+		}	
+		if(start==roop) {
+			return ;
+		}
+		if((total-sum)==sum) {
+			answer="YES";
+			flag=true;
+			return;
+		}
+			solution(start+1,sum+arr[start],arr);
+			solution(start+1,sum,arr);
+		
 
-		if(start <0) {
-			return;
-		}
-		cnt+=sum/arr[start];
-		solution(cnt,start-1,  sum%arr[start],arr);
-		cnt-=sum/arr[start];
-		solution(cnt,start-1, sum,arr);
+
 	}
 	
+	
+
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Main T = new Main();
-		
-
-		int [][] arr = new int[9][9];
-		Arrays.fill(arr,1);
-
-		for(int i=1; i<=7; i++) {
-				StringTokenizer str = new StringTokenizer(br.readLine());
-			for(int j=1; j<7; j++) {
-					arr[i][j] = Integer.parseInt(str.nextToken());
-			}
-
+		roop = Integer.parseInt(br.readLine());
+		StringTokenizer str = new StringTokenizer(br.readLine());
+		int [] arr = new int[roop];
+		for(int i=0; i<roop; i++) {
+			total += arr[i] = Integer.parseInt(str.nextToken());
 		}
-		total = Integer.parseInt(br.readLine());
-		//T.solution(0,roop-1,total,arr);
-		
-		System.out.println(min);
+		answer = "NO";
+		T.solution(0,0,arr);
+		System.out.println(answer);
 	}
 
 }
+
+
+
+*/
