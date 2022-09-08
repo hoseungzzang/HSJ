@@ -19,13 +19,12 @@ public class num11724 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		
 		StringTokenizer str  = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(str.nextToken());
 		int M = Integer.parseInt(str.nextToken());
 		line = new int  [N+1][N+1];
 		check = new boolean[N+1];
+		//양방향이므로 양쪽에 1 저장
 		for(int i=0; i<M; i++) {
 			str  = new StringTokenizer(br.readLine());
 			int num1 = Integer.parseInt(str.nextToken());
@@ -34,12 +33,16 @@ public class num11724 {
 			line[num2][num1] = 1;
 		}
 		check = new boolean[N+1];
+		
 		for(int i=1; i<=N; i++) {
 			if(!check[i]) {
 				cnt++;
 			}
 			DFS(i);
+			//2
+		
 		}
+		//2
 		System.out.println(cnt);
 	}
 	public static void DFS(int start) {

@@ -1,4 +1,10 @@
-package inf;
+package inf.bfsdfs;
+
+public class ex05_6 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -22,20 +28,18 @@ public class Main {
 	static int answer =0;
 	static int cnt=0;
 	static int target;
-	static boolean [] check;
-	public void solution(int start, int[][] arr) {
-		if(check[start]){
-            return;
-       }
-		check[start]= true;
-		for(int i=0; i<arr[start].length; i++) {
-			int num = arr[start][i];
-			if(!check[i] && num==1) {
-				solution(start+1,arr);
+	public void solution(int start, int sum, int[] arr) {
+		if(start==arr.length) {
+			if(sum==target) {
+				cnt++;
 			}
-			
+			return;
 		}
-	
+		sum = sum+arr[start];
+		solution(start+1,sum+arr[start],arr);
+		
+		sum = sum-arr[start];
+		solution(start+1,sum-arr[start],arr);
 		
 		
 	}
@@ -45,19 +49,18 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Main T = new Main();
-		int n=3;
-		int[][] computers= {{1,1,0},{1,1,0},{0,0,1}};
-		check = new boolean[n];
-		for(int i=0; i<n; i++) {
-			if(!check[i]) {
-				answer++;
-				T.solution(i,computers);
-			}
+		int[] numbers = {4, 1, 2, 1};
+		 target=4;
 		
-		}
-		
-		System.out.println(answer);
+		T.solution(0,0,numbers);
+		System.out.println(cnt);
 		
 	}
 
 }
+
+
+
+
+
+*/

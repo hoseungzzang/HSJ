@@ -21,48 +21,8 @@ import java.util.stream.Collectors;
 public class lv2 {
 //앞에가 비동의 뒤에가 동의
 	public static void main(String[] args) throws IOException {
-		// 1. 작업이 끝나는 일 수를 계산해서 스택에 넣어줌
-		// 2. 스택의 가장 위에있는 일수보다 들어오려는 일수가 더 크면 스택 사이즈만큼 리스트에 넣어둠
-		// 3. 기존 스택을 초기화하고, 현재 들어온 값을 스택에 넣어줌.
-		// 4. 마지막 날짜는 무조건 스택안에 남고, 리스트에 저장이 되지 않으므로 반복문 종료 후 리스트에 따로 추가해줌.
-		int[] progresses = { 93, 30, 55 };
-		int[] speeds = { 1, 30, 5 };
-		Stack<Integer> stack = new Stack<>();
-		ArrayList<Integer> list = new ArrayList<>();
-		int[] answer;
 		
-		//개발 개수만큼 돌려줌
-		for (int i = 0; i < progresses.length; i++) {
-			int date = progresses[i];
-			int day = 0;
-			//100% 이거나 100%를 넘길때까지 돌려줌. (일자 세기)
-			while (date < 100) {
-				date += speeds[i];
-				day++;
-			}
-			//스택이 비어있으면 (첫번째이면) 그냥 넣어줌.
-			if (stack.isEmpty()) {
-				stack.add(day);
-			} else {
-				//스택에 가장먼저 들어온 일자와 현재 들어오는 일자를 비교하여 적으면 스택에 넣고, 크면 스택을 클리어 후 들어온 일자를 넣어줌.
-				if (stack.firstElement() >= day) {
-					stack.push(day);
-				} else {
-					list.add(stack.size());
-					stack.clear();
-					stack.push(day);
-				}
-
-			}
-		}
-		//스택에 남은 작업 리스트에 추가 후 출력
-		list.add(stack.size());
-		answer = new int[list.size()];
-		for (int i = 0; i < answer.length; i++) {
-			answer[i] = list.get(i);
-			System.out.print(answer[i] + " ");
-		}
-
+		
 	}
 		
 
@@ -1131,4 +1091,52 @@ public class lv2 {
 		System.out.println(answer);
 		
 }
+	
+	public static void ex36() throws IOException {
+		// 1. 작업이 끝나는 일 수를 계산해서 스택에 넣어줌
+		// 2. 스택의 가장 위에있는 일수보다 들어오려는 일수가 더 크면 스택 사이즈만큼 리스트에 넣어둠
+		// 3. 기존 스택을 초기화하고, 현재 들어온 값을 스택에 넣어줌.
+		// 4. 마지막 날짜는 무조건 스택안에 남고, 리스트에 저장이 되지 않으므로 반복문 종료 후 리스트에 따로 추가해줌.
+		int[] progresses = { 93, 30, 55 };
+		int[] speeds = { 1, 30, 5 };
+		Stack<Integer> stack = new Stack<>();
+		ArrayList<Integer> list = new ArrayList<>();
+		int[] answer;
+		
+		//개발 개수만큼 돌려줌
+		for (int i = 0; i < progresses.length; i++) {
+			int date = progresses[i];
+			int day = 0;
+			//100% 이거나 100%를 넘길때까지 돌려줌. (일자 세기)
+			while (date < 100) {
+				date += speeds[i];
+				day++;
+			}
+			//스택이 비어있으면 (첫번째이면) 그냥 넣어줌.
+			if (stack.isEmpty()) {
+				stack.add(day);
+			} else {
+				//스택에 가장먼저 들어온 일자와 현재 들어오는 일자를 비교하여 적으면 스택에 넣고, 크면 스택을 클리어 후 들어온 일자를 넣어줌.
+				if (stack.firstElement() >= day) {
+					stack.push(day);
+				} else {
+					list.add(stack.size());
+					stack.clear();
+					stack.push(day);
+				}
+
+			}
+		}
+		//스택에 남은 작업 리스트에 추가 후 출력
+		list.add(stack.size());
+		answer = new int[list.size()];
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = list.get(i);
+			System.out.print(answer[i] + " ");
+		}
+
+	}
+	
+	
+	
 }
