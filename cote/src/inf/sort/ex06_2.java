@@ -1,4 +1,10 @@
-package inf;
+package inf.sort;
+
+public class ex06_2 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -22,26 +28,14 @@ import java.util.StringTokenizer;
 public class Main {
 
 	public String solution(int[] line ,int n) {
-	String answer = "";
-	ArrayList<Integer> list = new ArrayList<>();
-	for(int i=0; i<line.length; i++) {
-		list.add(line[i]);
-	}
-	Collections.sort(list);
-	int flag=0;
-	for(int i=0; i<line.length-1; i++) {
-		if(line[i] != list.get(i)) {
-			int num = list.get(i);
-			answer+= (i+1) +" ";
-			for(int j=i+1;j<line.length;j++) {
-				if(line[j]<line[j-1]&&line[j] ==num) {
-					flag=j;
-				}
-			}
-			answer+= flag+1;
+	String answer = "U";
+	ArrayList<Integer> list = new ArrayList<Integer>();
+	for(int i=0; i<n;i++) {
+		if(list.indexOf(line[i])!=-1) {
+			answer="D";
 			break;
 		}
-		
+		list.add(line[i]);
 	}
 	return answer;
 		
@@ -68,3 +62,8 @@ public class Main {
 	}
 
 }
+
+
+
+
+*/

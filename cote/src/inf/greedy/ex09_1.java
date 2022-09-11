@@ -1,4 +1,10 @@
-package inf;
+package inf.greedy;
+
+public class ex09_1 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -20,31 +26,20 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
+	public int solution(int[] line,Map<Integer,Integer> map ) {
 
-	public String solution(int[] line ,int n) {
-	String answer = "";
-	ArrayList<Integer> list = new ArrayList<>();
-	for(int i=0; i<line.length; i++) {
-		list.add(line[i]);
-	}
-	Collections.sort(list);
-	int flag=0;
-	for(int i=0; i<line.length-1; i++) {
-		if(line[i] != list.get(i)) {
-			int num = list.get(i);
-			answer+= (i+1) +" ";
-			for(int j=i+1;j<line.length;j++) {
-				if(line[j]<line[j-1]&&line[j] ==num) {
-					flag=j;
-				}
+		int cnt=1;
+		Arrays.sort(line);
+		
+		int max = map.get(line[line.length-1]);
+		
+		for(int i=line.length-1; i>=0; i--) {
+			if(map.get(line[i])>max) {
+				cnt++;
+				max=map.get(line[i]);
 			}
-			answer+= flag+1;
-			break;
 		}
-		
-	}
-	return answer;
-		
+		return cnt;
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -53,18 +48,26 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Main T = new Main();
 
-
 		int n = Integer.parseInt(br.readLine());
-		
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
 		int [] line = new int[n];
-		StringTokenizer	str =new StringTokenizer(br.readLine());
+		
 		for(int i=0; i<n; i++) {
-			line[i] = Integer.parseInt(str.nextToken());
+			StringTokenizer	str =new StringTokenizer(br.readLine());
+		
+				int num1 = Integer.parseInt(str.nextToken());
+				int num2 = Integer.parseInt(str.nextToken());
+				map.put(num1,num2);
+				line[i] = num1;
 		}
-		System.out.println(T.solution(line,n)); 
-		
-		
+
+		System.out.println(T.solution(line,map));
 		
 	}
 
 }
+
+
+
+
+*/

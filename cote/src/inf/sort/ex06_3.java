@@ -1,4 +1,10 @@
-package inf;
+package inf.sort;
+
+public class ex06_3 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -68,3 +74,8 @@ public class Main {
 	}
 
 }
+
+
+
+
+*/
