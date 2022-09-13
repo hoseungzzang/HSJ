@@ -24,43 +24,36 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		int roop = Integer.parseInt(br.readLine());
-		int min = Integer.MAX_VALUE;
-		int su1=0;
-		int su2=0;
-		int [] arr2 = new int[roop];
 		StringTokenizer str = new StringTokenizer(br.readLine());
-		int [] arr = new int[roop];
-		for(int i=0; i<roop; i++) {
-			arr[i] = Integer.parseInt(str.nextToken());
-			arr2[i] = Math.abs(arr[i]);
+		int n = Integer.parseInt(str.nextToken());
+		int m = Integer.parseInt(str.nextToken());
+		
+		int [] arr= new int[n];
+		int rt =0;
+		int lt = 0;
+		str = new StringTokenizer(br.readLine());
+		for(int i=0; i<n; i++) {
+			arr[i]  = Integer.parseInt(str.nextToken());
+			if(rt<arr[i]) {
+				rt = arr[i];
+			}
 		}
-		Arrays.sort(arr2);
-		int [] check = new int[arr2[roop-1]+arr2[roop-2]+1];
-		int rt = 0;
-		int lt=rt+1;
-		while(rt<roop-1) {
-			int num = Math.abs(arr[rt]+arr[lt]);
-			if(check[num]==0&&num<min) {
-				check[num] =1 ;
-					min = num;
-					su1= arr[rt];
-					su2= arr[lt];
+		int middle = 0;
+		while(lt<rt) {
+			long num =0; 
+			middle =  (lt+rt)/2;
+			for(int i=0; i<n; i++) {
+				if(arr[i]-middle>0) {
+					num+=(arr[i]-middle);
+				}
+			}
+			if(num<m) {
+				rt = middle;
 			}else {
-				check[num] =1 ;
+				lt = middle+1;
 			}
-			lt++;
-			if(lt==roop) {
-				rt++;
-				lt=rt+1;
-			}
-			
-			
 		}
-		System.out.println(su1+" "+su2);
-		
-		
-
+		System.out.println(lt-1);
 	}
 
 	public static void ex1() throws IOException {
