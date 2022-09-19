@@ -19,8 +19,34 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class lv2 {
-//앞에가 비동의 뒤에가 동의
+
 	public static void main(String[] args) throws IOException {
+		String[] info = {"java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260",
+				"java backend junior chicken 80","python backend senior chicken 50"};
+		String[] query= {"java and backend and junior and pizza 100","python and frontend and senior and chicken 200",
+				"cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"};
+		int[] answer = new int[query.length];
+		for(int i=0; i<query.length; i++) {
+			query[i] =  query[i].replaceAll(" and ", " ");
+			query[i] =  query[i].replaceAll("-", "");
+			String [] queryArr = query[i].split(" ");
+			for(int j=0; j<info.length; j++) {
+				String [] infoArr = info[j].split(" ");
+				for(int k=0;k<queryArr.length;k++) {
+					if(k==queryArr.length-1) {
+						if(Integer.parseInt(queryArr[k])<=Integer.parseInt(infoArr[infoArr.length-1])) answer[i]+=1; 
+					}else {
+						if(!info[j].contains(queryArr[k])) break;
+					}
+					
+				}
+	
+				
+			}
+		}
+		for(int i=0; i<answer.length ;i++) {
+			System.out.println(answer[i]);
+		}
 		
 		
 	}
@@ -1136,7 +1162,41 @@ public class lv2 {
 		}
 
 	}
+	public static void ex37() throws IOException {
+		
+		int n=6;
+		int [] times = {7,10};
 	
+		Arrays.sort(times);
+		long min = 0;
+		long max =(long) n*times[times.length-1]; //이거때문에 한시간 날렸다.. long형으로 캐스팅 해줘야만 정상적인 값이 들어온다.
+		long answer=Long.MAX_VALUE;
+		long mid = 0;
+		
+		while(min<=max) {
+			long num =0;
+			//중간값 계산
+			mid=(min+max)/2;
+			
+			//중간값에 들어온 시간을 뺀 몫을 더한다.
+			for(int i=0;i<times.length; i++) {
+				num += mid/times[i];
+			}
+			
+			//구하고자 하는 수보다 작을 경우 최소값 +1
+			if(num<n) {
+				min = mid+1;
+			}else {
+				//클경우는 현재 답으로 구해진 최소값보다 작은 값이 들어올 경우 바꿔준다.
+				if(mid<answer) {
+						answer = mid;
+				}
+				//클경우 최대값-1
+				max=mid-1;
+			}
+		}
+		System.out.println(answer);
+	}
 	
 	
 }

@@ -80,6 +80,7 @@ public class num7576 {
 	}
 	
 }
+/*
 //que에 좌표 자체를 저장하기 위한 클래스 선언
 class Point{
 	public int x,y;
@@ -89,6 +90,6 @@ class Point{
 		
 	}
 }
-
+*/
 
 

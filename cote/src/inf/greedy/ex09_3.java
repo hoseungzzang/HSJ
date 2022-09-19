@@ -1,4 +1,10 @@
-package inf;
+package inf.greedy;
+
+public class ex09_3 {
+
+}
+
+/*
 
 import java.io.BufferedReader;
 import java.util.LinkedList;
@@ -63,3 +69,8 @@ public class Main {
 		System.out.println(T.solution(arr)); 
 	}
 }
+
+
+
+
+*/

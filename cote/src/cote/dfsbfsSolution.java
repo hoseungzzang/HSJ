@@ -9,19 +9,27 @@ import inf.Main;
 
 public class dfsbfsSolution {
 	
-	static int answer =0;
 	static boolean [] check;
-	
-	public static void DFS(int start, int[][] arr,int n) {
-
+	static int [] answer;
+	static int count=0;
+	static boolean flag = false;
+	public static void DFS(int start, int cnt, int n, int k) {
+			if(flag) return;
 			if(check[start]) return;
+			if(cnt==n-1) {
+				count++;
+			}
 			
+			answer[cnt] = start+1;
 			check[start]= true;
-			for(int i=start+1; i<arr[start].length; i++) {
-				int num = arr[start][i];
-				if( num==1) {
-					DFS(i,arr,n);
+			if(count==k) flag=true;
+		
+			for(int i=0; i<n; i++) {
+				if(!check[i] && count!=k) {
+					DFS(i,cnt+1,n,k);
+					check[i] = false;
 				}
+				
 				
 			}
 			
@@ -34,17 +42,21 @@ public class dfsbfsSolution {
 	public static void main(String[] args) {
 		
 		int n=3;
-		int[][] computers= {{1,0,0},{0,1,0},{0,0,1}};
-		check = new boolean[n];
-		for(int i=0; i<n; i++) {
-			if(!check[i]) {
-				answer++;
-				DFS(i,computers,n);
-			}
+		int k = 5;
 		
+		
+		for(int i=0; i<n; i++) {
+			check = new boolean[n];
+			answer = new int [n];
+			DFS(i,0,n,k);
+			if(count==k) break;
+		}
+	
+
+		for(int i=0; i<answer.length; i++) {
+			System.out.println(answer[i]);
 		}
 		
-		System.out.println(answer);
 		
 	}
 
