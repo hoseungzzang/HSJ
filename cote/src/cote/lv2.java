@@ -21,34 +21,29 @@ import java.util.stream.Collectors;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		String[] info = {"java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260",
-				"java backend junior chicken 80","python backend senior chicken 50"};
-		String[] query= {"java and backend and junior and pizza 100","python and frontend and senior and chicken 200",
-				"cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150"};
-		int[] answer = new int[query.length];
-		for(int i=0; i<query.length; i++) {
-			query[i] =  query[i].replaceAll(" and ", " ");
-			query[i] =  query[i].replaceAll("-", "");
-			String [] queryArr = query[i].split(" ");
-			for(int j=0; j<info.length; j++) {
-				String [] infoArr = info[j].split(" ");
-				for(int k=0;k<queryArr.length;k++) {
-					if(k==queryArr.length-1) {
-						if(Integer.parseInt(queryArr[k])<=Integer.parseInt(infoArr[infoArr.length-1])) answer[i]+=1; 
-					}else {
-						if(!info[j].contains(queryArr[k])) break;
-					}
-					
+		
+		int[] citations = {6, 5, 5, 5, 3, 2, 1, 0};
+		int lt = 0;
+		
+		int answer = Integer.MIN_VALUE;
+		Arrays.sort(citations);
+		int rt = citations[citations.length-1];
+		while(lt<=rt) {
+			int cnt=0;
+			int index = (lt+rt)/2;
+			for(int i=0; i<citations.length; i++) {
+				if(index<=citations[i]) {
+					cnt++;
 				}
-	
-				
+			}
+			if(cnt>=index) {
+				answer = Integer.max(answer, index);
+				lt = index+1;
+			}else {
+				rt = index-1;
 			}
 		}
-		for(int i=0; i<answer.length ;i++) {
-			System.out.println(answer[i]);
-		}
-		
-		
+		System.out.println(answer);
 	}
 		
 
@@ -1196,6 +1191,55 @@ public class lv2 {
 			}
 		}
 		System.out.println(answer);
+	}
+	
+	public static void ex38() throws IOException {
+		int[] fees = {180, 5000, 10, 600}; 
+		String[] records = {"05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"};
+		
+		ArrayList<String> list = new ArrayList<>();
+		Map<String, Integer> map = new HashMap<>();
+		for(int i=0; i<records.length; i++) {
+			String [] arr = records[i].split(" ");
+			if(list.indexOf(arr[1])==-1) {
+				list.add(arr[1]);
+			}
+		}
+		Collections.sort(list);
+		int[] answer = new int[list.size()];
+		for(int i=0; i<list.size(); i++) {
+			int sum =0;
+			String num = list.get(i);
+			for(int j=0;j<records.length; j++) {
+				if(records[j].contains(num)) {
+					String [] arr = records[j].split(" ");
+					String [] sibun = arr[0].split(":");
+					int si = Integer.parseInt(sibun[0])*60;
+					int bun = Integer.parseInt(sibun[1]);
+					if(arr[2].equals("OUT")) {
+						sum+= ((si+bun) - map.get(arr[1]));
+						map.remove(arr[1]);
+					}else {
+						map.put(arr[1], si+bun);
+					}
+				}
+			}
+			if(!map.isEmpty()) {
+				sum+= 1439 - map.get(num);
+				map.remove(num);
+			}
+			if(sum>fees[0]) {
+				answer[i] =(int) (fees[1] + Math.ceil((double) (sum - fees[0]) / fees[2]) * fees[3]);
+			}else {
+				answer[i] = fees[1];
+			}
+			
+			
+		}
+		
+		for(int i=0; i<answer.length; i++) {
+			System.out.println(answer[i]);
+		}
 	}
 	
 	

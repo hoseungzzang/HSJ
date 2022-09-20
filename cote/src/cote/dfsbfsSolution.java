@@ -12,45 +12,38 @@ public class dfsbfsSolution {
 	static boolean [] check;
 	static int [] answer;
 	static int count=0;
-	static boolean flag = false;
 	public static void DFS(int start, int cnt, int n, int k) {
-			if(flag) return;
-			if(check[start]) return;
+			if(count==k|| cnt==n) return;
 			if(cnt==n-1) {
 				count++;
 			}
 			
-			answer[cnt] = start+1;
-			check[start]= true;
-			if(count==k) flag=true;
-		
 			for(int i=0; i<n; i++) {
-				if(!check[i] && count!=k) {
+				if(!check[i]) {
+					answer[cnt] = i+1;
+					check[i]= true;
 					DFS(i,cnt+1,n,k);
 					check[i] = false;
+					if(count==k) break;
+				
 				}
 				
 				
 			}
-			
-			
-	
 		
 	}
 	
-
 	public static void main(String[] args) {
 		
 		int n=3;
 		int k = 5;
 		
 		
-		for(int i=0; i<n; i++) {
+
 			check = new boolean[n];
 			answer = new int [n];
-			DFS(i,0,n,k);
-			if(count==k) break;
-		}
+			DFS(0,0,n,k);
+
 	
 
 		for(int i=0; i<answer.length; i++) {
