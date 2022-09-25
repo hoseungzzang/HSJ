@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class num1806 {
-	
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,39 +16,36 @@ public class num1806 {
 		StringTokenizer str = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(str.nextToken());
 		int s = Integer.parseInt(str.nextToken());
-		int [] arr = new int[n];
-		int 	calc =0;
+		int[] arr = new int[n];
 		str = new StringTokenizer(br.readLine());
-		for(int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			arr[i] = Integer.parseInt(str.nextToken());
-			calc+=arr[i];
 		}
-		
-			Arrays.sort(arr);
-			int lp=0;
-			int rp=lp;
-			
-			int len = Integer.MAX_VALUE;
-			int sum = 0;
-			while(lp<n) {
-				int cnt=0;
-				sum = arr[lp];
-				for(int i=lp+1; i<n; i++) {
-					sum+=arr[i];
-					cnt++;
-					if(sum>=s) {
-						len = Integer.min(len,cnt);
-					}
-				}
-			
+		int sum=0;
+		int lp = 0;
+		int len = Integer.MAX_VALUE;
+		int rp = 0;
+		int cnt=0;
+		while (lp < n ) {
+			if(sum>=s) {
+				len = Integer.min(cnt,len);
+				sum-=arr[lp];
+				lp++;
+				cnt--;
+			}else if(rp<n){
+				sum+=arr[rp];
+				cnt++;
+				rp++;
+			}else {
+				break;
+			}
+		}
+		if(len == Integer.MAX_VALUE) {
+			System.out.println(0);
+		}else {
 			System.out.println(len);
 		}
-	
 		
 	}
-	
+
 }
-
-
-
-

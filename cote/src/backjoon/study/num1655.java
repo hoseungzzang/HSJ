@@ -5,11 +5,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.StringTokenizer;
+
 
 public class num1655 {
 	
@@ -19,13 +17,24 @@ public class num1655 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+		PriorityQueue<Integer> min = new PriorityQueue<>();
+		
+		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
 		for(int i=0; i<n; i++) {
-			pq.offer(Integer.parseInt(br.readLine()));
-			if(pq.size()%2!=0) {
-				System.out.println(pq.);
-			}
+			int num = Integer.parseInt(br.readLine());
+			int calc = i/2;
+			min.offer(num);
+			max.offer(num);
+			PriorityQueue<Integer> minCalc = new PriorityQueue<>(min);
+			PriorityQueue<Integer> maxCalc = new PriorityQueue<>(max);
+				for(int j=0; j<calc; j++) {
+					minCalc.poll();
+					maxCalc.poll();
+				}
+				bw.write(Integer.min(minCalc.peek(), maxCalc.peek())+"\n");
 		}
+		bw.flush();
+		
 	}
 	
 }
