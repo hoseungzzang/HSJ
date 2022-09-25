@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
@@ -22,28 +23,40 @@ public class lv2 {
 
 	public static void main(String[] args) throws IOException {
 		
-		int[] citations = {6, 5, 5, 5, 3, 2, 1, 0};
-		int lt = 0;
-		
-		int answer = Integer.MIN_VALUE;
-		Arrays.sort(citations);
-		int rt = citations[citations.length-1];
-		while(lt<=rt) {
-			int cnt=0;
-			int index = (lt+rt)/2;
-			for(int i=0; i<citations.length; i++) {
-				if(index<=citations[i]) {
-					cnt++;
+		String[] id_list= {"con", "ryan"};
+		String[] report= {"ryan con", "ryan con", "ryan con", "ryan con"};
+		int k =2;
+		int [] answer = new int[id_list.length];
+		ArrayList<String> list = new ArrayList<>();
+		for(int i=0; i<id_list.length; i++) {
+			list.add(id_list[i]);
+		}
+		HashMap<String,ArrayList<String>>  table= new HashMap<>();
+		for(int i=0; i<report.length; i++) {
+			ArrayList<String> name = new ArrayList<>();
+			String[] arr = report[i].split(" ");
+			if(table.containsKey(arr[1])) {
+				name = table.get(arr[1]);
+				if(name.indexOf(arr[0])==-1) {
+					name.add(arr[0]);
+					table.put(arr[1],name);
 				}
-			}
-			if(cnt>=index) {
-				answer = Integer.max(answer, index);
-				lt = index+1;
 			}else {
-				rt = index-1;
+				name.add(arr[0]);
+				table.put(arr[1],name);
 			}
 		}
-		System.out.println(answer);
+
+		 for( String key : table.keySet() ){
+				ArrayList<String> name  = table.get(key);
+			 if(name.size()>=k) {
+				 for(int i=0; i<name.size(); i++) {
+					 String nm = name.get(i);
+					 answer[list.indexOf(nm)]++;
+				 }
+			 }
+	      }
+
 	}
 		
 
