@@ -20,28 +20,46 @@ public class num9935 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		String s = br.readLine();
 		String boom = br.readLine();
-		Stack<Character> answer = new Stack<>();
-		String an = "";
+		Map<String,Integer> map = new HashMap<>();
+		for(int i=0; i<boom.length(); i++) {
+			map.put(Character.toString(boom.charAt(i)),i);
+		}
+		Stack<String> main = new Stack<>();
+		Stack<Integer> sub = new Stack<>();
+		String answer = "";
 		for(int i=0; i<s.length(); i++) {
-			if()
-			for(int j=0;j<boom.length(); j++) {
-				if(s.charAt(i)==boom.charAt(j)) {
-					
+			String st = Character.toString(s.charAt(i));
+			main.push(st);
+			if(map.containsKey(st)) {
+				if(sub.isEmpty() && map.get(st)==0) {
+					sub.push(map.get(st));
+				}else if(!sub.isEmpty()) {
+					if(sub.peek()+1 < map.get(st)) {
+						sub.clear();
+					}else {
+						sub.push(map.get(st));
+						if(sub.peek()+1 == boom.length()) {
+							for(int j=0; j<boom.length(); j++) {
+								sub.pop();
+								main.pop();
+							}
+						}
+					}
+				
 				}
 			}
-		}
-		
-		if(answer.isEmpty()) {
-			System.out.println("FRULA");
-		}else {
-			int k=0;
-			while(k<answer.size()) {
-				bw.write(answer.get(k)+"");
-				k++;
-			}
+			
 			
 		}
-		bw.flush();
+		if(main.isEmpty()) {
+			System.out.println("FRULA");
+		}else {
+				String [] arr = new String[main.size()];
+				arr = main.toArray(arr);
+				for(int i=0; i<arr.length; i++) {
+					System.out.print(arr[i]); 
+				}
+		}
 	}
 	
 }

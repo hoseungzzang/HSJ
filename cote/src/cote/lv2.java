@@ -23,40 +23,7 @@ public class lv2 {
 
 	public static void main(String[] args) throws IOException {
 		
-		String[] id_list= {"con", "ryan"};
-		String[] report= {"ryan con", "ryan con", "ryan con", "ryan con"};
-		int k =2;
-		int [] answer = new int[id_list.length];
-		ArrayList<String> list = new ArrayList<>();
-		for(int i=0; i<id_list.length; i++) {
-			list.add(id_list[i]);
-		}
-		HashMap<String,ArrayList<String>>  table= new HashMap<>();
-		for(int i=0; i<report.length; i++) {
-			ArrayList<String> name = new ArrayList<>();
-			String[] arr = report[i].split(" ");
-			if(table.containsKey(arr[1])) {
-				name = table.get(arr[1]);
-				if(name.indexOf(arr[0])==-1) {
-					name.add(arr[0]);
-					table.put(arr[1],name);
-				}
-			}else {
-				name.add(arr[0]);
-				table.put(arr[1],name);
-			}
-		}
-
-		 for( String key : table.keySet() ){
-				ArrayList<String> name  = table.get(key);
-			 if(name.size()>=k) {
-				 for(int i=0; i<name.size(); i++) {
-					 String nm = name.get(i);
-					 answer[list.indexOf(nm)]++;
-				 }
-			 }
-	      }
-
+		
 	}
 		
 
@@ -1255,5 +1222,142 @@ public class lv2 {
 		}
 	}
 	
+	public static void ex39() throws IOException {
+		
+		String[] id_list= {"con", "ryan"};
+		String[] report= {"ryan con", "ryan con", "ryan con", "ryan con"};
+		int k =2;
+		int [] answer = new int[id_list.length];
+		ArrayList<String> list = new ArrayList<>();
+		for(int i=0; i<id_list.length; i++) {
+			list.add(id_list[i]);
+		}
+		HashMap<String,ArrayList<String>>  table= new HashMap<>();
+		for(int i=0; i<report.length; i++) {
+			ArrayList<String> name = new ArrayList<>();
+			String[] arr = report[i].split(" ");
+			if(table.containsKey(arr[1])) {
+				name = table.get(arr[1]);
+				if(name.indexOf(arr[0])==-1) {
+					name.add(arr[0]);
+					table.put(arr[1],name);
+				}
+			}else {
+				name.add(arr[0]);
+				table.put(arr[1],name);
+			}
+		}
+
+		 for( String key : table.keySet() ){
+				ArrayList<String> name  = table.get(key);
+			 if(name.size()>=k) {
+				 for(int i=0; i<name.size(); i++) {
+					 String nm = name.get(i);
+					 answer[list.indexOf(nm)]++;
+				 }
+			 }
+	      }
+
+	}
+	
+	public static void ex40() throws IOException {
+		Map<String,String> map = new HashMap<>();
+		map.put("]", "[");
+		map.put("}", "{");
+		map.put(")", "(");
+		String s = "[";
+		String [] arr = s.split("");
+		Queue<String> que = new LinkedList<String>();
+		int answer = 0;
+		for(int i=0; i<arr.length; i++) {
+			que.offer(arr[i]);
+		}
+		
+		for(int i=0; i<arr.length; i++) {
+			if(i!=0) {
+				que.offer(que.poll());
+				arr = que.toArray(arr);
+			}
+			Stack<String> stack = new Stack<>();
+			char flag = 'O';
+			for(int j=0; j<s.length(); j++) {
+				if(map.containsValue(arr[j])) {
+					stack.push(arr[j]);
+				}else {
+					if(stack.isEmpty()|| !stack.peek().equals( map.get(arr[j]))) {
+						flag = 'X';
+						break;
+					}else {
+						stack.pop();
+					}
+				}
+			}
+			if(flag == 'O' && stack.isEmpty()) answer++;
+		}
+		System.out.println(answer);
+		
+	}
+	
+	public static void ex41() throws IOException {
+		
+		int[] scoville = {1,2,3,9,10,12};
+		int K = 7;
+		PriorityQueue<Integer> min = new PriorityQueue<>();
+		for(int i=0; i<scoville.length; i++) {
+			min.add(scoville[i]);
+		}
+		int answer = 0;
+		while(min.peek()<K && min.size()!=1) {
+			int sum = min.poll()+(min.poll()*2);
+				min.add(sum);
+				answer++;
+		}
+		if(min.size()==1 && min.peek()<K) {
+			answer = -1;
+		}
+		System.out.println(answer);
+	}
+	public static void ex42() throws IOException {
+		int[] queue1= {3,3,3,3};
+		int[] queue2 = {3,3,21,3};
+		
+		Queue<Long> que1 = new LinkedList<Long>();
+		Queue<Long> que2 = new LinkedList<Long>();
+		long sum1=0;
+		long sum2=0;
+		
+		for(int i=0; i<queue1.length; i++) {
+			que1.offer((long)queue1[i]);
+			que2.offer((long)queue2[i]);
+			sum1 += queue1[i];
+			sum2 += queue2[i];
+		}
+		long result = (sum1+sum2)/2;
+		int cnt=0;
+		while(sum1!=sum2) {
+			if(sum1>sum2) {
+				long num = que1.poll();
+				if(num>result) {
+					cnt=-1;
+					break;
+				}
+				que2.add(num);
+				sum2+=num;
+				sum1-=num;
+			}else {
+				long num = que2.poll();
+				if(num>result) {
+					cnt=-1;
+					break;
+				}
+				que1.add(num);
+				sum1+=num;
+				sum2-=num;
+			}
+			cnt++;
+		}
+		System.out.println(cnt);
+		
+	}
 	
 }
