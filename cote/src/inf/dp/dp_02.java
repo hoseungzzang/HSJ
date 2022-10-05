@@ -1,4 +1,9 @@
-package inf;
+package inf.dp;
+
+public class dp_02 {
+
+}
+/*
 
 import java.io.BufferedReader;
 import java.util.LinkedList;
@@ -17,22 +22,16 @@ import java.util.StringTokenizer;
 public class Main {
 	
 	static int [] dy ;
-	public int solution(int n , int [] arr) {
-		dy[0] = 1;
-		int answer =0;
-		for(int i = 1; i<n; i++) {
-			int max = Integer.MIN_VALUE;
-			for(int j = i-1; j>=0; j--) {
-				if(arr[j]<arr[i]&& dy[j]>max) {
-					dy[i] = dy[j]+1;
-					max = dy[j];
-				}
-			}
-			if(max == Integer.MIN_VALUE) dy[i] = 1;
-			answer = Math.max(answer, dy[i]);
+	public int solution(int n) {
+		dy[1] = 1;
+		dy[2] = 2;
+		for(int i = 3; i<=n+1; i++) {
+			dy[i] = dy[i-2] + dy[i-1];
 		}
 
-		return answer;
+		
+		
+		return dy[n+1];
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -42,12 +41,9 @@ public class Main {
 		Main T = new Main();
 		
 		int roop = Integer.parseInt(br.readLine());
-		dy = new int[roop];
-		int [] arr = new int [roop];
-		StringTokenizer str = new StringTokenizer(br.readLine());
-		for(int i=0; i<roop; i++) {
-			arr[i] =  Integer.parseInt(str.nextToken());
-		}
-		System.out.println(T.solution(roop,arr)); 
+		dy = new int[roop+2];
+		System.out.println(T.solution(roop)); 
 	}
 }
+
+*/

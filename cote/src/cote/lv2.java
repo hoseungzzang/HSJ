@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +23,29 @@ import java.util.stream.Collectors;
 public class lv2 {
 
 	public static void main(String[] args) throws IOException {
-		
-		
+		int[][] triangle = {{7},{3,8},{8,1,0},{2,7,4,4},{4,5,2,6,5}};
+		triangle[1][0] +=triangle[0][0];
+		triangle[1][1] +=triangle[0][0];
+		int answer = 0;
+		for(int i=1; i<triangle.length-1; i++) {
+			
+			for(int j=0; j<triangle[i+1].length;j++) {
+				if(j==0) {
+					triangle[i+1][j] = triangle[i][j] + triangle[i+1][j];
+				}else if(j == triangle[i+1].length-1) {
+					triangle[i+1][j] = triangle[i][j-1] + triangle[i+1][j];
+				}else {
+					int max = Math.max(triangle[i][j-1],triangle[i][j]);
+					triangle[i+1][j] = max + triangle[i+1][j];
+				}
+			}
+		}
+		for(int i =0; i<triangle[triangle.length-1].length;i++) {
+			if(answer<triangle[triangle.length-1][i]) {
+				answer = triangle[triangle.length-1][i];
+			}
+		}
+		System.out.println(answer);
 	}
 		
 
@@ -1358,6 +1380,38 @@ public class lv2 {
 		}
 		System.out.println(cnt);
 		
+	}
+	
+	public static void ex43() throws IOException {
+		String[] gems = {"XYZ", "XYZ", "XYZ"};
+		  int[] answer = new int[2];
+	        int start = 0;
+			int end = 0;
+			HashSet<String> set = new HashSet<String>();
+			for(int i=0; i<gems.length; i++ ) {
+				set.add(gems[i]);
+			}
+			HashMap<String,Integer> map = new HashMap<>();
+			int min =Integer.MAX_VALUE;
+			map.put(gems[end], 1);
+			while(end<gems.length) {
+				if(map.size() == set.size()) {
+					if(end - start<min) {
+						min = end - start;
+						answer[0]  = start+1;
+						 answer[1]  = end+1;
+					}
+					map.put(gems[start], map.get(gems[start])-1);
+					if(map.get(gems[start])==0) map.remove(gems[start]);
+					start++;
+				}else {
+					end++;
+					if(end==gems.length) break;
+					map.put(gems[end], map.getOrDefault(gems[end], 0) + 1);
+					
+				}
+			}
+		System.out.println(answer[0] + " "+ answer[1]);
 	}
 	
 }
