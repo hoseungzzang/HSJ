@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class num14502 {
+public class num16234 {
 	static int [] y = {-1,0,1,0};
 	static int [] x = {0,1,0,-1};
 	static int calc =1;
@@ -45,10 +45,10 @@ public class num14502 {
 	public static void BFS(int [][] arr,int l, int r) {
 		Queue<Point> que  = new LinkedList<>();
 		que.offer(new Point(0,0));
-		check[0][0]=1;
 		while(!que.isEmpty()) {
 			boolean flag = false;
 			Point num = que.poll();
+			check[num.x][num.y]=1;
 			for(int i=0; i<4; i++) {
 				if(num.x+y[i]>=0 && num.x+y[i]<arr.length && num.y+x[i]>=0 && num.y+x[i]<arr.length ) {
 					int sum = Math.abs(arr[num.x][num.y] - arr[num.x+y[i]][num.y+x[i]]);
@@ -58,14 +58,11 @@ public class num14502 {
 							list.add(new Point(num.x,num.y));
 							calc += arr[num.x][num.y];
 						}
-						if(check[num.x+y[i]][num.y+x[i]]!=1) {
-							check[num.x+y[i]][num.y+x[i]]=1;
-							que.offer(new Point(num.x+y[i],num.y+x[i]));
-						}
-					
-		
 					}
-						
+					if( check[num.x+y[i]][num.y+x[i]]!=1 ) {
+						check[num.x+y[i]][num.y+x[i]]=1;
+						que.offer(new Point(num.x+y[i],num.y+x[i]));
+					}
 				}
 			}
 		

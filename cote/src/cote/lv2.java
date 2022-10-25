@@ -21,37 +21,33 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class lv2 {
-
+	static boolean [] check;
+	static int count;
 	public static void main(String[] args) throws IOException {
-		String s = "aabbaccc";
-		  int answer = s.length();    // 압축하기 전 문자열 길이로 초기화
-	        
-	        for(int i = 1; i <= s.length() / 2; i++){
-	            int zipLevel = 1;                           // 현재 압축정도
-	            String zipStr = s.substring(0, i);          // 압축할 문자
-	            StringBuilder result = new StringBuilder(); // 압축완료한 문자를 저장할 StringBuilder
-	            
-	            for(int j = i; j <= s.length(); j += i){
-	                // 다음 문자 추출
-	                String next = s.substring(j, j + i > s.length() ? s.length() : i + j);
-	                // 다음 문자와 현재 문자가 같으면 zipLevel증가
-	                if(zipStr.equals(next)) zipLevel++;
-	                // 다음 문자와 현재 문자가 다를 경우
-	                else{
-	                    // (압축이 안됬을 경우는 공백, 압축이 됬을경우 zipLevel을 붙여줌) + 압축할 문자를 넣어줌, 
-	                    result.append((zipLevel != 1 ? zipLevel : "") + zipStr);
-	                    zipStr = next;      // 다음 문자를 압축할 문자로 지정
-	                    zipLevel = 1;       // 압축 정도 1로 초기화
-	                }
-	            }
-	            result.append(zipStr);      // 마지막에 추가안된 zipStr추가
-	            answer = Math.min(answer, result.length()); // 가장 작은 문자열 길이 저장
-	        }
-	        System.out.println(answer);
-	        
+		int [] cards= {8,6,3,7,2,5,1,4};
+		check = new boolean[cards.length];
+		int answer= 0;
+		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
+		for(int i=0; i<cards.length; i++) {
+			count = 0;
+			if(!check[i]) DFS(i,cards);
+			
+			if(count!=0)max.offer(count);
+			
+		}
+		if(max.size()>1) {
+			answer = max.poll() * max.poll();
+		}else answer = 0;
+		System.out.println(answer);
 		
 	}
+	public static void DFS(int start, int [] cards) {
+		if(check[start]) return;
 		
+		check[start] = true;
+		count++;
+		DFS(cards[start]-1,cards);
+	}
 
 
 	public static void ex1() {
@@ -1454,6 +1450,68 @@ public class lv2 {
 		}
 		answer = Math.max(Math.max(land[land.length-1][0], land[land.length-1][1]), Math.max(land[land.length-1][0], land[land.length-1][1]));
 		System.out.println(answer);
+	}
+	public static void ex46() throws IOException {
+		String s = "aabbaccc";
+		  int answer = s.length();    // 압축하기 전 문자열 길이로 초기화
+	        
+	        for(int i = 1; i <= s.length() / 2; i++){
+	            int zipLevel = 1;                           // 현재 압축정도
+	            String zipStr = s.substring(0, i);          // 압축할 문자
+	            StringBuilder result = new StringBuilder(); // 압축완료한 문자를 저장할 StringBuilder
+	            
+	            for(int j = i; j <= s.length(); j += i){
+	                // 다음 문자 추출
+	                String next = s.substring(j, j + i > s.length() ? s.length() : i + j);
+	                // 다음 문자와 현재 문자가 같으면 zipLevel증가
+	                if(zipStr.equals(next)) zipLevel++;
+	                // 다음 문자와 현재 문자가 다를 경우
+	                else{
+	                    // (압축이 안됬을 경우는 공백, 압축이 됬을경우 zipLevel을 붙여줌) + 압축할 문자를 넣어줌, 
+	                    result.append((zipLevel != 1 ? zipLevel : "") + zipStr);
+	                    zipStr = next;      // 다음 문자를 압축할 문자로 지정
+	                    zipLevel = 1;       // 압축 정도 1로 초기화
+	                }
+	            }
+	            result.append(zipStr);      // 마지막에 추가안된 zipStr추가
+	            answer = Math.min(answer, result.length()); // 가장 작은 문자열 길이 저장
+	        }
+	        System.out.println(answer);
+	        
+		
+	}
+	public static void ex47() throws IOException {
+		int [] order = {2, 1, 4, 3, 6, 5, 8, 7, 10, 9};
+		int answer=0;
+		Queue<Integer> que = new LinkedList<Integer>();
+		Stack<Integer> stack = new Stack<>();
+		for(int i=1; i<=order.length; i++) {
+			if(i<order[0]) {
+				stack.push(i);
+			}else {
+				que.offer(i);
+			}
+			
+		}
+		
+		while(answer!=order.length) {
+			if(!que.isEmpty() && que.peek() == order[answer]) {
+				que.poll();
+				answer++;
+			}else if(!stack.isEmpty() && stack.peek() == order[answer]){
+				stack.pop();
+				answer++;
+			}else {
+				if(!que.isEmpty()) {
+					stack.push(que.poll());
+				}else {
+					break;
+				}
+			}
+		}
+		
+		System.out.println(answer);
+		
 	}
 	
 }

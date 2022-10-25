@@ -17,21 +17,31 @@ public class num1655 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
-		PriorityQueue<Integer> min = new PriorityQueue<>();
-		
-		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
+		PriorityQueue<Integer> min = new PriorityQueue<>(Collections.reverseOrder());
+		PriorityQueue<Integer> max = new PriorityQueue<>();
 		for(int i=0; i<n; i++) {
-			int num = Integer.parseInt(br.readLine());
-			int calc = i/2;
-			min.offer(num);
-			max.offer(num);
-			PriorityQueue<Integer> minCalc = new PriorityQueue<>(min);
-			PriorityQueue<Integer> maxCalc = new PriorityQueue<>(max);
-				for(int j=0; j<calc; j++) {
-					minCalc.poll();
-					maxCalc.poll();
-				}
-				bw.write(Integer.min(minCalc.peek(), maxCalc.peek())+"\n");
+				int num  = Integer.parseInt(br.readLine());
+				if(max.size() != min.size()) {
+					if(min.peek()>num) {
+						max.offer(min.poll());
+						min.offer(num);
+					}else {
+						max.offer(num);
+					}
+				}else {
+					if(i==0) {
+						min.offer(num);
+					}else {
+						if(max.peek()<num) {
+							min.offer(max.poll());
+							max.offer(num);
+						}else {
+							min.offer(num);
+						}
+					}
+					
+				}	
+			bw.write(min.peek()+"\n");
 		}
 		bw.flush();
 		
