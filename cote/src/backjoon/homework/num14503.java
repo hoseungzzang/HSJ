@@ -59,6 +59,5 @@ public class num14503 {
 			
 		}
 		System.out.println(cnt);
-
 	}
 }
