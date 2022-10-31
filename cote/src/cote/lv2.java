@@ -24,22 +24,24 @@ public class lv2 {
 	static boolean [] check;
 	static int count;
 	public static void main(String[] args) throws IOException {
-		int [] cards= {8,6,3,7,2,5,1,4};
-		check = new boolean[cards.length];
-		int answer= 0;
-		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
-		for(int i=0; i<cards.length; i++) {
-			count = 0;
-			if(!check[i]) DFS(i,cards);
-			
-			if(count!=0)max.offer(count);
-			
+		int [] topping = {1, 2, 1, 3, 1, 4, 1, 2};
+		int answer = 0;
+		HashMap<Integer,Integer> h = new HashMap<Integer,Integer>();
+		HashMap<Integer,Integer> d = new HashMap<Integer,Integer>();
+		for(int i=0; i<topping.length; i++) {
+			h.put(topping[i], h.getOrDefault(topping[i], 0) +1);
 		}
-		if(max.size()>1) {
-			answer = max.poll() * max.poll();
-		}else answer = 0;
+		int i =0;
+		while(d.size()<=h.size()) {
+			d.put(topping[i], d.getOrDefault(topping[i], 0) +1);
+			h.put(topping[i], h.get(topping[i])-1);
+			if(h.get(topping[i])==0) h.remove(topping[i]);
+			
+			if(d.size() == h.size()) answer++;
+			i++;
+		}
+
 		System.out.println(answer);
-		
 	}
 	public static void DFS(int start, int [] cards) {
 		if(check[start]) return;
@@ -1512,6 +1514,63 @@ public class lv2 {
 		
 		System.out.println(answer);
 		
+	}
+	public static void ex48() throws IOException {
+		int [] cards= {8,6,3,7,2,5,1,4};
+		check = new boolean[cards.length];
+		int answer= 0;
+		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
+		for(int i=0; i<cards.length; i++) {
+			count = 0;
+			if(!check[i]) DFS(i,cards);
+			
+			if(count!=0)max.offer(count);
+			
+		}
+		if(max.size()>1) {
+			answer = max.poll() * max.poll();
+		}else answer = 0;
+		System.out.println(answer);
+		/*
+		 * public static void DFS(int start, int [] cards) { if(check[start]) return;
+		 * 
+		 * check[start] = true; count++; DFS(cards[start]-1,cards); }
+		 */
+	}
+	
+	public static void ex49() throws IOException {
+		int distance = 10;
+		
+		int[][] scope = {{3,4},{5,8}};
+		int[][] times = {{2,5},{4,3}};
+		int [][] state = new int[scope.length][distance];
+		int index =0;
+		int man = 0;
+		while(man<scope.length) {
+			for(int i=0; i<times[man][0]; i++) {
+				if(index>distance-1) break;
+				state[man][index] = 1;
+				index++;
+			}
+			for(int i=0; i<times[man][1]; i++) {
+				if(index>distance-1) break;
+				state[man][index] = 0;
+				index++;
+			}
+			if(index>distance-1) {
+				index = 0;
+				man++;
+			}
+		}
+		int answer = distance;
+		for(int i=0; i<scope.length; i++) {
+			int [] arr =  scope[i];
+			Arrays.sort(arr);
+			for(int j = arr[0]-1; j<arr[1]; j++) {
+				 if(state[i][j] == 1)  answer = Math.min(answer, j)+1;
+			}
+		}
+		System.out.println(answer);
 	}
 	
 }
