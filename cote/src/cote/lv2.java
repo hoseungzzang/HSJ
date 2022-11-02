@@ -21,34 +21,32 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class lv2 {
-	static boolean [] check;
-	static int count;
-	public static void main(String[] args) throws IOException {
-		int [] topping = {1, 2, 1, 3, 1, 4, 1, 2};
-		int answer = 0;
-		HashMap<Integer,Integer> h = new HashMap<Integer,Integer>();
-		HashMap<Integer,Integer> d = new HashMap<Integer,Integer>();
-		for(int i=0; i<topping.length; i++) {
-			h.put(topping[i], h.getOrDefault(topping[i], 0) +1);
-		}
-		int i =0;
-		while(d.size()<=h.size()) {
-			d.put(topping[i], d.getOrDefault(topping[i], 0) +1);
-			h.put(topping[i], h.get(topping[i])-1);
-			if(h.get(topping[i])==0) h.remove(topping[i]);
-			
-			if(d.size() == h.size()) answer++;
-			i++;
-		}
 
+	public static void main(String[] args) throws IOException {
+		int cacheSize = 1;
+		int answer = 0;
+		String [] cities = {"Jeju", "Pangyo", "Seoul", "NewYork", "LA"};
+		ArrayList<String> list = new ArrayList<String>();
+		if(cacheSize!=0) {
+			for(int i=0; i<cities.length; i++) {
+				String s = cities[i].toLowerCase().replaceAll(" ","");
+				int num = list.indexOf(s);
+				if(num==-1) {
+					if(list.size()==cacheSize) {
+						list.remove(0);
+					}
+					list.add(s);
+					answer+=5;
+				}else {
+					list.remove(num);
+					list.add(s);
+					answer++;
+				}
+			}
+		}else {
+			answer = cities.length*5;
+		}
 		System.out.println(answer);
-	}
-	public static void DFS(int start, int [] cards) {
-		if(check[start]) return;
-		
-		check[start] = true;
-		count++;
-		DFS(cards[start]-1,cards);
 	}
 
 
@@ -1516,6 +1514,8 @@ public class lv2 {
 		
 	}
 	public static void ex48() throws IOException {
+		 boolean [] check;
+		 int count;
 		int [] cards= {8,6,3,7,2,5,1,4};
 		check = new boolean[cards.length];
 		int answer= 0;
@@ -1570,6 +1570,27 @@ public class lv2 {
 				 if(state[i][j] == 1)  answer = Math.min(answer, j)+1;
 			}
 		}
+		System.out.println(answer);
+	}
+	
+	public static void ex50() throws IOException {
+		int [] topping = {1, 2, 1, 3, 1, 4, 1, 2};
+		int answer = 0;
+		HashMap<Integer,Integer> h = new HashMap<Integer,Integer>();
+		HashMap<Integer,Integer> d = new HashMap<Integer,Integer>();
+		for(int i=0; i<topping.length; i++) {
+			h.put(topping[i], h.getOrDefault(topping[i], 0) +1);
+		}
+		int i =0;
+		while(d.size()<=h.size()) {
+			d.put(topping[i], d.getOrDefault(topping[i], 0) +1);
+			h.put(topping[i], h.get(topping[i])-1);
+			if(h.get(topping[i])==0) h.remove(topping[i]);
+			
+			if(d.size() == h.size()) answer++;
+			i++;
+		}
+
 		System.out.println(answer);
 	}
 	
