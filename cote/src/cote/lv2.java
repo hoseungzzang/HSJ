@@ -21,34 +21,73 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class lv2 {
+	static boolean[] check;
+
+	static boolean prime[] = new boolean[10000001];
+	static ArrayList<String> list;
+	static HashMap<Integer, HashMap<String, Integer>> map;
 
 	public static void main(String[] args) throws IOException {
-		int cacheSize = 1;
-		int answer = 0;
-		String [] cities = {"Jeju", "Pangyo", "Seoul", "NewYork", "LA"};
-		ArrayList<String> list = new ArrayList<String>();
-		if(cacheSize!=0) {
-			for(int i=0; i<cities.length; i++) {
-				String s = cities[i].toLowerCase().replaceAll(" ","");
-				int num = list.indexOf(s);
-				if(num==-1) {
-					if(list.size()==cacheSize) {
-						list.remove(0);
-					}
-					list.add(s);
-					answer+=5;
-				}else {
-					list.remove(num);
-					list.add(s);
-					answer++;
+		String[] orders = { "XYZ", "XWY", "WXA" };
+		int[] course = { 2, 3, 4 };
+		 map = new HashMap<>();
+		ArrayList<String> answerList = new ArrayList<>();
+		for(int i=0; i<course.length; i++) {
+		map.put(course[i], new HashMap<String, Integer>());
+		}
+			
+		
+		
+		for (int i = 0; i < orders.length; i++) {
+			list = new ArrayList<>();
+			String[] s = orders[i].split("");
+			check = new boolean[s.length];
+			DFS(s, "");
+		}
+		for (int i = 0; i < course.length; i++) {
+			int max = Integer.MIN_VALUE;
+			HashMap<String, Integer> map2 = map.get(course[i]);
+			for (String key : map2.keySet()) {
+				max = Math.max(max, map2.get(key));
+			}
+			if (max < 2)
+				continue;
+
+			for (String key : map2.keySet()) {
+				if (map2.get(key) == max) {
+					answerList.add(key);
 				}
 			}
-		}else {
-			answer = cities.length*5;
+
 		}
-		System.out.println(answer);
+		String[] answer = new String[answerList.size()];
+		for (int i = 0; i < answer.length; i++) {
+			answer[i] = answerList.get(i);
+		}
+		Arrays.sort(answer);
 	}
 
+	public static void DFS(String[] s, String str) {
+		if (map.containsKey(str.length())) {
+			char[] c = str.toCharArray();
+			Arrays.sort(c);
+			String so = new String(c);
+			if (!list.contains(so)) {
+				map.get(so.length()).put(so, map.get(so.length()).getOrDefault(so, 0) + 1);
+				// map.put(so.length(), so,map.getOrDefault(so, 0)+1);
+				list.add(so);
+			}
+
+		}
+		for (int i = 0; i < s.length; i++) {
+			if (!check[i]) {
+				check[i] = true;
+				DFS(s, str + s[i]);
+				check[i] = false;
+			}
+
+		}
+	}
 
 	public static void ex1() {
 		// 최솟값만들기
@@ -984,137 +1023,135 @@ public class lv2 {
 		}
 
 	}
-	
+
 	public static void ex32() throws IOException {
-		String X ="12321";
+		String X = "12321";
 		String answer = "";
-		String Y="42531";
+		String Y = "42531";
 		ArrayList<String> list = new ArrayList<String>();
 		ArrayList<String> list2 = new ArrayList<String>();
-		String [] arrX = X.split("");
-		String [] arrY = Y.split("");
-		int cnt=0;
+		String[] arrX = X.split("");
+		String[] arrY = Y.split("");
+		int cnt = 0;
 		int sum = 0;
-		for(int i = 0; i<arrY.length; i++) {
+		for (int i = 0; i < arrY.length; i++) {
 			list.add(arrY[i]);
 		}
-		for(int i=0; i<arrX.length; i++) {
-			if(list.contains(arrX[i])) {
+		for (int i = 0; i < arrX.length; i++) {
+			if (list.contains(arrX[i])) {
 				list.remove(arrX[i]);
 				list2.add(arrX[i]);
 				cnt++;
-				sum+=Integer.parseInt(arrX[i]);
+				sum += Integer.parseInt(arrX[i]);
 			}
 		}
-		
-		
-		if(cnt==0) {
-			answer ="-1";
-		}else if(cnt!=0&& sum==0) {
-			answer ="0";
-		}else {
+
+		if (cnt == 0) {
+			answer = "-1";
+		} else if (cnt != 0 && sum == 0) {
+			answer = "0";
+		} else {
 			Collections.sort(list2, Collections.reverseOrder());
 			answer = String.join("", list2);
 		}
-	
-		
+
 	}
 
 	public static void ex33() throws IOException {
-		String[] want = {"banana", "apple", "rice", "pork", "pot"};
-		int[] number = {3, 2, 2, 2, 1}; 
-		String[] discount= {"chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice", "pot", "banana", "apple", "banana"};
+		String[] want = { "banana", "apple", "rice", "pork", "pot" };
+		int[] number = { 3, 2, 2, 2, 1 };
+		String[] discount = { "chicken", "apple", "apple", "banana", "rice", "apple", "pork", "banana", "pork", "rice",
+				"pot", "banana", "apple", "banana" };
 		int answer = 0;
 
-		
-		for(int i=0; i<=discount.length-10; i++) {
+		for (int i = 0; i <= discount.length - 10; i++) {
 			String[] arr = new String[10];
 			int flag = 1;
-			for(int j=0; j<10; j++) {
-				arr[j] = discount[j+i];
+			for (int j = 0; j < 10; j++) {
+				arr[j] = discount[j + i];
 			}
-			for(int j=0; j<want.length; j++) {
-				if(Collections.frequency(Arrays.asList(arr), want[j]) != number[j]) {
-					flag=0;
+			for (int j = 0; j < want.length; j++) {
+				if (Collections.frequency(Arrays.asList(arr), want[j]) != number[j]) {
+					flag = 0;
 					break;
 				}
 			}
-			if(flag==1) {
+			if (flag == 1) {
 				answer++;
 			}
-		
+
 		}
 		System.out.println(answer);
-		
+
 	}
-	
+
 	public static void ex34() throws IOException {
-	
-		int[] order = {5,4,3,2,1};
-		int [] send = new int[order.length];
+
+		int[] order = { 5, 4, 3, 2, 1 };
+		int[] send = new int[order.length];
 		ArrayList<String> list = new ArrayList<String>();
-		for(int i=1; i<=send.length; i++) {
-			send[i-1] = i;
-			list.add(Integer.toString(i) );
+		for (int i = 1; i <= send.length; i++) {
+			send[i - 1] = i;
+			list.add(Integer.toString(i));
 		}
-		
+
 		Stack<Integer> main = new Stack<Integer>();
 		Stack<Integer> sub = new Stack<Integer>();
 		int answer = 0;
-		for(int i=0; i<order.length; i++) {
-			if(i==0) {
-				for(int j=0; j<send.length; j++) {
-					if(order[i] !=send[j]) {
+		for (int i = 0; i < order.length; i++) {
+			if (i == 0) {
+				for (int j = 0; j < send.length; j++) {
+					if (order[i] != send[j]) {
 						sub.push(send[j]);
 						list.remove(Integer.toString(send[j]));
-					}else {
+					} else {
 						list.remove(Integer.toString(order[i]));
 						answer++;
 						break;
 					}
 				}
-			}else {
-				
-				if(!list.isEmpty()&& order[i] ==Integer.parseInt(list.get(0)) ) {
+			} else {
+
+				if (!list.isEmpty() && order[i] == Integer.parseInt(list.get(0))) {
 					int num = Integer.parseInt(list.get(0));
 					answer++;
 					list.remove(Integer.toString(num));
-					
-				}else if(!sub.isEmpty() && sub.peek() == order[i]) {
+
+				} else if (!sub.isEmpty() && sub.peek() == order[i]) {
 					answer++;
 					sub.pop();
-				}else {
+				} else {
 					break;
 				}
-				
+
 			}
 
 		}
 		System.out.println(answer);
-		
+
 	}
-	
+
 	public static void ex35() throws IOException {
-		int[] topping = {1, 2, 1, 3, 1, 4, 1, 2};
+		int[] topping = { 1, 2, 1, 3, 1, 4, 1, 2 };
 		int answer = 0;
 		String arr = Arrays.toString(topping).replaceAll("\\[|]", "");
-		String [] arr2 = arr.split(", ");
+		String[] arr2 = arr.split(", ");
 		ArrayList<String> little = new ArrayList<String>(Arrays.asList(arr2));
 		ArrayList<Integer> bro = new ArrayList<Integer>();
-		for(int i=0; i<topping.length; i++) {
+		for (int i = 0; i < topping.length; i++) {
 			little.remove(0);
-				if(bro.indexOf(topping[i])==-1) {
-					bro.add(topping[i]);
-				}
-				List<String> newList = little.stream().distinct().collect(Collectors.toList());
-			if(bro.size() == newList.size()) {
+			if (bro.indexOf(topping[i]) == -1) {
+				bro.add(topping[i]);
+			}
+			List<String> newList = little.stream().distinct().collect(Collectors.toList());
+			if (bro.size() == newList.size()) {
 				answer++;
 			}
 		}
 		System.out.println(answer);
-		
-}
-	
+
+	}
+
 	public static void ex36() throws IOException {
 		// 1. 작업이 끝나는 일 수를 계산해서 스택에 넣어줌
 		// 2. 스택의 가장 위에있는 일수보다 들어오려는 일수가 더 크면 스택 사이즈만큼 리스트에 넣어둠
@@ -1125,21 +1162,21 @@ public class lv2 {
 		Stack<Integer> stack = new Stack<>();
 		ArrayList<Integer> list = new ArrayList<>();
 		int[] answer;
-		
-		//개발 개수만큼 돌려줌
+
+		// 개발 개수만큼 돌려줌
 		for (int i = 0; i < progresses.length; i++) {
 			int date = progresses[i];
 			int day = 0;
-			//100% 이거나 100%를 넘길때까지 돌려줌. (일자 세기)
+			// 100% 이거나 100%를 넘길때까지 돌려줌. (일자 세기)
 			while (date < 100) {
 				date += speeds[i];
 				day++;
 			}
-			//스택이 비어있으면 (첫번째이면) 그냥 넣어줌.
+			// 스택이 비어있으면 (첫번째이면) 그냥 넣어줌.
 			if (stack.isEmpty()) {
 				stack.add(day);
 			} else {
-				//스택에 가장먼저 들어온 일자와 현재 들어오는 일자를 비교하여 적으면 스택에 넣고, 크면 스택을 클리어 후 들어온 일자를 넣어줌.
+				// 스택에 가장먼저 들어온 일자와 현재 들어오는 일자를 비교하여 적으면 스택에 넣고, 크면 스택을 클리어 후 들어온 일자를 넣어줌.
 				if (stack.firstElement() >= day) {
 					stack.push(day);
 				} else {
@@ -1150,7 +1187,7 @@ public class lv2 {
 
 			}
 		}
-		//스택에 남은 작업 리스트에 추가 후 출력
+		// 스택에 남은 작업 리스트에 추가 후 출력
 		list.add(stack.size());
 		answer = new int[list.size()];
 		for (int i = 0; i < answer.length; i++) {
@@ -1159,377 +1196,390 @@ public class lv2 {
 		}
 
 	}
+
 	public static void ex37() throws IOException {
-		
-		int n=6;
-		int [] times = {7,10};
-	
+
+		int n = 6;
+		int[] times = { 7, 10 };
+
 		Arrays.sort(times);
 		long min = 0;
-		long max =(long) n*times[times.length-1]; //이거때문에 한시간 날렸다.. long형으로 캐스팅 해줘야만 정상적인 값이 들어온다.
-		long answer=Long.MAX_VALUE;
+		long max = (long) n * times[times.length - 1]; // 이거때문에 한시간 날렸다.. long형으로 캐스팅 해줘야만 정상적인 값이 들어온다.
+		long answer = Long.MAX_VALUE;
 		long mid = 0;
-		
-		while(min<=max) {
-			long num =0;
-			//중간값 계산
-			mid=(min+max)/2;
-			
-			//중간값에 들어온 시간을 뺀 몫을 더한다.
-			for(int i=0;i<times.length; i++) {
-				num += mid/times[i];
+
+		while (min <= max) {
+			long num = 0;
+			// 중간값 계산
+			mid = (min + max) / 2;
+
+			// 중간값에 들어온 시간을 뺀 몫을 더한다.
+			for (int i = 0; i < times.length; i++) {
+				num += mid / times[i];
 			}
-			
-			//구하고자 하는 수보다 작을 경우 최소값 +1
-			if(num<n) {
-				min = mid+1;
-			}else {
-				//클경우는 현재 답으로 구해진 최소값보다 작은 값이 들어올 경우 바꿔준다.
-				if(mid<answer) {
-						answer = mid;
+
+			// 구하고자 하는 수보다 작을 경우 최소값 +1
+			if (num < n) {
+				min = mid + 1;
+			} else {
+				// 클경우는 현재 답으로 구해진 최소값보다 작은 값이 들어올 경우 바꿔준다.
+				if (mid < answer) {
+					answer = mid;
 				}
-				//클경우 최대값-1
-				max=mid-1;
+				// 클경우 최대값-1
+				max = mid - 1;
 			}
 		}
 		System.out.println(answer);
 	}
-	
+
 	public static void ex38() throws IOException {
-		int[] fees = {180, 5000, 10, 600}; 
-		String[] records = {"05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"};
-		
+		int[] fees = { 180, 5000, 10, 600 };
+		String[] records = { "05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN",
+				"18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT" };
+
 		ArrayList<String> list = new ArrayList<>();
 		Map<String, Integer> map = new HashMap<>();
-		for(int i=0; i<records.length; i++) {
-			String [] arr = records[i].split(" ");
-			if(list.indexOf(arr[1])==-1) {
+		for (int i = 0; i < records.length; i++) {
+			String[] arr = records[i].split(" ");
+			if (list.indexOf(arr[1]) == -1) {
 				list.add(arr[1]);
 			}
 		}
 		Collections.sort(list);
 		int[] answer = new int[list.size()];
-		for(int i=0; i<list.size(); i++) {
-			int sum =0;
+		for (int i = 0; i < list.size(); i++) {
+			int sum = 0;
 			String num = list.get(i);
-			for(int j=0;j<records.length; j++) {
-				if(records[j].contains(num)) {
-					String [] arr = records[j].split(" ");
-					String [] sibun = arr[0].split(":");
-					int si = Integer.parseInt(sibun[0])*60;
+			for (int j = 0; j < records.length; j++) {
+				if (records[j].contains(num)) {
+					String[] arr = records[j].split(" ");
+					String[] sibun = arr[0].split(":");
+					int si = Integer.parseInt(sibun[0]) * 60;
 					int bun = Integer.parseInt(sibun[1]);
-					if(arr[2].equals("OUT")) {
-						sum+= ((si+bun) - map.get(arr[1]));
+					if (arr[2].equals("OUT")) {
+						sum += ((si + bun) - map.get(arr[1]));
 						map.remove(arr[1]);
-					}else {
-						map.put(arr[1], si+bun);
+					} else {
+						map.put(arr[1], si + bun);
 					}
 				}
 			}
-			if(!map.isEmpty()) {
-				sum+= 1439 - map.get(num);
+			if (!map.isEmpty()) {
+				sum += 1439 - map.get(num);
 				map.remove(num);
 			}
-			if(sum>fees[0]) {
-				answer[i] =(int) (fees[1] + Math.ceil((double) (sum - fees[0]) / fees[2]) * fees[3]);
-			}else {
+			if (sum > fees[0]) {
+				answer[i] = (int) (fees[1] + Math.ceil((double) (sum - fees[0]) / fees[2]) * fees[3]);
+			} else {
 				answer[i] = fees[1];
 			}
-			
-			
+
 		}
-		
-		for(int i=0; i<answer.length; i++) {
+
+		for (int i = 0; i < answer.length; i++) {
 			System.out.println(answer[i]);
 		}
 	}
-	
+
 	public static void ex39() throws IOException {
-		
-		String[] id_list= {"con", "ryan"};
-		String[] report= {"ryan con", "ryan con", "ryan con", "ryan con"};
-		int k =2;
-		int [] answer = new int[id_list.length];
+
+		String[] id_list = { "con", "ryan" };
+		String[] report = { "ryan con", "ryan con", "ryan con", "ryan con" };
+		int k = 2;
+		int[] answer = new int[id_list.length];
 		ArrayList<String> list = new ArrayList<>();
-		for(int i=0; i<id_list.length; i++) {
+		for (int i = 0; i < id_list.length; i++) {
 			list.add(id_list[i]);
 		}
-		HashMap<String,ArrayList<String>>  table= new HashMap<>();
-		for(int i=0; i<report.length; i++) {
+		HashMap<String, ArrayList<String>> table = new HashMap<>();
+		for (int i = 0; i < report.length; i++) {
 			ArrayList<String> name = new ArrayList<>();
 			String[] arr = report[i].split(" ");
-			if(table.containsKey(arr[1])) {
+			if (table.containsKey(arr[1])) {
 				name = table.get(arr[1]);
-				if(name.indexOf(arr[0])==-1) {
+				if (name.indexOf(arr[0]) == -1) {
 					name.add(arr[0]);
-					table.put(arr[1],name);
+					table.put(arr[1], name);
 				}
-			}else {
+			} else {
 				name.add(arr[0]);
-				table.put(arr[1],name);
+				table.put(arr[1], name);
 			}
 		}
 
-		 for( String key : table.keySet() ){
-				ArrayList<String> name  = table.get(key);
-			 if(name.size()>=k) {
-				 for(int i=0; i<name.size(); i++) {
-					 String nm = name.get(i);
-					 answer[list.indexOf(nm)]++;
-				 }
-			 }
-	      }
+		for (String key : table.keySet()) {
+			ArrayList<String> name = table.get(key);
+			if (name.size() >= k) {
+				for (int i = 0; i < name.size(); i++) {
+					String nm = name.get(i);
+					answer[list.indexOf(nm)]++;
+				}
+			}
+		}
 
 	}
-	
+
 	public static void ex40() throws IOException {
-		Map<String,String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		map.put("]", "[");
 		map.put("}", "{");
 		map.put(")", "(");
 		String s = "[";
-		String [] arr = s.split("");
+		String[] arr = s.split("");
 		Queue<String> que = new LinkedList<String>();
 		int answer = 0;
-		for(int i=0; i<arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			que.offer(arr[i]);
 		}
-		
-		for(int i=0; i<arr.length; i++) {
-			if(i!=0) {
+
+		for (int i = 0; i < arr.length; i++) {
+			if (i != 0) {
 				que.offer(que.poll());
 				arr = que.toArray(arr);
 			}
 			Stack<String> stack = new Stack<>();
 			char flag = 'O';
-			for(int j=0; j<s.length(); j++) {
-				if(map.containsValue(arr[j])) {
+			for (int j = 0; j < s.length(); j++) {
+				if (map.containsValue(arr[j])) {
 					stack.push(arr[j]);
-				}else {
-					if(stack.isEmpty()|| !stack.peek().equals( map.get(arr[j]))) {
+				} else {
+					if (stack.isEmpty() || !stack.peek().equals(map.get(arr[j]))) {
 						flag = 'X';
 						break;
-					}else {
+					} else {
 						stack.pop();
 					}
 				}
 			}
-			if(flag == 'O' && stack.isEmpty()) answer++;
+			if (flag == 'O' && stack.isEmpty())
+				answer++;
 		}
 		System.out.println(answer);
-		
+
 	}
-	
+
 	public static void ex41() throws IOException {
-		
-		int[] scoville = {1,2,3,9,10,12};
+
+		int[] scoville = { 1, 2, 3, 9, 10, 12 };
 		int K = 7;
 		PriorityQueue<Integer> min = new PriorityQueue<>();
-		for(int i=0; i<scoville.length; i++) {
+		for (int i = 0; i < scoville.length; i++) {
 			min.add(scoville[i]);
 		}
 		int answer = 0;
-		while(min.peek()<K && min.size()!=1) {
-			int sum = min.poll()+(min.poll()*2);
-				min.add(sum);
-				answer++;
+		while (min.peek() < K && min.size() != 1) {
+			int sum = min.poll() + (min.poll() * 2);
+			min.add(sum);
+			answer++;
 		}
-		if(min.size()==1 && min.peek()<K) {
+		if (min.size() == 1 && min.peek() < K) {
 			answer = -1;
 		}
 		System.out.println(answer);
 	}
+
 	public static void ex42() throws IOException {
-		int[] queue1= {3,3,3,3};
-		int[] queue2 = {3,3,21,3};
-		
+		int[] queue1 = { 3, 3, 3, 3 };
+		int[] queue2 = { 3, 3, 21, 3 };
+
 		Queue<Long> que1 = new LinkedList<Long>();
 		Queue<Long> que2 = new LinkedList<Long>();
-		long sum1=0;
-		long sum2=0;
-		
-		for(int i=0; i<queue1.length; i++) {
-			que1.offer((long)queue1[i]);
-			que2.offer((long)queue2[i]);
+		long sum1 = 0;
+		long sum2 = 0;
+
+		for (int i = 0; i < queue1.length; i++) {
+			que1.offer((long) queue1[i]);
+			que2.offer((long) queue2[i]);
 			sum1 += queue1[i];
 			sum2 += queue2[i];
 		}
-		long result = (sum1+sum2)/2;
-		int cnt=0;
-		while(sum1!=sum2) {
-			if(sum1>sum2) {
+		long result = (sum1 + sum2) / 2;
+		int cnt = 0;
+		while (sum1 != sum2) {
+			if (sum1 > sum2) {
 				long num = que1.poll();
-				if(num>result) {
-					cnt=-1;
+				if (num > result) {
+					cnt = -1;
 					break;
 				}
 				que2.add(num);
-				sum2+=num;
-				sum1-=num;
-			}else {
+				sum2 += num;
+				sum1 -= num;
+			} else {
 				long num = que2.poll();
-				if(num>result) {
-					cnt=-1;
+				if (num > result) {
+					cnt = -1;
 					break;
 				}
 				que1.add(num);
-				sum1+=num;
-				sum2-=num;
+				sum1 += num;
+				sum2 -= num;
 			}
 			cnt++;
 		}
 		System.out.println(cnt);
-		
+
 	}
-	
+
 	public static void ex43() throws IOException {
-		String[] gems = {"XYZ", "XYZ", "XYZ"};
-		  int[] answer = new int[2];
-	        int start = 0;
-			int end = 0;
-			HashSet<String> set = new HashSet<String>();
-			for(int i=0; i<gems.length; i++ ) {
-				set.add(gems[i]);
-			}
-			HashMap<String,Integer> map = new HashMap<>();
-			int min =Integer.MAX_VALUE;
-			map.put(gems[end], 1);
-			while(end<gems.length) {
-				if(map.size() == set.size()) {
-					if(end - start<min) {
-						min = end - start;
-						answer[0]  = start+1;
-						 answer[1]  = end+1;
-					}
-					map.put(gems[start], map.get(gems[start])-1);
-					if(map.get(gems[start])==0) map.remove(gems[start]);
-					start++;
-				}else {
-					end++;
-					if(end==gems.length) break;
-					map.put(gems[end], map.getOrDefault(gems[end], 0) + 1);
-					
+		String[] gems = { "XYZ", "XYZ", "XYZ" };
+		int[] answer = new int[2];
+		int start = 0;
+		int end = 0;
+		HashSet<String> set = new HashSet<String>();
+		for (int i = 0; i < gems.length; i++) {
+			set.add(gems[i]);
+		}
+		HashMap<String, Integer> map = new HashMap<>();
+		int min = Integer.MAX_VALUE;
+		map.put(gems[end], 1);
+		while (end < gems.length) {
+			if (map.size() == set.size()) {
+				if (end - start < min) {
+					min = end - start;
+					answer[0] = start + 1;
+					answer[1] = end + 1;
 				}
+				map.put(gems[start], map.get(gems[start]) - 1);
+				if (map.get(gems[start]) == 0)
+					map.remove(gems[start]);
+				start++;
+			} else {
+				end++;
+				if (end == gems.length)
+					break;
+				map.put(gems[end], map.getOrDefault(gems[end], 0) + 1);
+
 			}
-		System.out.println(answer[0] + " "+ answer[1]);
+		}
+		System.out.println(answer[0] + " " + answer[1]);
 	}
-	
+
 	public static void ex44() throws IOException {
-		int[][] triangle = {{7},{3,8},{8,1,0},{2,7,4,4},{4,5,2,6,5}};
-		triangle[1][0] +=triangle[0][0];
-		triangle[1][1] +=triangle[0][0];
+		int[][] triangle = { { 7 }, { 3, 8 }, { 8, 1, 0 }, { 2, 7, 4, 4 }, { 4, 5, 2, 6, 5 } };
+		triangle[1][0] += triangle[0][0];
+		triangle[1][1] += triangle[0][0];
 		int answer = 0;
-		for(int i=1; i<triangle.length-1; i++) {
-			
-			for(int j=0; j<triangle[i+1].length;j++) {
-				if(j==0) {
-					triangle[i+1][j] = triangle[i][j] + triangle[i+1][j];
-				}else if(j == triangle[i+1].length-1) {
-					triangle[i+1][j] = triangle[i][j-1] + triangle[i+1][j];
-				}else {
-					int max = Math.max(triangle[i][j-1],triangle[i][j]);
-					triangle[i+1][j] = max + triangle[i+1][j];
+		for (int i = 1; i < triangle.length - 1; i++) {
+
+			for (int j = 0; j < triangle[i + 1].length; j++) {
+				if (j == 0) {
+					triangle[i + 1][j] = triangle[i][j] + triangle[i + 1][j];
+				} else if (j == triangle[i + 1].length - 1) {
+					triangle[i + 1][j] = triangle[i][j - 1] + triangle[i + 1][j];
+				} else {
+					int max = Math.max(triangle[i][j - 1], triangle[i][j]);
+					triangle[i + 1][j] = max + triangle[i + 1][j];
 				}
 			}
 		}
-		for(int i =0; i<triangle[triangle.length-1].length;i++) {
-			if(answer<triangle[triangle.length-1][i]) {
-				answer = triangle[triangle.length-1][i];
+		for (int i = 0; i < triangle[triangle.length - 1].length; i++) {
+			if (answer < triangle[triangle.length - 1][i]) {
+				answer = triangle[triangle.length - 1][i];
 			}
 		}
 		System.out.println(answer);
 	}
+
 	public static void ex45() throws IOException {
-		int[][] land = {{1,2,3,5},{5,6,7,8},{4,3,2,1}};
-		 int answer = 0;
-		for(int i=1; i<land.length; i++) {
-			land[i][0] = land[i][0] + Math.max(land[i-1][3],Math.max(land[i-1][1],land[i-1][2] )) ;  
-			land[i][1] = land[i][1] +Math.max(land[i-1][3],Math.max(land[i-1][0],land[i-1][2] ));  
-			land[i][2] = land[i][2] + Math.max(land[i-1][3],Math.max(land[i-1][1],land[i-1][0] ));  
-			land[i][3] = land[i][3] + Math.max(land[i-1][1],Math.max(land[i-1][0],land[i-1][2] ));  
+		int[][] land = { { 1, 2, 3, 5 }, { 5, 6, 7, 8 }, { 4, 3, 2, 1 } };
+		int answer = 0;
+		for (int i = 1; i < land.length; i++) {
+			land[i][0] = land[i][0] + Math.max(land[i - 1][3], Math.max(land[i - 1][1], land[i - 1][2]));
+			land[i][1] = land[i][1] + Math.max(land[i - 1][3], Math.max(land[i - 1][0], land[i - 1][2]));
+			land[i][2] = land[i][2] + Math.max(land[i - 1][3], Math.max(land[i - 1][1], land[i - 1][0]));
+			land[i][3] = land[i][3] + Math.max(land[i - 1][1], Math.max(land[i - 1][0], land[i - 1][2]));
 		}
-		answer = Math.max(Math.max(land[land.length-1][0], land[land.length-1][1]), Math.max(land[land.length-1][0], land[land.length-1][1]));
+		answer = Math.max(Math.max(land[land.length - 1][0], land[land.length - 1][1]),
+				Math.max(land[land.length - 1][0], land[land.length - 1][1]));
 		System.out.println(answer);
 	}
+
 	public static void ex46() throws IOException {
 		String s = "aabbaccc";
-		  int answer = s.length();    // 압축하기 전 문자열 길이로 초기화
-	        
-	        for(int i = 1; i <= s.length() / 2; i++){
-	            int zipLevel = 1;                           // 현재 압축정도
-	            String zipStr = s.substring(0, i);          // 압축할 문자
-	            StringBuilder result = new StringBuilder(); // 압축완료한 문자를 저장할 StringBuilder
-	            
-	            for(int j = i; j <= s.length(); j += i){
-	                // 다음 문자 추출
-	                String next = s.substring(j, j + i > s.length() ? s.length() : i + j);
-	                // 다음 문자와 현재 문자가 같으면 zipLevel증가
-	                if(zipStr.equals(next)) zipLevel++;
-	                // 다음 문자와 현재 문자가 다를 경우
-	                else{
-	                    // (압축이 안됬을 경우는 공백, 압축이 됬을경우 zipLevel을 붙여줌) + 압축할 문자를 넣어줌, 
-	                    result.append((zipLevel != 1 ? zipLevel : "") + zipStr);
-	                    zipStr = next;      // 다음 문자를 압축할 문자로 지정
-	                    zipLevel = 1;       // 압축 정도 1로 초기화
-	                }
-	            }
-	            result.append(zipStr);      // 마지막에 추가안된 zipStr추가
-	            answer = Math.min(answer, result.length()); // 가장 작은 문자열 길이 저장
-	        }
-	        System.out.println(answer);
-	        
-		
+		int answer = s.length(); // 압축하기 전 문자열 길이로 초기화
+
+		for (int i = 1; i <= s.length() / 2; i++) {
+			int zipLevel = 1; // 현재 압축정도
+			String zipStr = s.substring(0, i); // 압축할 문자
+			StringBuilder result = new StringBuilder(); // 압축완료한 문자를 저장할 StringBuilder
+
+			for (int j = i; j <= s.length(); j += i) {
+				// 다음 문자 추출
+				String next = s.substring(j, j + i > s.length() ? s.length() : i + j);
+				// 다음 문자와 현재 문자가 같으면 zipLevel증가
+				if (zipStr.equals(next))
+					zipLevel++;
+				// 다음 문자와 현재 문자가 다를 경우
+				else {
+					// (압축이 안됬을 경우는 공백, 압축이 됬을경우 zipLevel을 붙여줌) + 압축할 문자를 넣어줌,
+					result.append((zipLevel != 1 ? zipLevel : "") + zipStr);
+					zipStr = next; // 다음 문자를 압축할 문자로 지정
+					zipLevel = 1; // 압축 정도 1로 초기화
+				}
+			}
+			result.append(zipStr); // 마지막에 추가안된 zipStr추가
+			answer = Math.min(answer, result.length()); // 가장 작은 문자열 길이 저장
+		}
+		System.out.println(answer);
+
 	}
+
 	public static void ex47() throws IOException {
-		int [] order = {2, 1, 4, 3, 6, 5, 8, 7, 10, 9};
-		int answer=0;
+		int[] order = { 2, 1, 4, 3, 6, 5, 8, 7, 10, 9 };
+		int answer = 0;
 		Queue<Integer> que = new LinkedList<Integer>();
 		Stack<Integer> stack = new Stack<>();
-		for(int i=1; i<=order.length; i++) {
-			if(i<order[0]) {
+		for (int i = 1; i <= order.length; i++) {
+			if (i < order[0]) {
 				stack.push(i);
-			}else {
+			} else {
 				que.offer(i);
 			}
-			
+
 		}
-		
-		while(answer!=order.length) {
-			if(!que.isEmpty() && que.peek() == order[answer]) {
+
+		while (answer != order.length) {
+			if (!que.isEmpty() && que.peek() == order[answer]) {
 				que.poll();
 				answer++;
-			}else if(!stack.isEmpty() && stack.peek() == order[answer]){
+			} else if (!stack.isEmpty() && stack.peek() == order[answer]) {
 				stack.pop();
 				answer++;
-			}else {
-				if(!que.isEmpty()) {
+			} else {
+				if (!que.isEmpty()) {
 					stack.push(que.poll());
-				}else {
+				} else {
 					break;
 				}
 			}
 		}
-		
+
 		System.out.println(answer);
-		
+
 	}
+
 	public static void ex48() throws IOException {
-		 boolean [] check;
-		 int count;
-		int [] cards= {8,6,3,7,2,5,1,4};
+		boolean[] check;
+		int count;
+		int[] cards = { 8, 6, 3, 7, 2, 5, 1, 4 };
 		check = new boolean[cards.length];
-		int answer= 0;
+		int answer = 0;
 		PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
-		for(int i=0; i<cards.length; i++) {
+		for (int i = 0; i < cards.length; i++) {
 			count = 0;
-			if(!check[i]) DFS(i,cards);
-			
-			if(count!=0)max.offer(count);
-			
+			if (!check[i])
+				DFS(i, cards);
+
+			if (count != 0)
+				max.offer(count);
+
 		}
-		if(max.size()>1) {
+		if (max.size() > 1) {
 			answer = max.poll() * max.poll();
-		}else answer = 0;
+		} else
+			answer = 0;
 		System.out.println(answer);
 		/*
 		 * public static void DFS(int start, int [] cards) { if(check[start]) return;
@@ -1537,61 +1587,129 @@ public class lv2 {
 		 * check[start] = true; count++; DFS(cards[start]-1,cards); }
 		 */
 	}
-	
+
 	public static void ex49() throws IOException {
 		int distance = 10;
-		
-		int[][] scope = {{3,4},{5,8}};
-		int[][] times = {{2,5},{4,3}};
-		int [][] state = new int[scope.length][distance];
-		int index =0;
+
+		int[][] scope = { { 3, 4 }, { 5, 8 } };
+		int[][] times = { { 2, 5 }, { 4, 3 } };
+		int[][] state = new int[scope.length][distance];
+		int index = 0;
 		int man = 0;
-		while(man<scope.length) {
-			for(int i=0; i<times[man][0]; i++) {
-				if(index>distance-1) break;
+		while (man < scope.length) {
+			for (int i = 0; i < times[man][0]; i++) {
+				if (index > distance - 1)
+					break;
 				state[man][index] = 1;
 				index++;
 			}
-			for(int i=0; i<times[man][1]; i++) {
-				if(index>distance-1) break;
+			for (int i = 0; i < times[man][1]; i++) {
+				if (index > distance - 1)
+					break;
 				state[man][index] = 0;
 				index++;
 			}
-			if(index>distance-1) {
+			if (index > distance - 1) {
 				index = 0;
 				man++;
 			}
 		}
 		int answer = distance;
-		for(int i=0; i<scope.length; i++) {
-			int [] arr =  scope[i];
+		for (int i = 0; i < scope.length; i++) {
+			int[] arr = scope[i];
 			Arrays.sort(arr);
-			for(int j = arr[0]-1; j<arr[1]; j++) {
-				 if(state[i][j] == 1)  answer = Math.min(answer, j)+1;
+			for (int j = arr[0] - 1; j < arr[1]; j++) {
+				if (state[i][j] == 1)
+					answer = Math.min(answer, j) + 1;
 			}
 		}
 		System.out.println(answer);
 	}
-	
+
 	public static void ex50() throws IOException {
-		int [] topping = {1, 2, 1, 3, 1, 4, 1, 2};
+		int[] topping = { 1, 2, 1, 3, 1, 4, 1, 2 };
 		int answer = 0;
-		HashMap<Integer,Integer> h = new HashMap<Integer,Integer>();
-		HashMap<Integer,Integer> d = new HashMap<Integer,Integer>();
-		for(int i=0; i<topping.length; i++) {
-			h.put(topping[i], h.getOrDefault(topping[i], 0) +1);
+		HashMap<Integer, Integer> h = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> d = new HashMap<Integer, Integer>();
+		for (int i = 0; i < topping.length; i++) {
+			h.put(topping[i], h.getOrDefault(topping[i], 0) + 1);
 		}
-		int i =0;
-		while(d.size()<=h.size()) {
-			d.put(topping[i], d.getOrDefault(topping[i], 0) +1);
-			h.put(topping[i], h.get(topping[i])-1);
-			if(h.get(topping[i])==0) h.remove(topping[i]);
-			
-			if(d.size() == h.size()) answer++;
+		int i = 0;
+		while (d.size() <= h.size()) {
+			d.put(topping[i], d.getOrDefault(topping[i], 0) + 1);
+			h.put(topping[i], h.get(topping[i]) - 1);
+			if (h.get(topping[i]) == 0)
+				h.remove(topping[i]);
+
+			if (d.size() == h.size())
+				answer++;
 			i++;
 		}
 
 		System.out.println(answer);
 	}
-	
+
+	public static void ex51() throws IOException {
+		int cacheSize = 1;
+		int answer = 0;
+		String[] cities = { "Jeju", "Pangyo", "Seoul", "NewYork", "LA" };
+		ArrayList<String> list = new ArrayList<String>();
+		if (cacheSize != 0) {
+			for (int i = 0; i < cities.length; i++) {
+				String s = cities[i].toLowerCase().replaceAll(" ", "");
+				int num = list.indexOf(s);
+				if (num == -1) {
+					if (list.size() == cacheSize) {
+						list.remove(0);
+					}
+					list.add(s);
+					answer += 5;
+				} else {
+					list.remove(num);
+					list.add(s);
+					answer++;
+				}
+			}
+		} else {
+			answer = cities.length * 5;
+		}
+		System.out.println(answer);
+	}
+
+	public static void ex52() throws IOException {
+
+		int k = 80;
+
+		int[][] dungeons = { { 80, 20 }, { 50, 40 }, { 30, 10 } };
+		check = new boolean[dungeons.length];
+		// DFS(dungeons,k,0);
+		/*
+		 * public static void DFS(int [][] dungeons,int k,int cnt) { answer =
+		 * Math.max(cnt, answer); for(int i=0; i<dungeons.length; i++) { if(!check[i] &&
+		 * dungeons[i][0]<=k) { check[i] = true; DFS(dungeons, k-dungeons[i][1],cnt+1);
+		 * check[i] = false; } } }
+		 */
+	}
+
+	public static void ex53() throws IOException {
+		String numbers = "011";
+		prime[0] = prime[1] = true;
+		for (int i = 2; i * i <= 10000000; i++) {
+			// prime[i]가 소수라면
+			if (!prime[i]) {
+				// prime[j] 소수가 아닌 표시
+				for (int j = i * i; j <= 10000000; j += i)
+					prime[j] = true;
+			}
+		}
+
+		check = new boolean[numbers.length()];
+		DFS(numbers.split(""), "");
+		System.out.println(answer);
+		/*
+		 * public static void DFS(String [] numbers,String s) { if(s!="") {
+		 * if(!prime[Integer.parseInt(s)] && !list.contains(Integer.parseInt(s))) {
+		 * answer++; list.add(Integer.parseInt(s)); } }
+		 */
+	}
 }
