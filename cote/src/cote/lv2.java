@@ -18,67 +18,54 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class lv2 {
 	static boolean[] check;
 
-	static boolean prime[] = new boolean[10000001];
 	static ArrayList<String> list;
-	static HashMap<Integer, HashMap<String, Integer>> map;
+	static HashMap<String, Integer> map;
 
 	public static void main(String[] args) throws IOException {
-		String[] orders = { "XYZ", "XWY", "WXA" };
-		int[] course = { 2, 3, 4 };
-		 map = new HashMap<>();
-		ArrayList<String> answerList = new ArrayList<>();
-		for(int i=0; i<course.length; i++) {
-		map.put(course[i], new HashMap<String, Integer>());
-		}
-			
-		
-		
-		for (int i = 0; i < orders.length; i++) {
-			list = new ArrayList<>();
-			String[] s = orders[i].split("");
-			check = new boolean[s.length];
-			DFS(s, "");
-		}
-		for (int i = 0; i < course.length; i++) {
-			int max = Integer.MIN_VALUE;
-			HashMap<String, Integer> map2 = map.get(course[i]);
-			for (String key : map2.keySet()) {
-				max = Math.max(max, map2.get(key));
-			}
-			if (max < 2)
-				continue;
+		int[][] lines = {{0,1},{2,5},{3,9}};
+		 int answer = 0;
 
-			for (String key : map2.keySet()) {
-				if (map2.get(key) == max) {
-					answerList.add(key);
-				}
-			}
+	        Map<String, Integer> map = new HashMap<String, Integer>();
 
-		}
-		String[] answer = new String[answerList.size()];
-		for (int i = 0; i < answer.length; i++) {
-			answer[i] = answerList.get(i);
-		}
-		Arrays.sort(answer);
+	        for (int[] line : lines) {
+	            int tempMin = Math.min(line[0], line[1]);
+	            int tempMax = Math.max(line[0], line[1]);
+	            for (int i = tempMin + 1; i < tempMax + 1; i++) {
+	                String str = (i - 1) + "/" + i;
+	                map.put(str, map.getOrDefault(str, 0) + 1);
+	            }
+	        }
+
+	        for (Integer value : map.values()) {
+	            if (value > 1) answer++;
+	        }
 	}
 
-	public static void DFS(String[] s, String str) {
-		if (map.containsKey(str.length())) {
-			char[] c = str.toCharArray();
-			Arrays.sort(c);
-			String so = new String(c);
-			if (!list.contains(so)) {
-				map.get(so.length()).put(so, map.get(so.length()).getOrDefault(so, 0) + 1);
-				// map.put(so.length(), so,map.getOrDefault(so, 0)+1);
-				list.add(so);
+	public static void DFS(String[] s,String str) {
+		if(!list.contains(str)) {
+			list.add(str);
+		}
+
+		for (int i = 0; i < s.length; i++) {
+			if (!check[i]) {
+				check[i] = true;
+				DFS(s, str + s[i]);
+				check[i] = false;
 			}
 
 		}
+	}
+	public static void BFS(String[] s,String str) {
+		if(!list.contains(str)) {
+			list.add(str);
+		}
+
 		for (int i = 0; i < s.length; i++) {
 			if (!check[i]) {
 				check[i] = true;
