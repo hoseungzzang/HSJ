@@ -20,42 +20,33 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 public class lv2 {
-	static boolean[] check;
-
-	static ArrayList<String> list;
-	static HashMap<String, Integer> map;
 
 	public static void main(String[] args) throws IOException {
-		int[][] lines = {{0,1},{2,5},{3,9}};
-		 int answer = 0;
-
-	        Map<String, Integer> map = new HashMap<String, Integer>();
-
-	        for (int[] line : lines) {
-	            int tempMin = Math.min(line[0], line[1]);
-	            int tempMax = Math.max(line[0], line[1]);
-	            for (int i = tempMin + 1; i < tempMax + 1; i++) {
-	                String str = (i - 1) + "/" + i;
-	                map.put(str, map.getOrDefault(str, 0) + 1);
-	            }
-	        }
-
-	        for (Integer value : map.values()) {
-	            if (value > 1) answer++;
-	        }
+	
+		int n = 1;
+		int m =2;
+		int[] arr = new int[100];
+		arr[0] = 1;
+        arr[1] = 1;
+        for (int i = 2; i < 100; i++) {
+            arr[i] = arr[i - 1] + arr[i - 2];
+        }
+        
+		System.out.println(arr[n+m]);
 	}
 
-	public static void DFS(String[] s,String str) {
-		if(!list.contains(str)) {
-			list.add(str);
+	public static void DFS(int num) {
+		if(list.size()==num) {
+			answer++;
+			return;
 		}
-
-		for (int i = 0; i < s.length; i++) {
+		for (int i = 0; i < num; i++) {
 			if (!check[i]) {
 				check[i] = true;
-				DFS(s, str + s[i]);
+				list.add(i);
+				DFS(num);
+				list.remove(list.indexOf(i));
 				check[i] = false;
 			}
 
